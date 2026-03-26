@@ -240,6 +240,11 @@
     <string name="restore_on_boot_summary_off">لن تجلب الأنفاق المفعلة عند التمهيد</string>
     <string name="restore_on_boot_summary_on">سوف تجلب الأنفاق المفعلة عند التمهيد</string>
     <string name="restore_on_boot_title">الإستعادة عند تشغيل الجهاز</string>
+    <string name="root_mode_summary_off">استخدام واجهة Android VPN API (الوضع القياسي)</string>
+    <string name="root_mode_summary_on">استخدام صلاحيات الجذر للنفق (بدون VPN API، جميع التطبيقات موجهة)</string>
+    <string name="root_mode_title">وضع الجذر (بدون VPN API)</string>
+    <string name="root_mode_error">صلاحيات الجذر غير متاحة</string>
+    <string name="root_shell_error">فشل أمر صدفة الجذر: %d</string>
     <string name="save">حفظ</string>
     <string name="select_all">اختيار الكلّ</string>
     <string name="settings">الإعدادات</string>
@@ -279,6 +284,7 @@
     <string name="tunnel_rename_error">غير قادر على إعادة تسمية النفق: %s</string>
     <string name="tunnel_rename_success">تمت إعادة تسمية النفق بنجاح إلى \"%s\"</string>
     <string name="type_name_go_userspace">انتقل مساحة المستخدمين</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">وحدة النواة</string>
     <string name="unknown_error">خطأ غير معروف</string>
     <string name="version_summary">%1$s خلفية %2$s</string>

@@ -188,6 +188,11 @@
     <string name="restore_on_boot_summary_off">Önyüklemede etkin tünelleri açmayacak</string>
     <string name="restore_on_boot_summary_on">Önyüklemede etkin tünelleri açacak</string>
     <string name="restore_on_boot_title">Cihaz açılırken başlat</string>
+    <string name="root_mode_summary_off">Android VPN API kullanılıyor (standart mod)</string>
+    <string name="root_mode_summary_on">Tünel için root erişimi kullanılıyor (VPN API yok, tüm uygulamalar yönlendiriliyor)</string>
+    <string name="root_mode_title">Root modu (VPN API yok)</string>
+    <string name="root_mode_error">Root erişimi mevcut değil</string>
+    <string name="root_shell_error">Root kabuk komutu başarısız oldu: %d</string>
     <string name="save">Kaydet</string>
     <string name="select_all">Tümünü seç</string>
     <string name="settings">Ayarlar</string>
@@ -227,6 +232,7 @@
     <string name="tunnel_rename_error">Tünel yeniden adlandırılamıyor: %s</string>
     <string name="tunnel_rename_success">Tünel başarıyla yeniden adlandırıldı “%s”</string>
     <string name="type_name_go_userspace">Kullanıcı alanına git</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Çekirdek modülü</string>
     <string name="unknown_error">Bilinmeyen hata</string>
     <string name="version_summary">%1$s arka uç %2$s</string>

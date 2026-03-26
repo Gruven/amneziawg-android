@@ -188,6 +188,11 @@
     <string name="restore_on_boot_summary_off">Zal ingeschakelde tunnels niet aanzetten bij opstarten</string>
     <string name="restore_on_boot_summary_on">Zal ingeschakelde tunnels aanzetten bij opstarten</string>
     <string name="restore_on_boot_title">Tunnel starten bij herstart</string>
+    <string name="root_mode_summary_off">Android VPN API gebruiken (standaardmodus)</string>
+    <string name="root_mode_summary_on">Root-toegang voor tunnel gebruiken (geen VPN API, alle apps gerouteerd)</string>
+    <string name="root_mode_title">Root-modus (geen VPN API)</string>
+    <string name="root_mode_error">Root-toegang is niet beschikbaar</string>
+    <string name="root_shell_error">Root shell-opdracht mislukt: %d</string>
     <string name="save">Opslaan</string>
     <string name="select_all">Selecteer alles</string>
     <string name="settings">Instellingen</string>
@@ -215,6 +220,7 @@
     <string name="tunnel_rename_error">Kan tunnel niet hernoemen: %s</string>
     <string name="tunnel_rename_success">Tunnel succesvol hernoemd naar \"%s\"</string>
     <string name="type_name_go_userspace">Go userspace</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Kernel module</string>
     <string name="unknown_error">Onbekende fout</string>
     <string name="version_title">AmneziaWG voor Android v%s</string>

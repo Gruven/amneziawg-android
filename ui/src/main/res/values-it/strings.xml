@@ -188,6 +188,11 @@
     <string name="restore_on_boot_summary_off">Non attiverà i tunnel configurati all\'avvio</string>
     <string name="restore_on_boot_summary_on">Attiverà i tunnel configurati all\'avvio</string>
     <string name="restore_on_boot_title">Ripristina all\'avvio</string>
+    <string name="root_mode_summary_off">Utilizzo dell\'API VPN Android (modalità standard)</string>
+    <string name="root_mode_summary_on">Utilizzo dell\'accesso root per il tunnel (nessuna API VPN, tutte le app instradate)</string>
+    <string name="root_mode_title">Modalità root (nessuna API VPN)</string>
+    <string name="root_mode_error">L\'accesso root non è disponibile</string>
+    <string name="root_shell_error">Comando root shell fallito: %d</string>
     <string name="save">Salva</string>
     <string name="select_all">Seleziona tutto</string>
     <string name="settings">Impostazioni</string>
@@ -227,6 +232,7 @@
     <string name="tunnel_rename_error">Impossibile rinominare il tunnel: %s</string>
     <string name="tunnel_rename_success">Tunnel rinominato correttamente in “%s”</string>
     <string name="type_name_go_userspace">Spazio utente Go</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Modulo kernel</string>
     <string name="unknown_error">Errore sconosciuto</string>
     <string name="version_summary">Backend %1$s %2$s</string>

@@ -184,6 +184,11 @@
     <string name="restore_on_boot_summary_off">No mostrará túneles habilitados al arrancar</string>
     <string name="restore_on_boot_summary_on">Mostrará túneles habilitados al arrancar</string>
     <string name="restore_on_boot_title">Restaurar al arrancar</string>
+    <string name="root_mode_summary_off">Usando API VPN de Android (modo estándar)</string>
+    <string name="root_mode_summary_on">Usando acceso root para el túnel (sin API VPN, todas las apps enrutadas)</string>
+    <string name="root_mode_title">Modo root (sin API VPN)</string>
+    <string name="root_mode_error">El acceso root no está disponible</string>
+    <string name="root_shell_error">El comando root shell falló: %d</string>
     <string name="save">Guardar</string>
     <string name="select_all">Seleccionar todo</string>
     <string name="settings">Preferencias</string>
@@ -223,6 +228,7 @@
     <string name="tunnel_rename_error">No se puede renombrar túnel: %s</string>
     <string name="tunnel_rename_success">Túnel renombrado con éxito a “%s”</string>
     <string name="type_name_go_userspace">Ir al espacio de usuario</string>
+    <string name="type_name_root_go_userspace">Root Go espacio de usuario</string>
     <string name="type_name_kernel_module">Módulo Kernel</string>
     <string name="unknown_error">Error desconocido</string>
     <string name="version_summary">%1$s backend %2$s</string>

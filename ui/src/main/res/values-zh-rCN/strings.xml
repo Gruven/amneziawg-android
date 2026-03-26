@@ -175,6 +175,11 @@
     <string name="restore_on_boot_summary_off">未启用</string>
     <string name="restore_on_boot_summary_on">设备启动时自动开启上次使用的隧道</string>
     <string name="restore_on_boot_title">启动时恢复</string>
+    <string name="root_mode_summary_off">使用 Android VPN API（标准模式）</string>
+    <string name="root_mode_summary_on">使用 root 权限建立隧道（无 VPN API，所有应用流量均被路由）</string>
+    <string name="root_mode_title">Root 模式（无 VPN API）</string>
+    <string name="root_mode_error">Root 权限不可用</string>
+    <string name="root_shell_error">Root shell 命令执行失败：%d</string>
     <string name="save">保存</string>
     <string name="select_all">全选</string>
     <string name="settings">设置</string>
@@ -214,6 +219,7 @@
     <string name="tunnel_rename_error">无法重命名隧道：%s</string>
     <string name="tunnel_rename_success">隧道已重命名为 “%s”</string>
     <string name="type_name_go_userspace">Go userspace</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Kernel module</string>
     <string name="unknown_error">未知错误</string>
     <string name="version_summary">%1$s backend %2$s</string>

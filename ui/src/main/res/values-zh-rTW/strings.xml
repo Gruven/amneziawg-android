@@ -168,6 +168,11 @@
     <string name="restore_on_boot_summary_off">開機時不會啟動已啟用的通道</string>
     <string name="restore_on_boot_summary_on">開機時啟動已啟用的通道</string>
     <string name="restore_on_boot_title">開機時復原</string>
+    <string name="root_mode_summary_off">使用 Android VPN API（標準模式）</string>
+    <string name="root_mode_summary_on">使用 root 權限建立隧道（無 VPN API，所有應用流量均被路由）</string>
+    <string name="root_mode_title">Root 模式（無 VPN API）</string>
+    <string name="root_mode_error">Root 權限不可用</string>
+    <string name="root_shell_error">Root shell 命令執行失敗：%d</string>
     <string name="save">儲存</string>
     <string name="select_all">全選</string>
     <string name="settings">設定</string>
@@ -206,6 +211,7 @@
     <string name="tunnel_rename_error">無法重新命名通道: %s</string>
     <string name="tunnel_rename_success">成功重新命名通道 \"%s\"</string>
     <string name="type_name_go_userspace">去用戶空間</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">核心模組</string>
     <string name="unknown_error">未知的錯誤</string>
     <string name="version_summary">%1$s 後端 %2$s</string>

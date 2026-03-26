@@ -207,6 +207,11 @@
     <string name="restore_on_boot_summary_off">Włączone tunele nie zostaną przywrócone podczas uruchamiania</string>
     <string name="restore_on_boot_summary_on">Włączone tunele zostaną przywrócone podczas uruchamiania</string>
     <string name="restore_on_boot_title">Przywróć podczas uruchamiania</string>
+    <string name="root_mode_summary_off">Korzystanie z Android VPN API (tryb standardowy)</string>
+    <string name="root_mode_summary_on">Korzystanie z dostępu root do tunelu (bez VPN API, cały ruch jest kierowany)</string>
+    <string name="root_mode_title">Tryb root (bez VPN API)</string>
+    <string name="root_mode_error">Dostęp root nie jest dostępny</string>
+    <string name="root_shell_error">Polecenie root shell nie powiodło się: %d</string>
     <string name="save">Zapisz</string>
     <string name="select_all">Wybierz wszystko</string>
     <string name="settings">Ustawienia</string>
@@ -245,6 +250,7 @@
     <string name="tunnel_rename_error">Nie można zmienić nazwy tunelu: %s</string>
     <string name="tunnel_rename_success">Pomyślnie zmieniono nazwę tunelu na „%s”</string>
     <string name="type_name_go_userspace">Przestrzeń użytkownika Go</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Moduł jądra</string>
     <string name="unknown_error">Nieznany błąd</string>
     <string name="version_summary">%1$s backend %2$s</string>

@@ -185,6 +185,11 @@
     <string name="restore_on_boot_summary_off">Ei lülita seadme käivitumisel lubatud tunneleid sisse</string>
     <string name="restore_on_boot_summary_on">Lülitab seadme käivitumisel lubatud tunnelid sisse</string>
     <string name="restore_on_boot_title">Taasta seadme käivitumisel</string>
+    <string name="root_mode_summary_off">Android VPN API kasutamine (tavaline režiim)</string>
+    <string name="root_mode_summary_on">Tunneli jaoks root-juurdepääsu kasutamine (VPN API puudub, kõik rakendused suunatakse)</string>
+    <string name="root_mode_title">Root-režiim (VPN API puudub)</string>
+    <string name="root_mode_error">Root-juurdepääs pole saadaval</string>
+    <string name="root_shell_error">Root shelli käsk nurjus: %d</string>
     <string name="save">Salvesta</string>
     <string name="select_all">Vali kõik</string>
     <string name="settings">Seaded</string>
@@ -224,6 +229,7 @@
     <string name="tunnel_rename_error">Tunneli ümbernimetamine ebaõnnestus: %s</string>
     <string name="tunnel_rename_success">Tunnel edukalt ümbernimetatud \"%s\" -iks</string>
     <string name="type_name_go_userspace">Go kasutajamaa</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Tuumamoodul</string>
     <string name="unknown_error">Tundmatu viga</string>
     <string name="version_summary">%1$s taustsüsteem %2$s</string>

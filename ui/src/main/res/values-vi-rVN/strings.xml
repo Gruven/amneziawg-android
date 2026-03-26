@@ -133,4 +133,10 @@
     <string name="log_saver_activity_label">Lưu nhật ký</string>
     <string name="parse_error_inet_address">Địa chỉ IP</string>
     <string name="peer">Đồng trang lứa</string>
+    <string name="root_mode_summary_off">Sử dụng Android VPN API (chế độ tiêu chuẩn)</string>
+    <string name="root_mode_summary_on">Sử dụng quyền root cho đường hầm (không có VPN API, tất cả ứng dụng được định tuyến)</string>
+    <string name="root_mode_title">Chế độ root (không có VPN API)</string>
+    <string name="root_mode_error">Quyền truy cập root không khả dụng</string>
+    <string name="root_shell_error">Lệnh root shell thất bại: %d</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
 </resources>
