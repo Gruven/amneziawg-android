@@ -188,6 +188,11 @@
     <string name="restore_on_boot_summary_off">Aktivierte Tunnel beim Systemstart nicht automatisch starten</string>
     <string name="restore_on_boot_summary_on">Aktivierte Tunnel beim Systemstart automatisch wieder starten</string>
     <string name="restore_on_boot_title">Beim Neustart wiederherstellen</string>
+    <string name="root_mode_summary_off">Android VPN API verwenden (Standardmodus)</string>
+    <string name="root_mode_summary_on">Root-Zugriff für den Tunnel verwenden (kein VPN API, alle Apps werden geroutet)</string>
+    <string name="root_mode_title">Root-Modus (kein VPN API)</string>
+    <string name="root_mode_error">Root-Zugriff ist nicht verfügbar</string>
+    <string name="root_shell_error">Root-Shell-Befehl fehlgeschlagen: %d</string>
     <string name="save">Speichern</string>
     <string name="select_all">Alle auswählen</string>
     <string name="settings">Einstellungen</string>
@@ -227,6 +232,7 @@
     <string name="tunnel_rename_error">Kann Tunnel nicht umbenennen: %s</string>
     <string name="tunnel_rename_success">Tunnel erfolgreich in „%s “ umbenannt</string>
     <string name="type_name_go_userspace">Go userspace</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Kernelmodul</string>
     <string name="unknown_error">Unbekannter Fehler</string>
     <string name="version_summary">%1$s backend %2$s</string>

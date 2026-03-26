@@ -133,4 +133,10 @@
     <string name="multiple_tunnels_summary_on">Více tunelů může být zapnuto najednou</string>
     <string name="multiple_tunnels_title">Povolit více simultánních tunelů</string>
     <string name="name">Název</string>
+    <string name="root_mode_summary_off">Používání Android VPN API (standardní režim)</string>
+    <string name="root_mode_summary_on">Používání root přístupu pro tunel (bez VPN API, veškerý provoz je směrován)</string>
+    <string name="root_mode_title">Režim root (bez VPN API)</string>
+    <string name="root_mode_error">Root přístup není dostupný</string>
+    <string name="root_shell_error">Příkaz root shellu selhal: %d</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
 </resources>

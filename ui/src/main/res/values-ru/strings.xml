@@ -214,6 +214,11 @@
     <string name="restore_on_boot_summary_off">Не поднимать ранее выбранные туннели при загрузке</string>
     <string name="restore_on_boot_summary_on">Поднимать ранее выбранные туннели при загрузке</string>
     <string name="restore_on_boot_title">Восстановить при загрузке</string>
+    <string name="root_mode_summary_off">Использование Android VPN API (стандартный режим)</string>
+    <string name="root_mode_summary_on">Использование root-доступа для туннеля (без VPN API, весь трафик направляется)</string>
+    <string name="root_mode_title">Режим root (без VPN API)</string>
+    <string name="root_mode_error">Root-доступ недоступен</string>
+    <string name="root_shell_error">Команда root shell завершилась с ошибкой: %d</string>
     <string name="save">Сохранить</string>
     <string name="select_all">Выбрать все</string>
     <string name="settings">Настройки</string>
@@ -253,6 +258,7 @@
     <string name="tunnel_rename_error">Не удалось переименовать туннель: %s</string>
     <string name="tunnel_rename_success">Туннель успешно переименован в “%s”</string>
     <string name="type_name_go_userspace">Go в пользовательском пространстве</string>
+    <string name="type_name_root_go_userspace">Root Go в пользовательском пространстве</string>
     <string name="type_name_kernel_module">Модуль ядра</string>
     <string name="unknown_error">Неизвестная ошибка</string>
     <string name="version_summary">Бэкенд: %1$s %2$s</string>

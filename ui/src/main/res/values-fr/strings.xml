@@ -188,6 +188,11 @@
     <string name="restore_on_boot_summary_off">N\'affichera pas les tunnels activés au démarrage</string>
     <string name="restore_on_boot_summary_on">Les tunnels activés seront affichés au démarrage</string>
     <string name="restore_on_boot_title">Restaurer au démarrage</string>
+    <string name="root_mode_summary_off">Utilisation de l\'API VPN Android (mode standard)</string>
+    <string name="root_mode_summary_on">Utilisation de l\'accès root pour le tunnel (pas d\'API VPN, toutes les applications routées)</string>
+    <string name="root_mode_title">Mode root (pas d\'API VPN)</string>
+    <string name="root_mode_error">L\'accès root n\'est pas disponible</string>
+    <string name="root_shell_error">La commande root shell a échoué : %d</string>
     <string name="save">Enregistrer</string>
     <string name="select_all">Tout sélectionner</string>
     <string name="settings">Paramètres</string>
@@ -227,6 +232,7 @@
     <string name="tunnel_rename_error">Impossible de renommer le tunnel : %s</string>
     <string name="tunnel_rename_success">Tunnel renommé avec succès en «%s »</string>
     <string name="type_name_go_userspace">Implémentation Go en espace utilisateur</string>
+    <string name="type_name_root_go_userspace">Root Go espace utilisateur</string>
     <string name="type_name_kernel_module">Module noyau</string>
     <string name="unknown_error">Erreur inconnue</string>
     <string name="version_summary">%1$s backend %2$s</string>

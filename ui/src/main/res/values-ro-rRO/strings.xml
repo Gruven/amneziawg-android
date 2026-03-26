@@ -199,6 +199,11 @@
     <string name="restore_on_boot_summary_off">Tunelurile activate nu vor fi pornite odată cu pornirea dispozitivului</string>
     <string name="restore_on_boot_summary_on">Tunelurile activate vor fi pornite odată cu pornirea dispozitivului</string>
     <string name="restore_on_boot_title">Restaurare la pornire</string>
+    <string name="root_mode_summary_off">Se utilizează Android VPN API (mod standard)</string>
+    <string name="root_mode_summary_on">Se utilizează acces root pentru tunel (fără VPN API, toate aplicațiile sunt rutate)</string>
+    <string name="root_mode_title">Mod root (fără VPN API)</string>
+    <string name="root_mode_error">Accesul root nu este disponibil</string>
+    <string name="root_shell_error">Comanda root shell a eșuat: %d</string>
     <string name="save">Salvare</string>
     <string name="select_all">Selectare totală</string>
     <string name="settings">Setări</string>
@@ -237,6 +242,7 @@
     <string name="tunnel_rename_error">Tunelul nu poate fi redenumit: %s</string>
     <string name="tunnel_rename_success">Tunelul a fost redenumit ca „%s”</string>
     <string name="type_name_go_userspace">Spațiu de utilizator Go</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Modul nucleu</string>
     <string name="unknown_error">Eroare necunoscută</string>
     <string name="version_summary">Bibliotecă %1$s %2$s</string>

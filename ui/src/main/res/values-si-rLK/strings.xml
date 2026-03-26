@@ -147,6 +147,11 @@
     <string name="restore_on_boot_summary_off">ආරම්භයේදී සක්‍රීය උමං ගෙන එන්නේ නැත</string>
     <string name="restore_on_boot_summary_on">ආරම්භයේදී සක්‍රීය උමං ගෙන එනු ඇත</string>
     <string name="restore_on_boot_title">ආරම්භයේදී ප්‍රතිසාධනය කරන්න</string>
+    <string name="root_mode_summary_off">Android VPN API භාවිතා කරයි (සම්මත ප්‍රකාරය)</string>
+    <string name="root_mode_summary_on">උමං මාර්ගය සඳහා root ප්‍රවේශය භාවිතා කරයි (VPN API නැත, සියලුම යෙදුම් මාර්ගගත කෙරේ)</string>
+    <string name="root_mode_title">Root ප්‍රකාරය (VPN API නැත)</string>
+    <string name="root_mode_error">Root ප්‍රවේශය ලබා ගත නොහැක</string>
+    <string name="root_shell_error">Root shell විධානය අසාර්ථක විය: %d</string>
     <string name="save">සුරකින්න</string>
     <string name="select_all">සියල්ල තෝරන්න</string>
     <string name="settings">සැකසුම්</string>
@@ -185,6 +190,7 @@
     <string name="tunnel_rename_error">උමග නැවත නම් කළ නොහැක: %s</string>
     <string name="tunnel_rename_success">උමඟ සාර්ථකව \"%s\" ලෙස නම් කරන ලදී</string>
     <string name="type_name_go_userspace">පරිශීලක අවකාශයට යන්න</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">කර්නල් මොඩියුලය</string>
     <string name="unknown_error">නොදන්නා දෝෂයකි</string>
     <string name="version_summary">%1$s පසුපෙළ %2$s</string>

@@ -168,6 +168,11 @@
     <string name="restore_on_boot_summary_off">Tunel yang diaktifkan tidak akan ditampilkan saat boot</string>
     <string name="restore_on_boot_summary_on">Tunel yang diaktifkan akan dimunculkan saat boot</string>
     <string name="restore_on_boot_title">Pulihkan saat boot</string>
+    <string name="root_mode_summary_off">Menggunakan Android VPN API (mode standar)</string>
+    <string name="root_mode_summary_on">Menggunakan akses root untuk tunnel (tanpa VPN API, semua aplikasi dialihkan)</string>
+    <string name="root_mode_title">Mode root (tanpa VPN API)</string>
+    <string name="root_mode_error">Akses root tidak tersedia</string>
+    <string name="root_shell_error">Perintah root shell gagal: %d</string>
     <string name="save">Simpan</string>
     <string name="select_all">Pilih semua</string>
     <string name="settings">Pengaturan</string>
@@ -206,6 +211,7 @@
     <string name="tunnel_rename_error">Nama tunel %s tidak bisa diganti</string>
     <string name="tunnel_rename_success">Berhasil mengganti nama tunnel ke “%s”</string>
     <string name="type_name_go_userspace">Ke userspace</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Modul kernel</string>
     <string name="unknown_error">Eror tidak diketahui</string>
     <string name="version_summary">%1$s dengan v%2$s</string>

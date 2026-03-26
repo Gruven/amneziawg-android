@@ -35,6 +35,18 @@ object UserKnobs {
             it[MULTIPLE_TUNNELS] ?: false
         }
 
+    private val ENABLE_ROOT_MODE = booleanPreferencesKey("enable_root_mode")
+    val enableRootMode: Flow<Boolean>
+        get() = Application.getPreferencesDataStore().data.map {
+            it[ENABLE_ROOT_MODE] ?: false
+        }
+
+    suspend fun setEnableRootMode(enable: Boolean) {
+        Application.getPreferencesDataStore().edit {
+            it[ENABLE_ROOT_MODE] = enable
+        }
+    }
+
     private val DARK_THEME = booleanPreferencesKey("dark_theme")
     val darkTheme: Flow<Boolean>
         get() = Application.getPreferencesDataStore().data.map {

@@ -175,6 +175,11 @@
     <string name="restore_on_boot_summary_off">起動時にトンネルを有効化しない</string>
     <string name="restore_on_boot_summary_on">起動時に、前回有効だったトンネルを有効化する</string>
     <string name="restore_on_boot_title">起動時に復元</string>
+    <string name="root_mode_summary_off">Android VPN APIを使用（標準モード）</string>
+    <string name="root_mode_summary_on">トンネルにrootアクセスを使用（VPN APIなし、すべてのアプリがルーティングされます）</string>
+    <string name="root_mode_title">Rootモード（VPN APIなし）</string>
+    <string name="root_mode_error">Rootアクセスが利用できません</string>
+    <string name="root_shell_error">Rootシェルコマンドが失敗しました：%d</string>
     <string name="save">保存</string>
     <string name="select_all">すべて選択</string>
     <string name="settings">設定</string>
@@ -214,6 +219,7 @@
     <string name="tunnel_rename_error">トンネル名を変更できません: %s</string>
     <string name="tunnel_rename_success">トンネル名を “%s” に変更しました</string>
     <string name="type_name_go_userspace">Go ユーザースペース</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">カーネルモジュール</string>
     <string name="unknown_error">未知のエラー</string>
     <string name="version_summary">%1$s バックエンド %2$s</string>

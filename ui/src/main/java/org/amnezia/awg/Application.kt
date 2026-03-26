@@ -20,6 +20,7 @@ import com.google.android.material.color.DynamicColors
 import org.amnezia.awg.backend.Backend
 import org.amnezia.awg.backend.GoBackend
 import org.amnezia.awg.backend.AwgQuickBackend
+import org.amnezia.awg.backend.RootGoBackend
 import org.amnezia.awg.configStore.FileConfigStore
 import org.amnezia.awg.model.TunnelManager
 import org.amnezia.awg.util.NetworkState
@@ -66,7 +67,20 @@ class Application : android.app.Application() {
 
     private suspend fun determineBackend(): Backend {
         var backend: Backend? = null
-        if (UserKnobs.enableKernelModule.first() && AwgQuickBackend.hasKernelSupport()) {
+
+        // Root-режим (без VPN API)
+        if (UserKnobs.enableRootMode.first()) {
+            try {
+                rootShell.start()
+                backend = RootGoBackend(applicationContext, rootShell)
+                Log.i(TAG, "Using RootGoBackend (no VPN API)")
+            } catch (e: Exception) {
+                Log.w(TAG, "Root mode requested but root unavailable, falling back", e)
+            }
+        }
+
+        // Kernel module режим
+        if (backend == null && UserKnobs.enableKernelModule.first() && AwgQuickBackend.hasKernelSupport()) {
             try {
                 rootShell.start()
                 val awgQuickBackend = AwgQuickBackend(applicationContext, rootShell, toolsInstaller)
@@ -78,6 +92,8 @@ class Application : android.app.Application() {
             } catch (ignored: Exception) {
             }
         }
+
+        // Стандартный VPN API режим
         if (backend == null) {
             backend = GoBackend(applicationContext)
             GoBackend.setAlwaysOnCallback { get().applicationScope.launch { get().tunnelManager.restoreState(true) } }

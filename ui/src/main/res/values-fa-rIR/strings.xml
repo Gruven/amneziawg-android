@@ -182,6 +182,11 @@
     <string name="restore_on_boot_summary_off">تونل های فعال در لحظه بالا آمدن سیستم، روشن نخواهند شد</string>
     <string name="restore_on_boot_summary_on">تونل های فعال در لحظه بالا آمدن سیستم، روشن خواهند شد</string>
     <string name="restore_on_boot_title">بازگردانی در بوت</string>
+    <string name="root_mode_summary_off">استفاده از Android VPN API (حالت استاندارد)</string>
+    <string name="root_mode_summary_on">استفاده از دسترسی روت برای تونل (بدون VPN API، همه برنامه‌ها مسیریابی می‌شوند)</string>
+    <string name="root_mode_title">حالت روت (بدون VPN API)</string>
+    <string name="root_mode_error">دسترسی روت در دسترس نیست</string>
+    <string name="root_shell_error">دستور شل روت ناموفق بود: %d</string>
     <string name="save">ذخیره</string>
     <string name="select_all">انتخاب همه</string>
     <string name="settings">تنظیمات</string>
@@ -221,6 +226,7 @@
     <string name="tunnel_rename_error">ناتوان در تغییر نام تونل: %s</string>
     <string name="tunnel_rename_success">نام تونل با موفقیت تغییر یافت به “%s”</string>
     <string name="type_name_go_userspace">رفتن به فضای کاربر</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">واحد هسته</string>
     <string name="unknown_error">خطای نامشخص</string>
     <string name="version_summary">%1$s بک اند %2$s</string>

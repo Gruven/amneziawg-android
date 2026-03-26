@@ -27,6 +27,13 @@
         android:title="@string/dark_theme_title" />
     <CheckBoxPreference
         android:defaultValue="false"
+        android:key="enable_root_mode"
+        android:singleLineTitle="false"
+        android:summaryOff="@string/root_mode_summary_off"
+        android:summaryOn="@string/root_mode_summary_on"
+        android:title="@string/root_mode_title" />
+    <CheckBoxPreference
+        android:defaultValue="false"
         android:key="multiple_tunnels"
         android:singleLineTitle="false"
         android:summaryOff="@string/multiple_tunnels_summary_off"

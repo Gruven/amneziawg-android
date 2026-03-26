@@ -115,6 +115,11 @@
     <string name="public_key">Verejný kľúč</string>
     <string name="qr_code_hint">Tip: vygenerovať s `qrencode -t ansiutf8 &lt; tunnel.conf`.</string>
     <string name="restore_on_boot_title">Obnov po štarte</string>
+    <string name="root_mode_summary_off">Používanie Android VPN API (štandardný režim)</string>
+    <string name="root_mode_summary_on">Používanie root prístupu pre tunel (bez VPN API, všetky aplikácie smerované)</string>
+    <string name="root_mode_title">Režim root (bez VPN API)</string>
+    <string name="root_mode_error">Root prístup nie je dostupný</string>
+    <string name="root_shell_error">Príkaz root shellu zlyhal: %d</string>
     <string name="save">Uložiť</string>
     <string name="select_all">Označiť všetko</string>
     <string name="settings">Nastavenia</string>
@@ -141,6 +146,7 @@
     <string name="tunnel_name">Meno tunelu</string>
     <string name="tunnel_rename_error">Nepodarilo sa premenovať tunel: %s</string>
     <string name="tunnel_rename_success">Úspešne premenovaný tunel na “%s”</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Kernelový modul</string>
     <string name="unknown_error">Neznáma chyba</string>
     <string name="version_summary_unknown">Neznáma %s verzia</string>

@@ -124,6 +124,11 @@
     <string name="restore_on_boot_summary_on">बूट पर सक्षम टनलस को लाएगा</string>
     <string name="restore_on_boot_summary_off">बूट पर सक्षम टनलस को नहीं लाएगा</string>
     <string name="restore_on_boot_title">बूट पर पुनर्स्थापित करें</string>
+    <string name="root_mode_summary_off">Android VPN API का उपयोग (मानक मोड)</string>
+    <string name="root_mode_summary_on">टनल के लिए रूट एक्सेस का उपयोग (कोई VPN API नहीं, सभी ऐप्स रूट किए गए)</string>
+    <string name="root_mode_title">रूट मोड (कोई VPN API नहीं)</string>
+    <string name="root_mode_error">रूट एक्सेस उपलब्ध नहीं है</string>
+    <string name="root_shell_error">रूट शेल कमांड विफल: %d</string>
     <string name="save">सहेजें</string>
     <string name="select_all">सभी का चयन करे</string>
     <string name="settings">सेटिंग्स</string>
@@ -159,6 +164,7 @@
     <string name="tunnel_rename_error">टनल का नाम बदलने में असमर्थ: %s</string>
     <string name="tunnel_rename_success">सफलतापूर्वक टनल का नाम बदलकर “%s” कर दिया गया</string>
     <string name="type_name_go_userspace">userspace पे जाए </string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">कर्नेल मॉड्यूल</string>
     <string name="unknown_error">अज्ञात त्रुटि</string>
     <string name="version_summary">%1$s बैकएंड %2$s</string>

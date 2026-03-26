@@ -182,6 +182,11 @@
     <string name="restore_on_boot_summary_off">Vil ikke ta opp aktive tunneler ved oppstart</string>
     <string name="restore_on_boot_summary_on">Vil ta opp aktive tunneler ved oppstart</string>
     <string name="restore_on_boot_title">Gjenopprett ved oppstart</string>
+    <string name="root_mode_summary_off">Bruker Android VPN API (standardmodus)</string>
+    <string name="root_mode_summary_on">Bruker root-tilgang for tunnel (ingen VPN API, alle apper rutes)</string>
+    <string name="root_mode_title">Root-modus (ingen VPN API)</string>
+    <string name="root_mode_error">Root-tilgang er ikke tilgjengelig</string>
+    <string name="root_shell_error">Root-skallkommando mislyktes: %d</string>
     <string name="save">Lagre</string>
     <string name="select_all">Velg alle</string>
     <string name="settings">Innstillinger</string>
@@ -221,6 +226,7 @@
     <string name="tunnel_rename_error">Kan ikke endre navn på tunnel: %s</string>
     <string name="tunnel_rename_success">Endret navn på tunnelen til «%s»</string>
     <string name="type_name_go_userspace">Bruk userspace</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Kjernemodul</string>
     <string name="unknown_error">Ukjent feil</string>
     <string name="version_summary">%1$s backend %2$s</string>

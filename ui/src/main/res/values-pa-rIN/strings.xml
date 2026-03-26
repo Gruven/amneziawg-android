@@ -178,6 +178,11 @@
     <string name="restore_on_boot_summary_off">ਬੂਟ ਕਰਨ ਸਮੇਂ ਸਮਰੱਥ ਕੀਤੀਆਂ ਟਨਲਾਂ ਨੂੰ ਚਾਲੂ ਨਹੀਂ ਕੀਤਾ ਜਾਵੇਗਾ</string>
     <string name="restore_on_boot_summary_on">ਬੂਟ ਕਰਨ ਸਮੇਂ ਸਮਰੱਥ ਕੀਤੀਆਂ ਟਨਲਾਂ ਨੂੰ ਚਾਲੂ ਕੀਤਾ ਜਾਵੇਗਾ</string>
     <string name="restore_on_boot_title">ਬੂਟ ਕਰਨ ਉੱਤੇ ਬਹਾਲ ਕਰੋ</string>
+    <string name="root_mode_summary_off">Android VPN API ਵਰਤ ਰਿਹਾ ਹੈ (ਮਿਆਰੀ ਮੋਡ)</string>
+    <string name="root_mode_summary_on">ਟਨਲ ਲਈ ਰੂਟ ਐਕਸੈਸ ਵਰਤ ਰਿਹਾ ਹੈ (ਕੋਈ VPN API ਨਹੀਂ, ਸਾਰੀਆਂ ਐਪਸ ਰੂਟ ਕੀਤੀਆਂ)</string>
+    <string name="root_mode_title">ਰੂਟ ਮੋਡ (ਕੋਈ VPN API ਨਹੀਂ)</string>
+    <string name="root_mode_error">ਰੂਟ ਐਕਸੈਸ ਉਪਲਬਧ ਨਹੀਂ ਹੈ</string>
+    <string name="root_shell_error">ਰੂਟ ਸ਼ੈੱਲ ਕਮਾਂਡ ਅਸਫਲ: %d</string>
     <string name="save">ਸੰਭਾਲੋ</string>
     <string name="select_all">ਸਾਰੇ ਚੁਣੋ</string>
     <string name="settings">ਸੈਟਿੰਗਾਂ</string>
@@ -215,6 +220,7 @@
     <string name="tunnel_rename_error">ਟਨਲ ਨਾਂ-ਬਦਲਣ ਲਈ ਅਸਮਰੱਥ: %s</string>
     <string name="tunnel_rename_success">ਟਨਲ ਦਾ ਨਾਂ \"%s\" ਵਜੋਂ ਕਾਮਯਾਬੀ ਨਾਲ ਬਦਲਿਆ ਗਿਆ</string>
     <string name="type_name_go_userspace">ਵਰਤੋਂ-ਸਪੇਸ ਤੇ ਜਾਓ</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">ਕਰਨਲ ਮੋਡੀਊਲ</string>
     <string name="unknown_error">ਅਣਪਛਾਤੀ ਗਲਤੀ</string>
     <string name="version_summary_checking">%s ਬੈਕਐਂਡ ਵਰਜ਼ਨ ਦੀ ਜਾਂਚ ਕੀਤੀ ਜਾ ਰਹੀ ਹੈ</string>

@@ -205,6 +205,11 @@
     <string name="restore_on_boot_summary_off">Pri zagonu telefona omogočeni tuneli ne bodo aktivirani</string>
     <string name="restore_on_boot_summary_on">Pri zagonu telefona bodo omogočeni tuneli aktivirani</string>
     <string name="restore_on_boot_title">Ponovna vzpostavitev ob zagonu</string>
+    <string name="root_mode_summary_off">Uporaba Android VPN API (standardni način)</string>
+    <string name="root_mode_summary_on">Uporaba root dostopa za tunel (brez VPN API, vse aplikacije usmerjene)</string>
+    <string name="root_mode_title">Korenski način (brez VPN API)</string>
+    <string name="root_mode_error">Korenski dostop ni na voljo</string>
+    <string name="root_shell_error">Ukaz root lupine ni uspel: %d</string>
     <string name="save">Shrani</string>
     <string name="select_all">Izberi vse</string>
     <string name="settings">Nastavitve</string>
@@ -243,6 +248,7 @@
     <string name="tunnel_rename_error">Tunela ni bilo mogoče preimenovati: %s</string>
     <string name="tunnel_rename_success">Tunel uspešno preimenovan v „%s“</string>
     <string name="type_name_go_userspace">Uporabniški prostor Go</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Modul jedra</string>
     <string name="unknown_error">Neznana napaka</string>
     <string name="version_summary">Zaledje %1$s %2$s</string>

@@ -188,6 +188,11 @@
     <string name="restore_on_boot_summary_off">Kommer inte ta upp aktiverade tunnlar vid uppstart</string>
     <string name="restore_on_boot_summary_on">Kommer ta upp aktiverade tunnlar vid uppstart</string>
     <string name="restore_on_boot_title">Återställ vid uppstart</string>
+    <string name="root_mode_summary_off">Använder Android VPN API (standardläge)</string>
+    <string name="root_mode_summary_on">Använder root-åtkomst för tunnel (inget VPN API, alla appar dirigeras)</string>
+    <string name="root_mode_title">Root-läge (inget VPN API)</string>
+    <string name="root_mode_error">Root-åtkomst är inte tillgänglig</string>
+    <string name="root_shell_error">Root-skalkommandot misslyckades: %d</string>
     <string name="save">Spara</string>
     <string name="select_all">Välj alla</string>
     <string name="settings">Inställningar</string>
@@ -227,6 +232,7 @@
     <string name="tunnel_rename_error">Kan inte byta namn på tunnel: %s</string>
     <string name="tunnel_rename_success">Lyckades döpa om tunnel till “%s”</string>
     <string name="type_name_go_userspace">Användarutrymme för Go</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Kärnmodul</string>
     <string name="unknown_error">Okänt fel</string>
     <string name="version_summary">%1$s bakstycke %2$s</string>

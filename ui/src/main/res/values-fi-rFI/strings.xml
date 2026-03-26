@@ -87,4 +87,10 @@
     <string name="version_summary_unknown">Tuntematon %s versio</string>
     <string name="biometric_auth_error">Varmennusvirhe</string>
     <string name="biometric_auth_error_reason">Varmennusvirhe: %s</string>
+    <string name="root_mode_summary_off">Käytetään Android VPN APIa (vakiotila)</string>
+    <string name="root_mode_summary_on">Käytetään root-käyttöoikeutta tunnelille (ei VPN APIa, kaikki sovellukset reititetään)</string>
+    <string name="root_mode_title">Root-tila (ei VPN APIa)</string>
+    <string name="root_mode_error">Root-käyttöoikeus ei ole saatavilla</string>
+    <string name="root_shell_error">Root shell -komento epäonnistui: %d</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
 </resources>

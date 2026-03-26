@@ -150,6 +150,11 @@
     <string name="private_key">Privat nøgle</string>
     <string name="public_key">Offentlig nøgle</string>
     <string name="restore_on_boot_title">Gendan ved opstart</string>
+    <string name="root_mode_summary_off">Bruger Android VPN API (standardtilstand)</string>
+    <string name="root_mode_summary_on">Bruger root-adgang til tunnel (ingen VPN API, alle apps routes)</string>
+    <string name="root_mode_title">Root-tilstand (ingen VPN API)</string>
+    <string name="root_mode_error">Root-adgang er ikke tilgængelig</string>
+    <string name="root_shell_error">Root shell-kommando mislykkedes: %d</string>
     <string name="save">Gem</string>
     <string name="select_all">Vælg alle</string>
     <string name="settings">Indstillinger</string>
@@ -175,6 +180,7 @@
     <string name="tunnel_rename_error">Kan ikke omdøbe tunnel: %s</string>
     <string name="tunnel_rename_success">Tunnel blev succesfuldt omdøbt til \"%s\"</string>
     <string name="type_name_kernel_module">Kerne modul</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="unknown_error">Ukendt fejl</string>
     <string name="version_summary_unknown">Ukendt %s version</string>
     <string name="version_title">AmneziaWG for Android v%s</string>

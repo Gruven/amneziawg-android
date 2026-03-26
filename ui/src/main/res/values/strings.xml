@@ -103,6 +103,12 @@
     <string name="dark_theme_summary_off">Currently using light (day) theme</string>
     <string name="dark_theme_summary_on">Currently using dark (night) theme</string>
     <string name="dark_theme_title">Use dark theme</string>
+    <string name="root_mode_summary_off">Using Android VPN API (standard mode)</string>
+    <string name="root_mode_summary_on">Using root access for tunnel (no VPN API, all apps routed)</string>
+    <string name="root_mode_title">Root mode (no VPN API)</string>
+    <string name="root_mode_error">Root access is not available</string>
+    <string name="root_shell_error">Root shell command failed: %d</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="delete">Delete</string>
     <string name="tv_delete">Select tunnel to delete</string>
     <string name="tv_select_a_storage_drive">Select a storage drive</string>

@@ -159,6 +159,11 @@
     <string name="quick_settings_tile_add_summary">A tecla de atalho alterna o túnel mais recente</string>
     <string name="quick_settings_tile_add_failure">Não foi possível adicionar o atalho de botão: erro %d</string>
     <string name="restore_on_boot_title">Restaurar na inicialização</string>
+    <string name="root_mode_summary_off">Usando API VPN do Android (modo padrão)</string>
+    <string name="root_mode_summary_on">Usando acesso root para o túnel (sem API VPN, todos os apps roteados)</string>
+    <string name="root_mode_title">Modo root (sem API VPN)</string>
+    <string name="root_mode_error">O acesso root não está disponível</string>
+    <string name="root_shell_error">Comando root shell falhou: %d</string>
     <string name="save">Salvar</string>
     <string name="select_all">Selecionar tudo</string>
     <string name="settings">Definições</string>
@@ -195,6 +200,7 @@
     <string name="tunnel_dns_failure">Não foi possível resolver host DNS: \"%s\"</string>
     <string name="tunnel_rename_error">Não foi possível renomear o túnel: %s</string>
     <string name="tunnel_rename_success">Renomeado com sucesso o túnel para “%s”</string>
+    <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="type_name_kernel_module">Modo de Kernel</string>
     <string name="unknown_error">Erro desconhecido</string>
     <string name="version_summary_checking">Verificando a versão do backend %s</string>

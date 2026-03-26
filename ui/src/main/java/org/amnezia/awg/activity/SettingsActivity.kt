@@ -17,9 +17,14 @@ import org.amnezia.awg.Application
 import org.amnezia.awg.QuickTileService
 import org.amnezia.awg.R
 import org.amnezia.awg.backend.AwgQuickBackend
+import org.amnezia.awg.backend.RootGoBackend
 import org.amnezia.awg.preference.PreferencesPreferenceDataStore
 import org.amnezia.awg.util.AdminKnobs
+import org.amnezia.awg.util.UserKnobs
+import android.widget.Toast
+import androidx.preference.CheckBoxPreference
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
@@ -95,6 +100,39 @@ class SettingsActivity : AppCompatActivity() {
                 }
             } else {
                 kernelModuleEnabler?.parent?.removePreference(kernelModuleEnabler)
+            }
+
+            val rootModePref = preferenceManager.findPreference<CheckBoxPreference>("enable_root_mode")
+            lifecycleScope.launch {
+                rootModePref?.isChecked = UserKnobs.enableRootMode.first()
+            }
+            rootModePref?.setOnPreferenceChangeListener { _, newValue ->
+                val enable = newValue as Boolean
+                if (enable) {
+                    lifecycleScope.launch {
+                        try {
+                            withContext(Dispatchers.IO) { Application.getRootShell().start() }
+                            UserKnobs.setEnableRootMode(true)
+                            Toast.makeText(requireContext(), R.string.success_application_will_restart, Toast.LENGTH_LONG).show()
+                            requireActivity().finishAffinity()
+                            requireContext().packageManager.getLaunchIntentForPackage(requireContext().packageName)?.let { startActivity(it) }
+                            Runtime.getRuntime().exit(0)
+                        } catch (_: Throwable) {
+                            rootModePref.isChecked = false
+                            Toast.makeText(requireContext(), R.string.root_mode_error, Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    false
+                } else {
+                    lifecycleScope.launch {
+                        UserKnobs.setEnableRootMode(false)
+                        Toast.makeText(requireContext(), R.string.success_application_will_restart, Toast.LENGTH_LONG).show()
+                        requireActivity().finishAffinity()
+                        requireContext().packageManager.getLaunchIntentForPackage(requireContext().packageName)?.let { startActivity(it) }
+                        Runtime.getRuntime().exit(0)
+                    }
+                    false
+                }
             }
         }
     }
