@@ -6,6 +6,11 @@
 #include <jni.h>
 #include <stdlib.h>
 #include <string.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <sys/ioctl.h>
+#include <net/if.h>
+#include <linux/if_tun.h>
 
 struct go_string { const char *str; long n; };
 extern int awgTurnOn(struct go_string ifname, int tun_fd, struct go_string settings);
@@ -68,4 +73,32 @@ JNIEXPORT jstring JNICALL Java_org_amnezia_awg_GoBackend_awgVersion(JNIEnv *env,
 	ret = (*env)->NewStringUTF(env, version);
 	free(version);
 	return ret;
+}
+
+JNIEXPORT jint JNICALL Java_org_amnezia_awg_GoBackend_openTun(JNIEnv *env, jclass c, jstring ifname)
+{
+	int fd = open("/dev/net/tun", O_RDWR);
+	if (fd < 0)
+		return -1;
+
+	struct ifreq ifr;
+	memset(&ifr, 0, sizeof(ifr));
+	ifr.ifr_flags = IFF_TUN | IFF_NO_PI;
+
+	const char *ifname_str = (*env)->GetStringUTFChars(env, ifname, 0);
+	strncpy(ifr.ifr_name, ifname_str, IFNAMSIZ - 1);
+	(*env)->ReleaseStringUTFChars(env, ifname, ifname_str);
+
+	if (ioctl(fd, TUNSETIFF, &ifr) < 0) {
+		close(fd);
+		return -2;
+	}
+
+	return fd;
+}
+
+JNIEXPORT void JNICALL Java_org_amnezia_awg_GoBackend_closeTun(JNIEnv *env, jclass c, jint fd)
+{
+	if (fd >= 0)
+		close(fd);
 }
