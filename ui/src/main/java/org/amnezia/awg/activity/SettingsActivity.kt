@@ -173,7 +173,7 @@ class SettingsActivity : AppCompatActivity() {
                 lifecycleScope.launch {
                     if (enable) {
                         val existing = UserKnobs.remoteControlToken.first()
-                        if (existing == null) {
+                        if (existing.isNullOrBlank()) {
                             val token = UserKnobs.generateToken()
                             UserKnobs.setRemoteControlToken(token)
                             tokenPref?.summary = token
