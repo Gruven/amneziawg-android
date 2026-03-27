@@ -13,9 +13,9 @@ on:
         - release_aab
         - debug_apk
       ref:
-        description: "Git ref (branch/tag/sha)"
+        description: "Git ref (branch/tag/sha), leave empty to use selected branch"
         required: false
-        default: "master"
+        default: ""
 
 jobs:
   build:
@@ -26,7 +26,8 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
       with:
-        ref: ${{ inputs.ref }}
+        ref: ${{ inputs.ref || github.ref_name }}
+        token: ${{ secrets.CHECKOUT_TOKEN || github.token }}
         submodules: recursive
         fetch-depth: 0
 
@@ -99,8 +100,8 @@ jobs:
           FILE="./ui/build/outputs/apk/debug/ui-debug.apk"
         fi
         
-        if [[ -z "${FILE}" ]]; then
-          echo "Built file not found" >&2
+        if [[ ! -f "${FILE}" ]]; then
+          echo "Built file not found: ${FILE}" >&2
           exit 1
         fi
         
@@ -113,6 +114,7 @@ jobs:
       env:
         KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
         KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
       run: |
         set -euo pipefail
         
@@ -123,10 +125,16 @@ jobs:
           echo "Missing one of secrets: ANDROID_KEYSTORE_PASSWORD / ANDROID_KEY_ALIAS" >&2
           exit 1
         fi
+
+        KEYPASS_ARGS=()
+        if [[ -n "${KEY_PASSWORD}" ]]; then
+          KEYPASS_ARGS=(-keypass "${KEY_PASSWORD}")
+        fi
         
         jarsigner \
           -keystore "${KEYSTORE_PATH}" \
           -storepass "${KEYSTORE_PASSWORD}" \
+          "${KEYPASS_ARGS[@]}" \
           -signedjar "${SIGNED_AAB}" \
           "${AAB}" \
           "${KEY_ALIAS}"
