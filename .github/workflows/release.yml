@@ -32,6 +32,9 @@ jobs:
         name: release-apk
         path: artifacts/
 
+    - name: Rename artifact
+      run: mv artifacts/*.apk "artifacts/AmneziaWG-Plus-${{ github.ref_name }}.apk"
+
     - name: Create GitHub Release
       uses: softprops/action-gh-release@v2
       with:
