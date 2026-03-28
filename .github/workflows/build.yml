@@ -1,4 +1,4 @@
-name: Android build (signed AAB / debug APK)
+name: Android build (AAB / APK)
 run-name: "Android • ${{ inputs.target }} • ${{ inputs.ref || github.ref_name }}"
 
 on:
@@ -17,6 +17,28 @@ on:
         description: "Git ref (branch/tag/sha), leave empty to use selected branch"
         required: false
         default: ""
+  workflow_call:
+    inputs:
+      target:
+        description: "What to build"
+        type: string
+        required: true
+      ref:
+        description: "Git ref (branch/tag/sha)"
+        required: false
+        default: ""
+        type: string
+    secrets:
+      CHECKOUT_TOKEN:
+        required: false
+      ANDROID_KEYSTORE_BASE64:
+        required: false
+      ANDROID_KEYSTORE_PASSWORD:
+        required: false
+      ANDROID_KEY_ALIAS:
+        required: false
+      ANDROID_KEY_PASSWORD:
+        required: false
 
 jobs:
   build:
