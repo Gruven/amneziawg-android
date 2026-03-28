@@ -178,8 +178,10 @@ jobs:
           fi
 
           ALIGNED_APK="${INPUT_FILE%.apk}-aligned.apk"
-          SIGNED_APK="${INPUT_FILE%-unsigned.apk}-signed.apk"
-          if [[ "${SIGNED_APK}" == "${INPUT_FILE}" ]]; then
+
+          if [[ "${INPUT_FILE}" == *-unsigned.apk ]]; then
+            SIGNED_APK="${INPUT_FILE%-unsigned.apk}-signed.apk"
+          else
             SIGNED_APK="${INPUT_FILE%.apk}-signed.apk"
           fi
 
