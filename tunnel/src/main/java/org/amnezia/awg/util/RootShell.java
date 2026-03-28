@@ -91,17 +91,20 @@ public class RootShell {
             final String script = "echo " + marker + "; echo " + marker + " >&2; (" + command +
                     "); ret=$?; echo " + marker + " $ret; echo " + marker + " $ret >&2\n";
             Log.v(TAG, "executing: " + command);
+            assert stdin != null;
             stdin.write(script);
             stdin.flush();
             String line;
             int errnoStdout = Integer.MIN_VALUE;
             int errnoStderr = Integer.MAX_VALUE;
             int markersSeen = 0;
-            while ((line = stdout.readLine()) != null) {
+            while (true) {
+                assert stdout != null;
+                if ((line = stdout.readLine()) == null) break;
                 if (line.startsWith(marker)) {
                     ++markersSeen;
                     if (line.length() > marker.length() + 1) {
-                        errnoStdout = Integer.valueOf(line.substring(marker.length() + 1));
+                        errnoStdout = Integer.parseInt(line.substring(marker.length() + 1));
                         break;
                     }
                 } else if (markersSeen > 0) {
@@ -110,11 +113,13 @@ public class RootShell {
                     Log.v(TAG, "stdout: " + line);
                 }
             }
-            while ((line = stderr.readLine()) != null) {
+            while (true) {
+                assert stderr != null;
+                if ((line = stderr.readLine()) == null) break;
                 if (line.startsWith(marker)) {
                     ++markersSeen;
                     if (line.length() > marker.length() + 1) {
-                        errnoStderr = Integer.valueOf(line.substring(marker.length() + 1));
+                        errnoStderr = Integer.parseInt(line.substring(marker.length() + 1));
                         break;
                     }
                 } else if (markersSeen > 2) {
@@ -160,7 +165,8 @@ public class RootShell {
                 stdin.flush();
                 // Check that the shell started successfully.
                 final String uid = stdout.readLine();
-                if (!"0".equals(uid)) {
+                // Accept both "0" (from id -u) and "uid=0(...)" (from id on older Android toolbox)
+                if (!"0".equals(uid) && !uid.contains("uid=0")) {
                     Log.w(TAG, "Root check did not return correct UID: " + uid);
                     throw new RootShellException(Reason.NO_ROOT_ACCESS);
                 }
