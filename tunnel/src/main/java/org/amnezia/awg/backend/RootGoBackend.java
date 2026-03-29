@@ -78,6 +78,26 @@ public final class RootGoBackend implements Backend {
         SharedLibraryLoader.loadSharedLibrary(context, "wg-go");
         this.context = context;
         this.rootShell = rootShell;
+        cleanupStaleResources();
+    }
+
+    /**
+     * Cleanup routing/iptables rules that may remain after a crash or OOM kill.
+     * Only runs if the TUN interface exists without an active tunnel handle,
+     * indicating a previous unclean shutdown.
+     */
+    private void cleanupStaleResources() {
+        try {
+            final List<String> output = new ArrayList<>();
+            rootShell.run(output, "ip link show " + TUN_INTERFACE + " 2>/dev/null");
+            if (!output.isEmpty()) {
+                Log.w(TAG, "Stale TUN interface found — cleaning up after previous crash");
+                cleanupRootResources();
+            }
+        } catch (final Exception e) {
+            // Root shell not available or interface doesn't exist — nothing to clean up
+            Log.v(TAG, "Stale resource check skipped: " + e.getMessage());
+        }
     }
 
     @Override
