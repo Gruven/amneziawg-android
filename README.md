@@ -8,7 +8,7 @@ Android GUI for [AmneziaWG](https://docs.amnezia.org/documentation/amnezia-wg/)
 ## Additional features
 
 - **Android 5.0+ support** — Minimum SDK lowered to 21 (Android 5.0 Lollipop).
-- **Root mode** — Optional tunnel backend that uses root access to create TUN interfaces and configure routing via `iptables`/`ip route`, completely bypassing the Android VPN API. No VPN icon in the status bar, no VPN permission dialogs. All device traffic is routed through the tunnel. Can be enabled in settings.
+- **Root mode** — Optional tunnel backend that uses root access to create TUN interfaces and configure routing via `iptables`/`ip route`, completely bypassing the Android VPN API. No VPN icon in the status bar, no VPN permission dialogs. All device traffic is routed through the tunnel. Can be enabled in settings. **Requires a rooted device** (SuperSU, Magisk tested).
 - **Tasker plugin** — Integrates as a Tasker action plugin for automation. Select a tunnel and action (on/off/toggle) directly from Tasker.
 - **Token-based intent authentication** — Replaced the `CONTROL_TUNNELS` Android permission with a simple token for intent API authentication. No need to declare permissions in the calling app's manifest — just pass the token as an intent extra. More compatible with `adb`, scripts, and automation tools.
 - **UI fixes:**
