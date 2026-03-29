@@ -484,6 +484,11 @@ public final class RootGoBackend implements Backend {
     }
 
     private void setupIptables(final Config config) throws Exception {
+        // TCP MSS clamping — без этого TCP может согласовать MSS по MTU физического
+        // интерфейса, а не TUN, и крупные сегменты не пройдут через туннель
+        runRootCommand("iptables -t mangle -A POSTROUTING -o " + TUN_INTERFACE + " -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu");
+        runRootCommand("ip6tables -t mangle -A POSTROUTING -o " + TUN_INTERFACE + " -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu");
+
         // NAT for traffic through the tunnel
         runRootCommand("iptables -t nat -A POSTROUTING -o " + TUN_INTERFACE + " -j MASQUERADE");
         runRootCommand("ip6tables -t nat -A POSTROUTING -o " + TUN_INTERFACE + " -j MASQUERADE");
@@ -587,7 +592,10 @@ public final class RootGoBackend implements Backend {
 
         // 7. Remove mangle rules
         final int myUid = android.os.Process.myUid();
-        safeCleanup("mangle rules", () ->
+        safeCleanup("mangle MSS clamp", () ->
+                rootShell.run(null, "iptables -t mangle -D POSTROUTING -o " + TUN_INTERFACE + " -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu 2>/dev/null; " +
+                        "ip6tables -t mangle -D POSTROUTING -o " + TUN_INTERFACE + " -p tcp --tcp-flags SYN,RST SYN -j TCPMSS --clamp-mss-to-pmtu 2>/dev/null"));
+        safeCleanup("mangle fwmark", () ->
                 rootShell.run(null, "iptables -t mangle -D OUTPUT -m owner --uid-owner " + myUid + " -p udp -j MARK --set-mark " + FWMARK + " 2>/dev/null; " +
                         "ip6tables -t mangle -D OUTPUT -m owner --uid-owner " + myUid + " -p udp -j MARK --set-mark " + FWMARK + " 2>/dev/null"));
 
