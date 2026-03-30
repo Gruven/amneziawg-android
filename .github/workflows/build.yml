@@ -205,7 +205,7 @@ jobs:
               --out "${SIGNED}" \
               "${ALIGNED}"
 
-            rm -f "${APK}" "${ALIGNED}"
+            rm -f "${APK}" "${ALIGNED}" "${SIGNED}.idsig"
           done
         fi
 
