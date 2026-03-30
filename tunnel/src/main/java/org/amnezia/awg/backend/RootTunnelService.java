@@ -34,6 +34,7 @@ import static org.amnezia.awg.backend.RootGoBackend.EXTRA_TUNNEL_NAME;
 import static org.amnezia.awg.backend.RootGoBackend.NOTIFICATION_CHANNEL_ID;
 import static org.amnezia.awg.backend.RootGoBackend.NOTIFICATION_ID;
 import static org.amnezia.awg.backend.RootNetworkManager.ENDPOINT_IPS_FILE;
+import static org.amnezia.awg.backend.RootNetworkManager.IP_FORWARD_FILE;
 
 /**
  * Foreground service that keeps the app process alive while root tunnel is active.
@@ -142,8 +143,24 @@ public class RootTunnelService extends Service {
                 file.delete();
             }
 
+            // Load saved ip_forward values from file
+            String ipv4Forward = "1";
+            String ipv6Forward = "0";
+            final File fwdFile = new File(getApplicationContext().getCacheDir(), IP_FORWARD_FILE);
+            if (fwdFile.exists()) {
+                try (BufferedReader br = new BufferedReader(new FileReader(fwdFile))) {
+                    final String line4 = br.readLine();
+                    final String line6 = br.readLine();
+                    if (line4 != null) ipv4Forward = line4.trim();
+                    if (line6 != null) ipv6Forward = line6.trim();
+                } catch (final Exception e) {
+                    Log.w(TAG, "Failed to load ip_forward values: " + e.getMessage());
+                }
+                fwdFile.delete();
+            }
+
             RootNetworkManager.performNetworkCleanup(shell, android.os.Process.myUid(),
-                    null, false, endpointIps, "1", "0");
+                    null, false, endpointIps, ipv4Forward, ipv6Forward);
 
             shell.stop();
             Log.i(TAG, "Post-crash cleanup completed");

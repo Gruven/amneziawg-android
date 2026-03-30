@@ -18,6 +18,7 @@ import org.amnezia.awg.QuickTileService
 import org.amnezia.awg.R
 import org.amnezia.awg.backend.AwgQuickBackend
 import org.amnezia.awg.backend.RootGoBackend
+import org.amnezia.awg.backend.Tunnel
 import org.amnezia.awg.preference.PreferencesPreferenceDataStore
 import org.amnezia.awg.util.AdminKnobs
 import org.amnezia.awg.util.UserKnobs
@@ -56,6 +57,24 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
+        private suspend fun shutdownTunnelsAndRestart() {
+            try {
+                val manager = Application.getTunnelManager()
+                for (tunnel in manager.getTunnels()) {
+                    if (tunnel.state == Tunnel.State.UP) {
+                        try {
+                            manager.setTunnelState(tunnel, Tunnel.State.DOWN)
+                        } catch (e: Throwable) {
+                            Log.w("AmneziaWG/Settings", "Failed to stop tunnel ${tunnel.name}", e)
+                        }
+                    }
+                }
+            } catch (e: Throwable) {
+                Log.w("AmneziaWG/Settings", "Failed to shut down tunnels before restart", e)
+            }
+            restartApp()
+        }
+
         private fun restartApp() {
             try {
                 Toast.makeText(requireContext(), R.string.success_application_will_restart, Toast.LENGTH_LONG).show()
@@ -140,13 +159,13 @@ class SettingsActivity : AppCompatActivity() {
                         }
                         // Step 2: save and restart
                         UserKnobs.setEnableRootMode(true)
-                        restartApp()
+                        shutdownTunnelsAndRestart()
                     }
                     false
                 } else {
                     lifecycleScope.launch {
                         UserKnobs.setEnableRootMode(false)
-                        restartApp()
+                        shutdownTunnelsAndRestart()
                     }
                     false
                 }

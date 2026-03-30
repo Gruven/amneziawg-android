@@ -42,6 +42,7 @@ final class RootNetworkManager {
     static final int FWMARK = 51820;
     static final int ROUTING_TABLE = 51820;
     static final String ENDPOINT_IPS_FILE = "root_endpoint_ips.txt";
+    static final String IP_FORWARD_FILE = "root_ip_forward.txt";
 
     private final Context context;
     private final RootShell rootShell;
@@ -93,6 +94,9 @@ final class RootNetworkManager {
         } catch (final Exception e) {
             Log.w(TAG, "Failed to read ipv6 forwarding: " + e.getMessage());
         }
+
+        // Persist ip_forward values to disk for crash recovery
+        saveIpForward();
 
         // Enable IP forwarding
         runCommand("echo 1 > /proc/sys/net/ipv4/ip_forward");
@@ -205,6 +209,7 @@ final class RootNetworkManager {
 
         activeDnsIp = null;
         activeEndpointIps.clear();
+        new File(context.getCacheDir(), IP_FORWARD_FILE).delete();
     }
 
     /**
@@ -282,6 +287,18 @@ final class RootNetworkManager {
             shell.run(null, command);
         } catch (final Exception e) {
             Log.w(TAG, "Cleanup failed [" + step + "]: " + e.getMessage());
+        }
+    }
+
+    private void saveIpForward() {
+        try {
+            final File file = new File(context.getCacheDir(), IP_FORWARD_FILE);
+            try (PrintWriter pw = new PrintWriter(file)) {
+                pw.println(savedIpv4Forward);
+                pw.println(savedIpv6Forward);
+            }
+        } catch (final Exception e) {
+            Log.w(TAG, "Failed to save ip_forward values: " + e.getMessage());
         }
     }
 
