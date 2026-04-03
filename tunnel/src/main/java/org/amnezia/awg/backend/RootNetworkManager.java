@@ -6,7 +6,6 @@
 package org.amnezia.awg.backend;
 
 import android.content.Context;
-import android.os.Build;
 import android.util.Log;
 
 import org.amnezia.awg.backend.BackendException.Reason;
@@ -126,17 +125,19 @@ final class RootNetworkManager {
         runCommand("echo 1 > /proc/sys/net/ipv6/conf/all/forwarding");
 
         // Reverse path filtering on the TUN interface.
-        // Always disable rp_filter on awg0 itself — there is no reason for the kernel
-        // to validate return paths on a userspace TUN device.
+        // Disable rp_filter on awg0 — there is no reason for the kernel to validate
+        // return paths on a userspace TUN device.  Effective rp_filter is
+        // max(conf/all, conf/<iface>), so this only helps when conf/all <= 0.
         runCommand("echo 0 > /proc/sys/net/ipv4/conf/" + TUN_INTERFACE + "/rp_filter");
-        // On 3.x kernels (Android < 7) rp_filter does not consult policy routing
-        // (ip rules), so strict mode (1) drops reply packets arriving on awg0 because
-        // the main table routes them via the physical interface.  Effective rp_filter =
-        // max(conf/all, conf/<iface>), so conf/all must also be relaxed.  Value 2
-        // (loose) still validates that a route to the source exists in any table.
-        // On 4.x+ kernels this is unnecessary and may interfere with Android's
-        // connectivity management, so we leave conf/all untouched.
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
+        // On older kernels rp_filter does not consult policy routing (ip rules),
+        // so strict mode (1) drops reply packets arriving on awg0 because the main
+        // table routes them via the physical interface.  src_valid_mark makes rp_filter
+        // use the packet's fwmark for route lookup, which consults policy routing.
+        // This is per-interface and does not affect other interfaces.
+        // If src_valid_mark is unavailable (kernel < 2.6.37), fall back to relaxing
+        // conf/all/rp_filter to 2 (loose) — the only option left.
+        if (rootShell.run(null, "echo 1 > /proc/sys/net/ipv4/conf/" + TUN_INTERFACE + "/src_valid_mark 2>/dev/null") != 0) {
+            Log.w(TAG, "src_valid_mark not available, relaxing conf/all/rp_filter to loose");
             runCommand("echo 2 > /proc/sys/net/ipv4/conf/all/rp_filter");
         }
 
@@ -375,11 +376,10 @@ final class RootNetworkManager {
         safeRun(shell, "echo " + ipv6Forward + " > /proc/sys/net/ipv6/conf/all/forwarding 2>/dev/null", "ip_forward restore");
 
         // 8a. Restore rp_filter and conntrack tcp_be_liberal.
-        // conf/awg0/rp_filter needs no restore — the TUN interface was already deleted in step 1.
-        // conf/all/rp_filter is only modified on 3.x kernels (Android < 7).
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N) {
-            safeRun(shell, "echo " + rpFilterAll + " > /proc/sys/net/ipv4/conf/all/rp_filter 2>/dev/null", "rp_filter restore");
-        }
+        // conf/awg0/rp_filter and src_valid_mark need no restore — TUN was deleted in step 1.
+        // conf/all/rp_filter is restored unconditionally — if we didn't modify it,
+        // this writes back the original value (harmless no-op).
+        safeRun(shell, "echo " + rpFilterAll + " > /proc/sys/net/ipv4/conf/all/rp_filter 2>/dev/null", "rp_filter restore");
         safeRun(shell, "echo " + beLiberal + " > /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 2>/dev/null", "be_liberal restore");
 
         // 9. Flush conntrack — stale MASQUERADE entries may prevent new connections
