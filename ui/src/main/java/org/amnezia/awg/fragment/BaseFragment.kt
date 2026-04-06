@@ -81,6 +81,9 @@ abstract class BaseFragment : Fragment(), OnSelectedTunnelChangedListener {
                     val message = activity.getString(R.string.error_prepare, ErrorMessages[e])
                     Snackbar.make(view, message, Snackbar.LENGTH_LONG)
                         .setAnchorView(view.findViewById(R.id.create_fab))
+                        .setAction(R.string.log_viewer_title) {
+                            startActivity(Intent(activity, LogViewerActivity::class.java))
+                        }
                         .show()
                     Log.e(TAG, message, e)
                 }
