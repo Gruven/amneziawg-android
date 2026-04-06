@@ -5,7 +5,7 @@
 cmake_minimum_required(VERSION 3.4.1)
 project("AmneziaWG")
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_LIBRARY_OUTPUT_DIRECTORY}")
-add_link_options(LINKER:--build-id=none)
+add_link_options(LINKER:--build-id=none LINKER:-z,max-page-size=16384)
 add_compile_options(-Wall -Werror)
 
 add_executable(libwg-quick.so amneziawg-tools/src/wg-quick/android.c ndk-compat/compat.c)
