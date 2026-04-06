@@ -1,0 +1,83 @@
+name: Create tag
+run-name: "Tag • ${{ inputs.tag }} • from ${{ inputs.ref || github.ref_name }}"
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag name (e.g. v2.0.0). Leave empty to use versionName from gradle.properties"
+        required: false
+        default: ""
+      ref:
+        description: "Git ref to tag (branch/tag/sha). Leave empty to use selected branch"
+        required: false
+        default: ""
+
+jobs:
+  tag:
+    name: Create tag
+    runs-on: ubuntu-latest
+    concurrency:
+      group: create-tag
+      cancel-in-progress: false
+    permissions:
+      contents: write
+
+    steps:
+    - name: Check token
+      shell: bash
+      env:
+        TOKEN: ${{ secrets.CHECKOUT_TOKEN }}
+      run: |
+        set -euo pipefail
+        if [[ -z "${TOKEN}" ]]; then
+          echo "::warning::CHECKOUT_TOKEN is not set — tag push will NOT trigger downstream release workflow"
+        fi
+
+    - name: Checkout
+      uses: actions/checkout@v6
+      with:
+        ref: ${{ inputs.ref || github.ref_name }}
+        token: ${{ secrets.CHECKOUT_TOKEN || github.token }}
+        fetch-depth: 1
+
+    - name: Resolve tag name
+      id: resolve
+      shell: bash
+      env:
+        INPUT_TAG: ${{ inputs.tag }}
+      run: |
+        set -euo pipefail
+        TAG="${INPUT_TAG}"
+        if [[ -z "${TAG}" ]]; then
+          VERSION="$(grep -E '^amneziawgVersionName=' gradle.properties | cut -d= -f2)"
+          if [[ -z "${VERSION}" ]]; then
+            echo "Could not read versionName from gradle.properties" >&2
+            exit 1
+          fi
+          TAG="v${VERSION}"
+        fi
+        echo "tag=${TAG}" >> "$GITHUB_OUTPUT"
+        echo "Resolved tag: ${TAG}"
+
+    - name: Check tag does not exist
+      shell: bash
+      env:
+        TAG: ${{ steps.resolve.outputs.tag }}
+      run: |
+        set -euo pipefail
+        if git ls-remote --tags origin "refs/tags/${TAG}" | grep -q .; then
+          echo "::error::Tag ${TAG} already exists on remote"
+          exit 1
+        fi
+
+    - name: Create and push tag
+      shell: bash
+      env:
+        TAG: ${{ steps.resolve.outputs.tag }}
+        REF: ${{ inputs.ref || github.ref_name }}
+      run: |
+        set -euo pipefail
+        git tag "${TAG}"
+        git push origin "${TAG}"
+        echo "::notice::Created tag ${TAG} on ${REF} ($(git rev-parse HEAD))"

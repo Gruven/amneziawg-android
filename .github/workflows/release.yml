@@ -34,14 +34,18 @@ jobs:
         path: artifacts/
 
     - name: Rename artifacts
+      shell: bash
+      env:
+        TAG_NAME: ${{ github.ref_name }}
       run: |
+        set -euo pipefail
         for APK in artifacts/*.apk; do
           BASENAME="$(basename "${APK}")"
           ABI="$(echo "${BASENAME}" | sed -n 's/^ui-\(.*\)-release.*\.apk$/\1/p')"
           if [[ -n "${ABI}" ]]; then
-            mv "${APK}" "artifacts/AmneziaWG-Plus-${{ github.ref_name }}-${ABI}.apk"
+            mv "${APK}" "artifacts/AmneziaWG-Plus-${TAG_NAME}-${ABI}.apk"
           else
-            mv "${APK}" "artifacts/AmneziaWG-Plus-${{ github.ref_name }}.apk"
+            mv "${APK}" "artifacts/AmneziaWG-Plus-${TAG_NAME}.apk"
           fi
         done
 
