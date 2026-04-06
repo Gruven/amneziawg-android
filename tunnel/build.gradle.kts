@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.android.build.api.dsl.LibraryExtension
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 
 val pkg: String = providers.gradleProperty("amneziawgPackageName").get()
@@ -9,7 +10,7 @@ plugins {
     alias(libs.plugins.android.library)
 }
 
-android {
+extensions.configure<LibraryExtension> {
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
@@ -24,7 +25,7 @@ android {
         it.testLogging { events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED) }
     }
     buildTypes {
-        all {
+        configureEach {
             externalNativeBuild {
                 cmake {
                     targets("libwg-go.so", "libwg.so", "libwg-quick.so", "libawg-tun-creator.so")

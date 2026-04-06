@@ -18,8 +18,8 @@ dependencyResolutionManagement {
 }
 
 plugins {
-    id("com.android.settings") version "8.13.2"
-    id("org.gradle.toolchains.foojay-resolver-convention") version "0.10.0"
+    id("com.android.settings") version "9.1.0"
+    id("org.gradle.toolchains.foojay-resolver-convention") version "1.0.0"
 }
 
 rootProject.name = "amneziawg-android"
@@ -28,7 +28,6 @@ include(":tunnel")
 include(":ui")
 
 configure<SettingsExtension> {
-    buildToolsVersion = "35.0.0"
     compileSdk = 35
     minSdk = 21
     ndkVersion = "26.1.10909125"

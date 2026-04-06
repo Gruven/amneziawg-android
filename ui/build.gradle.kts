@@ -1,5 +1,6 @@
 @file:Suppress("UnstableApiUsage")
 
+import com.android.build.api.dsl.ApplicationExtension
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
@@ -7,11 +8,10 @@ val pkg: String = providers.gradleProperty("amneziawgPackageName").get()
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.kapt)
+    alias(libs.plugins.legacy.kapt)
 }
 
-android {
+extensions.configure<ApplicationExtension> {
     buildFeatures {
         buildConfig = true
         dataBinding = true
@@ -77,7 +77,7 @@ androidComponents {
         variant.outputs.forEach { output ->
             val abi = output.filters.find { it.filterType == com.android.build.api.variant.FilterConfiguration.FilterType.ABI }?.identifier
             val abiCode = abiCodes[abi] ?: 0
-            output.versionCode.set((output.versionCode.get() ?: 0) * 10 + abiCode)
+            output.versionCode.set(output.versionCode.get() * 10 + abiCode)
         }
     }
 }

@@ -1,6 +1,5 @@
 [versions]
-agp = "8.13.2"
-kotlin = "2.2.0"
+agp = "9.1.0"
 
 [libraries]
 androidx-activity-ktx = "androidx.activity:activity-ktx:1.8.2"
@@ -25,5 +24,4 @@ zxing-android-embedded = "com.journeyapps:zxing-android-embedded:4.3.0"
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
+legacy-kapt = { id = "com.android.legacy-kapt", version.ref = "agp" }
