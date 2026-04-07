@@ -20,7 +20,7 @@ extensions.configure<ApplicationExtension> {
     namespace = pkg
     defaultConfig {
         applicationId = pkg
-        targetSdk = 20
+        targetSdk = 19
         versionCode = providers.gradleProperty("amneziawgVersionCode").get().toInt()
         versionName = providers.gradleProperty("amneziawgVersionName").get()
         buildConfigField("int", "MIN_SDK_VERSION", minSdk.toString())

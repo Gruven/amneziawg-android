@@ -27,7 +27,6 @@ import androidx.annotation.Nullable;
 
 import static org.amnezia.awg.backend.RootGoBackend.EXTRA_CONNECTED;
 import static org.amnezia.awg.backend.RootGoBackend.EXTRA_TUNNEL_NAME;
-import static org.amnezia.awg.backend.RootGoBackend.NOTIFICATION_CHANNEL_ID;
 import static org.amnezia.awg.backend.RootGoBackend.NOTIFICATION_ID;
 import static org.amnezia.awg.backend.RootNetworkManager.ENDPOINT_IPS_FILE;
 import static org.amnezia.awg.backend.RootNetworkManager.SYSCTL_FILE;
