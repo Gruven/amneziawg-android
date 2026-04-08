@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.preference.PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
         android:key="settings">
     <org.amnezia.awg.preference.VersionPreference
         android:icon="@drawable/ic_icon"
@@ -13,8 +12,6 @@
         android:summaryOn="@string/restore_on_boot_summary_on"
         android:title="@string/restore_on_boot_title" />
     <org.amnezia.awg.preference.ZipExporterPreference android:key="zip_exporter" />
-    <org.amnezia.awg.preference.QuickTilePreference android:key="quick_tile"
-            tools:targetApi="33" />
     <Preference
         android:key="log_viewer"
         android:singleLineTitle="false"
@@ -27,13 +24,6 @@
         android:summaryOff="@string/dark_theme_summary_off"
         android:summaryOn="@string/dark_theme_summary_on"
         android:title="@string/dark_theme_title" />
-    <CheckBoxPreference
-        android:defaultValue="false"
-        android:key="disable_battery_optimization"
-        android:singleLineTitle="false"
-        android:summaryOff="@string/battery_optimization_summary_off"
-        android:summaryOn="@string/battery_optimization_summary_on"
-        android:title="@string/battery_optimization_title" />
     <CheckBoxPreference
         android:defaultValue="false"
         android:key="enable_root_mode"

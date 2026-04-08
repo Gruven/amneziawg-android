@@ -7,7 +7,6 @@ package org.amnezia.awg.activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.commit
 import androidx.lifecycle.lifecycleScope
@@ -16,7 +15,6 @@ import androidx.preference.PreferenceFragmentCompat
 import org.amnezia.awg.Application
 import org.amnezia.awg.R
 import org.amnezia.awg.backend.AwgQuickBackend
-import org.amnezia.awg.backend.RootGoBackend
 import org.amnezia.awg.backend.Tunnel
 import org.amnezia.awg.preference.PreferencesPreferenceDataStore
 import org.amnezia.awg.util.AdminKnobs
@@ -27,7 +25,6 @@ import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.getSystemService
-import androidx.core.net.toUri
 import androidx.preference.CheckBoxPreference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.first
@@ -57,20 +54,6 @@ class SettingsActivity : AppCompatActivity() {
     }
 
     class SettingsFragment : PreferenceFragmentCompat() {
-        private var batteryOptPref: CheckBoxPreference? = null
-
-        private val batteryOptLauncher = registerForActivityResult(
-            ActivityResultContracts.StartActivityForResult()
-        ) {
-            updateBatteryOptimizationState()
-        }
-
-        private fun updateBatteryOptimizationState() {
-            // Battery optimization (Doze) is API 23+, not available on this branch
-            batteryOptPref?.parent?.removePreference(batteryOptPref!!)
-        }
-
-
         private suspend fun shutdownTunnelsAndRestart() {
             try {
                 val manager = Application.getTunnelManager()
@@ -105,8 +88,6 @@ class SettingsActivity : AppCompatActivity() {
             preferenceManager.preferenceDataStore = PreferencesPreferenceDataStore(lifecycleScope, Application.getPreferencesDataStore())
             addPreferencesFromResource(R.xml.preferences)
 
-            val quickTile = preferenceManager.findPreference<Preference>("quick_tile")
-            quickTile?.parent?.removePreference(quickTile)
             if (AdminKnobs.disableConfigExport) {
                 val zipExporter = preferenceManager.findPreference<Preference>("zip_exporter")
                 zipExporter?.parent?.removePreference(zipExporter)
@@ -142,11 +123,6 @@ class SettingsActivity : AppCompatActivity() {
             } else {
                 kernelModuleEnabler?.parent?.removePreference(kernelModuleEnabler)
             }
-
-            // Battery optimization toggle (no root needed)
-            batteryOptPref = preferenceManager.findPreference("disable_battery_optimization")
-            updateBatteryOptimizationState()
-            // Battery optimization UI removed — requires API 23+
 
             // Process protection toggle (root only — hidden when root mode is off)
             val processProtPref = preferenceManager.findPreference<CheckBoxPreference>("enable_process_protection")

@@ -27,7 +27,6 @@ class TunnelToggleActivity : AppCompatActivity() {
             try {
                 tunnel.setStateAsync(Tunnel.State.TOGGLE)
             } catch (e: Throwable) {
-                requestTileServiceUpdate()
                 val error = ErrorMessages[e]
                 val message = getString(R.string.toggle_error, error)
                 Log.e(TAG, message, e)
@@ -35,13 +34,8 @@ class TunnelToggleActivity : AppCompatActivity() {
                 finishAffinity()
                 return@launch
             }
-            requestTileServiceUpdate()
             finishAffinity()
         }
-    }
-
-    private fun requestTileServiceUpdate() {
-        // Quick Tiles require API 24+, not available on this branch
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
