@@ -180,6 +180,7 @@
     <string name="duration_seconds">%d с</string>
     <string name="listen_port">Порт</string>
     <string name="log_export_error">Не удалось экспортировать журнал: %s</string>
+    <string name="log_viewer_error">Не удалось прочитать журнал: %s</string>
     <string name="log_export_subject">Файл журнала AmneziaWG Android</string>
     <string name="log_export_success">Сохранено в “%s”</string>
     <string name="log_export_title">Экспорт журнала в файл</string>

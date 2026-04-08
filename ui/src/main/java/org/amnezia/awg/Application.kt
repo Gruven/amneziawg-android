@@ -23,6 +23,7 @@ import org.amnezia.awg.backend.AwgQuickBackend
 import org.amnezia.awg.backend.RootGoBackend
 import org.amnezia.awg.configStore.FileConfigStore
 import org.amnezia.awg.model.TunnelManager
+import org.amnezia.awg.util.LogCapture
 import org.amnezia.awg.util.RootShell
 import org.amnezia.awg.util.ToolsInstaller
 import org.amnezia.awg.util.UserKnobs
@@ -71,8 +72,10 @@ class Application : MultiDexApplication() {
                 rootShell.start()
                 backend = RootGoBackend(applicationContext, rootShell)
                 Log.i(TAG, "Using RootGoBackend (no VPN API)")
+                LogCapture.i(TAG, "Using RootGoBackend (no VPN API)")
             } catch (e: Exception) {
                 Log.w(TAG, "Root mode requested but root unavailable, falling back", e)
+                LogCapture.w(TAG, "Root mode requested but root unavailable, falling back: ${e.message}")
             }
         }
 
@@ -94,12 +97,14 @@ class Application : MultiDexApplication() {
         if (backend == null) {
             backend = GoBackend(applicationContext)
             GoBackend.setAlwaysOnCallback { get().applicationScope.launch { get().tunnelManager.restoreState(true) } }
+            LogCapture.i(TAG, "Using GoBackend (VPN API)")
         }
         return backend
     }
 
     override fun onCreate() {
         Log.i(TAG, USER_AGENT)
+        LogCapture.i(TAG, USER_AGENT)
         super.onCreate()
         rootShell = RootShell(applicationContext)
         toolsInstaller = ToolsInstaller(applicationContext, rootShell)
@@ -127,6 +132,7 @@ class Application : MultiDexApplication() {
                 reapplyProcessProtection()
             } catch (e: Throwable) {
                 Log.e(TAG, Log.getStackTraceString(e))
+                LogCapture.e(TAG, "Backend initialization failed: ${e.message}")
             }
         }
 
@@ -149,11 +155,14 @@ class Application : MultiDexApplication() {
             val oomRet = rootShell.run(null, "echo -1000 > /proc/$myPid/oom_score_adj")
             if (oomRet != 0) {
                 Log.w(TAG, "Process protection failed on startup: oom=$oomRet")
+                LogCapture.w(TAG, "Process protection failed on startup: oom=$oomRet")
             } else {
                 Log.i(TAG, "Process protection reapplied on startup")
+                LogCapture.i(TAG, "Process protection reapplied on startup")
             }
         } catch (e: Throwable) {
             Log.w(TAG, "Failed to reapply process protection", e)
+            LogCapture.w(TAG, "Failed to reapply process protection: ${e.message}")
         }
     }
 

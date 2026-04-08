@@ -152,6 +152,7 @@
     <string name="duration_seconds">%ds</string>
     <string name="listen_port">Listen port</string>
     <string name="log_export_error">Unable to export log: %s</string>
+    <string name="log_viewer_error">Unable to read log: %s</string>
     <string name="log_export_subject">AmneziaWG Android Log File</string>
     <string name="log_export_success">Saved to “%s”</string>
     <string name="log_export_title">Export log file</string>

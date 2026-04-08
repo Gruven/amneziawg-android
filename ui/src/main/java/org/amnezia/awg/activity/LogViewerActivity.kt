@@ -41,9 +41,12 @@ import org.amnezia.awg.R
 import org.amnezia.awg.databinding.LogViewerActivityBinding
 import org.amnezia.awg.util.DownloadsFileSaver
 import org.amnezia.awg.util.ErrorMessages
+import org.amnezia.awg.util.LogCapture
+import org.amnezia.awg.util.UserKnobs
 import org.amnezia.awg.util.resolveAttribute
 import org.amnezia.awg.crypto.KeyPair
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.BufferedReader
@@ -192,7 +195,15 @@ class LogViewerActivity : AppCompatActivity() {
     }
 
     private suspend fun streamingLog() = withContext(Dispatchers.IO) {
-        val builder = ProcessBuilder().command("logcat", "-b", "all", "-v", "threadtime", "*:V")
+        if (UserKnobs.enableRootMode.first()) {
+            streamingLogRoot()
+        } else {
+            streamingLogInternal()
+        }
+    }
+
+    private suspend fun streamingLogRoot() = withContext(Dispatchers.IO) {
+        val builder = ProcessBuilder().command("su", "-c", "exec logcat -b main -b system -v threadtime '*:V'")
         builder.environment()["LC_ALL"] = "C"
         var process: Process? = null
         try {
@@ -200,6 +211,13 @@ class LogViewerActivity : AppCompatActivity() {
                 builder.start()
             } catch (e: IOException) {
                 Log.e(TAG, Log.getStackTraceString(e))
+                withContext(Dispatchers.Main) {
+                    Snackbar.make(
+                        findViewById(android.R.id.content),
+                        getString(R.string.log_viewer_error, ErrorMessages[e]),
+                        Snackbar.LENGTH_LONG
+                    ).show()
+                }
                 return@withContext
             }
             val stdout = BufferedReader(InputStreamReader(process!!.inputStream, StandardCharsets.UTF_8))
@@ -208,8 +226,7 @@ class LogViewerActivity : AppCompatActivity() {
             var timeLastNotify = System.nanoTime()
             var priorModified = false
             val bufferedLogLines = arrayListOf<LogLine>()
-            var timeout = 1000000000L / 2 // The timeout is initially small so that the view gets populated immediately.
-            val MAX_LINES = (1 shl 16) - 1
+            var timeout = 1000000000L / 2
             val MAX_BUFFERED_LINES = (1 shl 14) - 1
 
             while (true) {
@@ -231,7 +248,7 @@ class LogViewerActivity : AppCompatActivity() {
                 val timeNow = System.nanoTime()
                 if (bufferedLogLines.size < MAX_BUFFERED_LINES && (timeNow - timeLastNotify) < timeout && stdout.ready())
                     continue
-                timeout = 1000000000L * 5 / 2 // Increase the timeout after the initial view has something in it.
+                timeout = 1000000000L * 5 / 2
                 timeLastNotify = timeNow
 
                 withContext(Dispatchers.Main.immediate) {
@@ -246,7 +263,6 @@ class LogViewerActivity : AppCompatActivity() {
                         logLines.removeFromStart(numToRemove)
                         logAdapter.notifyItemRangeRemoved(0, numToRemove)
                         posStart -= numToRemove
-
                     }
                     for (bufferedLine in bufferedLogLines) {
                         logLines.addLast(bufferedLine)
@@ -263,6 +279,44 @@ class LogViewerActivity : AppCompatActivity() {
         } finally {
             process?.destroy()
         }
+    }
+
+    private suspend fun streamingLogInternal(): Unit = withContext(Dispatchers.IO) {
+        val snapshot = LogCapture.snapshot()
+        withContext(Dispatchers.Main.immediate) {
+            for (captured in snapshot) {
+                if (rawLogLines.size() >= MAX_LINES) rawLogLines.popFirst()
+                rawLogLines.addLast(captured.toRawString())
+                if (logLines.size() >= MAX_LINES) logLines.removeFromStart(1)
+                logLines.addLast(captured.toLogLine())
+            }
+            if (logLines.size() > 0) {
+                logAdapter.notifyItemRangeInserted(0, logLines.size())
+                recyclerView?.scrollToPosition(logLines.size() - 1)
+            }
+        }
+        LogCapture.newLines.collect { captured ->
+            withContext(Dispatchers.Main.immediate) {
+                val isScrolledToBottom = recyclerView?.canScrollVertically(1) == false
+                if (rawLogLines.size() >= MAX_LINES) rawLogLines.popFirst()
+                rawLogLines.addLast(captured.toRawString())
+                if (logLines.size() >= MAX_LINES) {
+                    logLines.removeFromStart(1)
+                    logAdapter.notifyItemRangeRemoved(0, 1)
+                }
+                logLines.addLast(captured.toLogLine())
+                logAdapter.notifyItemInserted(logLines.size() - 1)
+                if (isScrolledToBottom) recyclerView?.scrollToPosition(logLines.size() - 1)
+            }
+        }
+    }
+
+    private fun LogCapture.LogLine.toLogLine(): LogLine =
+        LogLine(pid, tid, time, level, tag, msg)
+
+    private fun LogCapture.LogLine.toRawString(): String {
+        val df = SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.US)
+        return "${df.format(time)} $pid $tid $level $tag: $msg"
     }
 
     private fun parseTime(timeStr: String): Date? {
@@ -295,6 +349,7 @@ class LogViewerActivity : AppCompatActivity() {
             Pattern.compile("^(\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}.\\d{3})(?:\\s+[0-9A-Za-z]+)?\\s+(\\d+)\\s+(\\d+)\\s+([A-Z])\\s+(.+?)\\s*: (.*)$")
         private val LOGS: MutableMap<String, ByteArray> = ConcurrentHashMap()
         private const val TAG = "AmneziaWG/LogViewerActivity"
+        private const val MAX_LINES = (1 shl 16) - 1
     }
 
     private inner class LogEntryAdapter : RecyclerView.Adapter<LogEntryAdapter.ViewHolder>() {
