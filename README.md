@@ -5,9 +5,12 @@ Android GUI for [AmneziaWG](https://docs.amnezia.org/documentation/amnezia-wg/)
 > [!NOTE]
 > This is a fork of the original [amneziawg-android](https://github.com/amnezia-vpn/amneziawg-android) with additional features listed below. For the upstream version, please visit the [original repository](https://github.com/amnezia-vpn/amneziawg-android).
 
+> [!CAUTION]
+> This legacy branch is only for Android 4.4 users. For Android 5.0+ please use the [master branch](https://github.com/Gruven/amneziawg-plus-android).
+
 ## ✨ Additional features
 
-- **Android 4.4 support** — Minimum and target SDK lowered to 19 (Android 4.4 KitKat). This legacy branch is only for Android 4.4 users. For Android 5.0+ please use the [master branch](https://github.com/Gruven/amneziawg-plus-android).
+- **Android 4.4 support** — Minimum and target SDK lowered to 19 (Android 4.4 KitKat).
 - **Root mode** — Optional tunnel backend that uses root access to create TUN interfaces and configure routing via `iptables`/`ip route`, completely bypassing the Android VPN API. No VPN icon in the status bar, no VPN permission dialogs. All device traffic is routed through the tunnel. Can be enabled in settings. **Requires a rooted device** (SuperSU, Magisk tested).
 - **Tasker plugin** — Integrates as a Tasker action plugin for automation. Select a tunnel and action (on/off/toggle) directly from Tasker.
 - **Token-based intent authentication** — Replaced the `CONTROL_TUNNELS` Android permission with a simple token for intent API authentication. No need to declare permissions in the calling app's manifest — just pass the token as an intent extra. More compatible with `adb`, scripts, and automation tools.
