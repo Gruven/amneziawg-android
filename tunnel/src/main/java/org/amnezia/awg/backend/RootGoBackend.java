@@ -7,8 +7,6 @@ package org.amnezia.awg.backend;
 
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
-
 import org.amnezia.awg.backend.BackendException.Reason;
 import org.amnezia.awg.backend.Tunnel.State;
 import org.amnezia.awg.config.Config;
@@ -17,6 +15,7 @@ import org.amnezia.awg.config.InetNetwork;
 import org.amnezia.awg.config.Peer;
 import org.amnezia.awg.crypto.Key;
 import org.amnezia.awg.crypto.KeyFormatException;
+import org.amnezia.awg.util.LogListener;
 import org.amnezia.awg.util.NonNullForAll;
 import org.amnezia.awg.util.RootShell;
 import org.amnezia.awg.util.SharedLibraryLoader;
@@ -76,14 +75,14 @@ public final class RootGoBackend implements Backend {
             final List<String> output = new ArrayList<>();
             rootShell.run(output, "ip link show " + TUN_INTERFACE + " 2>/dev/null");
             if (!output.isEmpty()) {
-                Log.w(TAG, "Stale TUN interface found — cleaning up after previous crash");
+                LogListener.w(TAG, "Stale TUN interface found — cleaning up after previous crash");
                 networkManager.cleanup(tunFd);
                 tunFd = -1;
                 stopTunnelService();
             }
         } catch (final Exception e) {
             // Root shell not available or interface doesn't exist — nothing to clean up
-            Log.v(TAG, "Stale resource check skipped: " + e.getMessage());
+            LogListener.v(TAG, "Stale resource check skipped: " + e.getMessage());
         }
     }
 
@@ -229,9 +228,9 @@ public final class RootGoBackend implements Backend {
                 }
             }
 
-            Log.d(TAG, "Endpoint routes refreshed: v4=" + v4Via + "/" + v4Dev + " v6=" + v6Via + "/" + v6Dev);
+            LogListener.d(TAG, "Endpoint routes refreshed: v4=" + v4Via + "/" + v4Dev + " v6=" + v6Via + "/" + v6Dev);
         } catch (final Exception e) {
-            Log.w(TAG, "Failed to refresh endpoint routes: " + e.getMessage());
+            LogListener.w(TAG, "Failed to refresh endpoint routes: " + e.getMessage());
         }
     }
 
@@ -252,7 +251,7 @@ public final class RootGoBackend implements Backend {
                         final StatusCallback cb = statusCallback;
                         if (cb != null) cb.onStatusChanged(true);
                     } catch (final Exception e) {
-                        Log.w(TAG, "statusCallback.onStatusChanged failed: " + e.getMessage());
+                        LogListener.w(TAG, "statusCallback.onStatusChanged failed: " + e.getMessage());
                     }
                     break;
                 }
@@ -325,25 +324,25 @@ public final class RootGoBackend implements Backend {
         try {
             turnOffThread.join(timeoutMs);
             if (turnOffThread.isAlive()) {
-                Log.e(TAG, "awgTurnOff did not finish within " + timeoutMs + " ms, proceeding with cleanup");
+                LogListener.e(TAG, "awgTurnOff did not finish within " + timeoutMs + " ms, proceeding with cleanup");
                 zombieTurnOffThread = turnOffThread;
             }
         } catch (final InterruptedException e) {
             Thread.currentThread().interrupt();
-            Log.e(TAG, "Interrupted while waiting for awgTurnOff");
+            LogListener.e(TAG, "Interrupted while waiting for awgTurnOff");
         }
     }
 
     private void setStateInternal(final Tunnel tunnel, @Nullable final Config config, final State state)
             throws Exception {
-        Log.i(TAG, "Bringing tunnel " + tunnel.getName() + ' ' + state);
+        LogListener.i(TAG, "Bringing tunnel " + tunnel.getName() + ' ' + state);
 
         if (state == State.UP) {
             if (config == null)
                 throw new BackendException(Reason.TUNNEL_MISSING_CONFIG);
 
             if (currentTunnelHandle != -1) {
-                Log.w(TAG, "Tunnel already up");
+                LogListener.w(TAG, "Tunnel already up");
                 return;
             }
 
@@ -358,7 +357,7 @@ public final class RootGoBackend implements Backend {
                     if (ep == null) continue;
                     if (ep.getResolved().orElse(null) == null) {
                         if (i < DNS_RESOLUTION_RETRIES - 1) {
-                            Log.w(TAG, "DNS host \"" + ep.getHost() + "\" failed to resolve; trying again");
+                            LogListener.w(TAG, "DNS host \"" + ep.getHost() + "\" failed to resolve; trying again");
                             Thread.sleep(1000);
                             continue dnsRetry;
                         } else
@@ -385,7 +384,7 @@ public final class RootGoBackend implements Backend {
                 throw new BackendException(Reason.TUN_CREATION_ERROR);
             }
 
-            Log.d(TAG, "TUN fd=" + tunFd + " received for " + TUN_INTERFACE);
+            LogListener.d(TAG, "TUN fd=" + tunFd + " received for " + TUN_INTERFACE);
 
             try {
                 // Configure interface via root
@@ -402,7 +401,7 @@ public final class RootGoBackend implements Backend {
                 final int fd = tunFd;
                 tunFd = -1;
                 final String goConfig = config.toAwgUserspaceString();
-                Log.d(TAG, "Go backend " + awgVersion());
+                LogListener.d(TAG, "Go backend " + awgVersion());
                 currentTunnelHandle = awgTurnOn(tunnel.getName(), fd, goConfig);
 
                 if (currentTunnelHandle < 0) {
@@ -432,7 +431,7 @@ public final class RootGoBackend implements Backend {
             tunnel.onStateChange(State.UP);
         } else {
             if (currentTunnelHandle == -1) {
-                Log.w(TAG, "Tunnel already down");
+                LogListener.w(TAG, "Tunnel already down");
                 return;
             }
             stopTunnelService();

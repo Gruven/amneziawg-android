@@ -7,7 +7,6 @@ package org.amnezia.awg.util;
 
 import android.content.Context;
 import android.os.Build;
-import android.util.Log;
 
 import org.amnezia.awg.util.NonNullForAll;
 
@@ -55,7 +54,7 @@ public final class SharedLibraryLoader {
                     final ZipEntry zipEntry = zipFile.getEntry(libZipPath);
                     if (zipEntry == null)
                         continue;
-                    Log.d(TAG, "Extracting apk:/" + libZipPath + " to " + destination.getAbsolutePath());
+                    LogListener.d(TAG, "Extracting apk:/" + libZipPath + " to " + destination.getAbsolutePath());
                     try (final FileOutputStream out = new FileOutputStream(destination);
                          final InputStream in = zipFile.getInputStream(zipEntry)) {
                         int len;
@@ -78,7 +77,7 @@ public final class SharedLibraryLoader {
             System.loadLibrary(libName);
             return;
         } catch (final UnsatisfiedLinkError e) {
-            Log.d(TAG, "Failed to load library normally, so attempting to extract from apk", e);
+            LogListener.d(TAG, "Failed to load library normally, so attempting to extract from apk", e);
             noAbiException = e;
         }
         File f = null;
@@ -91,7 +90,7 @@ public final class SharedLibraryLoader {
                 return;
             }
         } catch (final Exception e) {
-            Log.d(TAG, "Failed to load library apk:/" + libName, e);
+            LogListener.d(TAG, "Failed to load library apk:/" + libName, e);
             noAbiException = e;
         } finally {
             if (f != null)

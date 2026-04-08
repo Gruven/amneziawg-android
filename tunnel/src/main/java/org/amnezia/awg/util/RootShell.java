@@ -6,7 +6,6 @@
 package org.amnezia.awg.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.amnezia.awg.util.RootShell.RootShellException.Reason;
 import org.amnezia.awg.util.NonNullForAll;
@@ -90,7 +89,7 @@ public class RootShell {
             final String marker = UUID.randomUUID().toString();
             final String script = "echo " + marker + "; echo " + marker + " >&2; (" + command +
                     "); ret=$?; echo " + marker + " $ret; echo " + marker + " $ret >&2\n";
-            Log.v(TAG, "executing: " + command);
+            LogListener.v(TAG, "executing: " + command);
             assert stdin != null;
             stdin.write(script);
             stdin.flush();
@@ -110,7 +109,7 @@ public class RootShell {
                 } else if (markersSeen > 0) {
                     if (output != null)
                         output.add(line);
-                    Log.v(TAG, "stdout: " + line);
+                    LogListener.v(TAG, "stdout: " + line);
                 }
             }
             while (true) {
@@ -123,14 +122,14 @@ public class RootShell {
                         break;
                     }
                 } else if (markersSeen > 2) {
-                    Log.v(TAG, "stderr: " + line);
+                    LogListener.v(TAG, "stderr: " + line);
                 }
             }
             if (markersSeen != 4)
                 throw new RootShellException(Reason.SHELL_MARKER_COUNT_ERROR, markersSeen);
             if (errnoStdout != errnoStderr)
                 throw new RootShellException(Reason.SHELL_EXIT_STATUS_READ_ERROR);
-            Log.v(TAG, "exit: " + errnoStdout);
+            LogListener.v(TAG, "exit: " + errnoStdout);
             return errnoStdout;
         }
     }
@@ -167,13 +166,13 @@ public class RootShell {
                 final String uid = stdout.readLine();
                 // Accept both "0" (from id -u) and "uid=0(...)" (from id on older Android toolbox)
                 if (!"0".equals(uid) && !uid.contains("uid=0")) {
-                    Log.w(TAG, "Root check did not return correct UID: " + uid);
+                    LogListener.w(TAG, "Root check did not return correct UID: " + uid);
                     throw new RootShellException(Reason.NO_ROOT_ACCESS);
                 }
                 if (!isRunning()) {
                     String line;
                     while ((line = stderr.readLine()) != null) {
-                        Log.w(TAG, "Root check returned an error: " + line);
+                        LogListener.w(TAG, "Root check returned an error: " + line);
                         if (line.contains("Permission denied"))
                             throw new RootShellException(Reason.NO_ROOT_ACCESS);
                     }

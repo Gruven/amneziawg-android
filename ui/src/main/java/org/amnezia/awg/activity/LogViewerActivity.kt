@@ -282,41 +282,44 @@ class LogViewerActivity : AppCompatActivity() {
     }
 
     private suspend fun streamingLogInternal(): Unit = withContext(Dispatchers.IO) {
-        val snapshot = LogCapture.snapshot()
+        val existing = LogCapture.readAll()
         withContext(Dispatchers.Main.immediate) {
-            for (captured in snapshot) {
+            for (line in existing) {
                 if (rawLogLines.size() >= MAX_LINES) rawLogLines.popFirst()
-                rawLogLines.addLast(captured.toRawString())
-                if (logLines.size() >= MAX_LINES) logLines.removeFromStart(1)
-                logLines.addLast(captured.toLogLine())
+                rawLogLines.addLast(line)
+                val parsed = parseLine(line)
+                if (parsed != null) {
+                    if (logLines.size() >= MAX_LINES) logLines.removeFromStart(1)
+                    logLines.addLast(parsed)
+                } else if (!logLines.isEmpty()) {
+                    logLines[logLines.size() - 1].msg += "\n$line"
+                }
             }
             if (logLines.size() > 0) {
                 logAdapter.notifyItemRangeInserted(0, logLines.size())
                 recyclerView?.scrollToPosition(logLines.size() - 1)
             }
         }
-        LogCapture.newLines.collect { captured ->
+        LogCapture.newLines.collect { line ->
             withContext(Dispatchers.Main.immediate) {
                 val isScrolledToBottom = recyclerView?.canScrollVertically(1) == false
                 if (rawLogLines.size() >= MAX_LINES) rawLogLines.popFirst()
-                rawLogLines.addLast(captured.toRawString())
-                if (logLines.size() >= MAX_LINES) {
-                    logLines.removeFromStart(1)
-                    logAdapter.notifyItemRangeRemoved(0, 1)
+                rawLogLines.addLast(line)
+                val parsed = parseLine(line)
+                if (parsed != null) {
+                    if (logLines.size() >= MAX_LINES) {
+                        logLines.removeFromStart(1)
+                        logAdapter.notifyItemRangeRemoved(0, 1)
+                    }
+                    logLines.addLast(parsed)
+                    logAdapter.notifyItemInserted(logLines.size() - 1)
+                } else if (!logLines.isEmpty()) {
+                    logLines[logLines.size() - 1].msg += "\n$line"
+                    logAdapter.notifyItemChanged(logLines.size() - 1)
                 }
-                logLines.addLast(captured.toLogLine())
-                logAdapter.notifyItemInserted(logLines.size() - 1)
                 if (isScrolledToBottom) recyclerView?.scrollToPosition(logLines.size() - 1)
             }
         }
-    }
-
-    private fun LogCapture.LogLine.toLogLine(): LogLine =
-        LogLine(pid, tid, time, level, tag, msg)
-
-    private fun LogCapture.LogLine.toRawString(): String {
-        val df = SimpleDateFormat("MM-dd HH:mm:ss.SSS", Locale.US)
-        return "${df.format(time)} $pid $tid $level $tag: $msg"
     }
 
     private fun parseTime(timeStr: String): Date? {

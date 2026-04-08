@@ -22,6 +22,7 @@ import org.amnezia.awg.backend.Tunnel
 import org.amnezia.awg.configStore.ConfigStore
 import org.amnezia.awg.databinding.ObservableSortedKeyedArrayList
 import org.amnezia.awg.util.ErrorMessages
+import org.amnezia.awg.util.LogCapture
 import org.amnezia.awg.util.UserKnobs
 import org.amnezia.awg.util.applicationScope
 import org.amnezia.awg.config.Config
@@ -105,6 +106,7 @@ class TunnelManager(private val configStore: ConfigStore) : BaseObservable() {
                 setupStatusCallbacks()
             } catch (e: Throwable) {
                 Log.e(TAG, Log.getStackTraceString(e))
+                LogCapture.e(TAG, "onCreate failed: ${e.message}")
             }
         }
     }
@@ -133,6 +135,7 @@ class TunnelManager(private val configStore: ConfigStore) : BaseObservable() {
                 backend.setStatusCallback(statusCallback)
             } catch (e: Throwable) {
                 Log.e(TAG, "Failed to setup status callbacks", e)
+                LogCapture.e(TAG, "Failed to setup status callbacks: ${e.message}")
             }
         }
     }

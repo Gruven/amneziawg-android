@@ -12,8 +12,7 @@ import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
 import android.os.IBinder;
-import android.util.Log;
-
+import org.amnezia.awg.util.LogListener;
 import org.amnezia.awg.util.NonNullForAll;
 import org.amnezia.awg.util.RootShell;
 
@@ -47,7 +46,7 @@ public class RootTunnelService extends Service {
 
         // Restart after crash: intent is null, tunnel is dead — clean up and exit
         if (tunnelName == null) {
-            Log.w(TAG, "RootTunnelService restarted after crash — running cleanup");
+            LogListener.w(TAG, "RootTunnelService restarted after crash — running cleanup");
             final String cleanupText = getLocalizedString("root_tunnel_notification_cleanup", "Cleaning up\u2026");
             showNotification(cleanupText, "");
             new Thread(() -> {
@@ -111,7 +110,7 @@ public class RootTunnelService extends Service {
                         if (!line.isEmpty()) endpointIps.add(line);
                     }
                 } catch (final Exception e) {
-                    Log.w(TAG, "Failed to load endpoint IPs: " + e.getMessage());
+                    LogListener.w(TAG, "Failed to load endpoint IPs: " + e.getMessage());
                 }
                 file.delete();
             }
@@ -133,7 +132,7 @@ public class RootTunnelService extends Service {
                     if (lineRp != null) rpFilterAll = RootNetworkManager.sanitizeSysctlValue(lineRp.trim());
                     if (lineBl != null) beLiberal = RootNetworkManager.sanitizeSysctlValue(lineBl.trim());
                 } catch (final Exception e) {
-                    Log.w(TAG, "Failed to load sysctl values: " + e.getMessage());
+                    LogListener.w(TAG, "Failed to load sysctl values: " + e.getMessage());
                 }
                 fwdFile.delete();
             }
@@ -143,9 +142,9 @@ public class RootTunnelService extends Service {
                     rpFilterAll, beLiberal);
 
             shell.stop();
-            Log.i(TAG, "Post-crash cleanup completed");
+            LogListener.i(TAG, "Post-crash cleanup completed");
         } catch (final Exception e) {
-            Log.w(TAG, "Post-crash cleanup failed: " + e.getMessage());
+            LogListener.w(TAG, "Post-crash cleanup failed: " + e.getMessage());
         }
     }
 
@@ -157,7 +156,7 @@ public class RootTunnelService extends Service {
             try {
                 return getApplicationContext().getString(id);
             } catch (final Exception e) {
-                Log.w(TAG, "Failed to get string " + name + ": " + e.getMessage());
+                LogListener.w(TAG, "Failed to get string " + name + ": " + e.getMessage());
             }
         }
         return fallback;

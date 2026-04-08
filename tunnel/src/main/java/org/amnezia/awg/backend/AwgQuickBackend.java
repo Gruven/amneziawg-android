@@ -6,11 +6,11 @@
 package org.amnezia.awg.backend;
 
 import android.content.Context;
-import android.util.Log;
 import android.util.Pair;
 
 import org.amnezia.awg.backend.BackendException.Reason;
 import org.amnezia.awg.backend.Tunnel.State;
+import org.amnezia.awg.util.LogListener;
 import org.amnezia.awg.util.RootShell;
 import org.amnezia.awg.util.ToolsInstaller;
 import org.amnezia.awg.config.Config;
@@ -69,7 +69,7 @@ public final class AwgQuickBackend implements Backend {
             if (rootShell.run(output, "awg show interfaces") != 0 || output.isEmpty())
                 return Collections.emptySet();
         } catch (final Exception e) {
-            Log.w(TAG, "Unable to enumerate running tunnels", e);
+            LogListener.w(TAG, "Unable to enumerate running tunnels", e);
             return Collections.emptySet();
         }
         // awg puts all interface names on the same line. Split them into separate elements.
@@ -89,11 +89,11 @@ public final class AwgQuickBackend implements Backend {
         final Collection<String> output = new ArrayList<>();
         try {
             if (rootShell.run(output, String.format("awg show '%s' latest-handshakes", tunnel.getName())) != 0) {
-                Log.e(TAG, "Failed to get latest handshakes");
+                LogListener.e(TAG, "Failed to get latest handshakes");
                 return -2;
             }
         } catch (final Exception e) {
-            Log.e(TAG, "Failed to get latest handshakes", e);
+            LogListener.e(TAG, "Failed to get latest handshakes", e);
             return -2;
         }
         for (final String line : output) {
@@ -102,12 +102,12 @@ public final class AwgQuickBackend implements Backend {
                 try {
                     return Long.parseLong(parts[1]);
                 } catch (final NumberFormatException ignored) {
-                    Log.e(TAG, "Failed to parse handshake time");
+                    LogListener.e(TAG, "Failed to parse handshake time");
                     return -2;
                 }
             }
         }
-        Log.e(TAG, "No handshake time found");
+        LogListener.e(TAG, "No handshake time found");
         return -1;
     }
 
@@ -126,14 +126,14 @@ public final class AwgQuickBackend implements Backend {
      */
     private void launchStatusJob() {
         stopStatusJob();
-        Log.d(TAG, "Launch status job");
+        LogListener.d(TAG, "Launch status job");
         statusThread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 final long lastHandshake = getLastHandshake(currentTunnel);
 
                 // Check if tunnel is no longer active (race condition protection)
                 if (lastHandshake == -3L) {
-                    Log.d(TAG, "Tunnel is no longer active, stopping status job");
+                    LogListener.d(TAG, "Tunnel is no longer active, stopping status job");
                     break;
                 }
 
@@ -270,7 +270,7 @@ public final class AwgQuickBackend implements Backend {
     }
 
     private void setStateInternal(final Tunnel tunnel, @Nullable final Config config, final State state) throws Exception {
-        Log.i(TAG, "Bringing tunnel " + tunnel.getName() + ' ' + state);
+        LogListener.i(TAG, "Bringing tunnel " + tunnel.getName() + ' ' + state);
 
         Objects.requireNonNull(config, "Trying to set state up with a null config");
 

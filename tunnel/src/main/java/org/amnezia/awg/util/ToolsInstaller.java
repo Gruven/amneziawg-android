@@ -6,7 +6,6 @@
 package org.amnezia.awg.util;
 
 import android.content.Context;
-import android.util.Log;
 
 import org.amnezia.awg.util.RootShell.RootShellException;
 import org.amnezia.awg.util.NonNullForAll;
@@ -96,11 +95,11 @@ public final class ToolsInstaller {
         synchronized (lock) {
             if (areToolsAvailable == null) {
                 try {
-                    Log.d(TAG, extract() ? "Tools are now extracted into our private binary dir" :
+                    LogListener.d(TAG, extract() ? "Tools are now extracted into our private binary dir" :
                             "Tools were already extracted into our private binary dir");
                     areToolsAvailable = true;
                 } catch (final IOException e) {
-                    Log.e(TAG, "The awg and awg-quick tools are not available", e);
+                    LogListener.e(TAG, "The awg and awg-quick tools are not available", e);
                     areToolsAvailable = false;
                 }
             }

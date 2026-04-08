@@ -6,9 +6,8 @@
 package org.amnezia.awg.backend;
 
 import android.content.Context;
-import android.util.Log;
-
 import org.amnezia.awg.backend.BackendException.Reason;
+import org.amnezia.awg.util.LogListener;
 import org.amnezia.awg.config.Config;
 import org.amnezia.awg.config.InetEndpoint;
 import org.amnezia.awg.config.InetNetwork;
@@ -88,14 +87,14 @@ final class RootNetworkManager {
             rootShell.run(fwdOutput, "cat /proc/sys/net/ipv4/ip_forward");
             if (!fwdOutput.isEmpty()) savedIpv4Forward = sanitizeForwardValue(fwdOutput.get(0).trim());
         } catch (final Exception e) {
-            Log.w(TAG, "Failed to read ipv4.ip_forward: " + e.getMessage());
+            LogListener.w(TAG, "Failed to read ipv4.ip_forward: " + e.getMessage());
         }
         fwdOutput.clear();
         try {
             rootShell.run(fwdOutput, "cat /proc/sys/net/ipv6/conf/all/forwarding");
             if (!fwdOutput.isEmpty()) savedIpv6Forward = sanitizeForwardValue(fwdOutput.get(0).trim());
         } catch (final Exception e) {
-            Log.w(TAG, "Failed to read ipv6 forwarding: " + e.getMessage());
+            LogListener.w(TAG, "Failed to read ipv6 forwarding: " + e.getMessage());
         }
 
         // Save rp_filter BEFORE enabling ip_forward — on 3.x kernels enabling
@@ -105,7 +104,7 @@ final class RootNetworkManager {
             rootShell.run(fwdOutput, "cat /proc/sys/net/ipv4/conf/all/rp_filter");
             if (!fwdOutput.isEmpty()) savedRpFilterAll = sanitizeSysctlValue(fwdOutput.get(0).trim());
         } catch (final Exception e) {
-            Log.w(TAG, "Failed to read rp_filter: " + e.getMessage());
+            LogListener.w(TAG, "Failed to read rp_filter: " + e.getMessage());
         }
 
         // Save nf_conntrack_tcp_be_liberal (may fail if nf_conntrack not yet loaded)
@@ -114,7 +113,7 @@ final class RootNetworkManager {
             rootShell.run(fwdOutput, "cat /proc/sys/net/netfilter/nf_conntrack_tcp_be_liberal 2>/dev/null");
             if (!fwdOutput.isEmpty()) savedBeLiberal = sanitizeSysctlValue(fwdOutput.get(0).trim());
         } catch (final Exception e) {
-            Log.w(TAG, "Failed to read nf_conntrack_tcp_be_liberal: " + e.getMessage());
+            LogListener.w(TAG, "Failed to read nf_conntrack_tcp_be_liberal: " + e.getMessage());
         }
 
         // Persist sysctl values to disk for crash recovery
@@ -137,7 +136,7 @@ final class RootNetworkManager {
         // If src_valid_mark is unavailable (kernel < 2.6.37), fall back to relaxing
         // conf/all/rp_filter to 2 (loose) — the only option left.
         if (rootShell.run(null, "echo 1 > /proc/sys/net/ipv4/conf/" + TUN_INTERFACE + "/src_valid_mark 2>/dev/null") != 0) {
-            Log.w(TAG, "src_valid_mark not available, relaxing conf/all/rp_filter to loose");
+            LogListener.w(TAG, "src_valid_mark not available, relaxing conf/all/rp_filter to loose");
             runCommand("echo 2 > /proc/sys/net/ipv4/conf/all/rp_filter");
         }
 
@@ -161,7 +160,7 @@ final class RootNetworkManager {
                 rootShell.run(routeOutput, "ip route get " + ip + " | sed 's/ uid .*//'");
             if (!routeOutput.isEmpty()) {
                 final String route = routeOutput.get(0).trim();
-                Log.d(TAG, "Saving endpoint route: " + route);
+                LogListener.d(TAG, "Saving endpoint route: " + route);
                 runCommand((isV6 ? "ip -6" : "ip") + " route add " + route + " table main 2>/dev/null");
             }
         }
@@ -191,7 +190,7 @@ final class RootNetworkManager {
         // All shell commands use awk instead of grep -o/-oE because toolbox grep
         // on Android 5.x does not support -o and -E flags
         if (rootShell.run(null, "ip rule add not fwmark " + FWMARK + " table main suppress_prefixlength 0 priority 90") != 0) {
-            Log.w(TAG, "suppress_prefixlength not supported, adding connected subnet fallback");
+            LogListener.w(TAG, "suppress_prefixlength not supported, adding connected subnet fallback");
             final List<String> devOutput = new ArrayList<>();
             rootShell.run(devOutput, "ip route get 8.8.8.8 2>/dev/null | awk '/dev /{for(i=1;i<=NF;i++)if($i==\"dev\"){print $(i+1);exit}}'");
             if (!devOutput.isEmpty()) {
@@ -302,7 +301,7 @@ final class RootNetworkManager {
             try {
                 closeTun(tunFd);
             } catch (final Exception e) {
-                Log.w(TAG, "Cleanup failed [close TUN fd]: " + e.getMessage());
+                LogListener.w(TAG, "Cleanup failed [close TUN fd]: " + e.getMessage());
             }
         }
 
@@ -401,7 +400,7 @@ final class RootNetworkManager {
      */
     static String sanitizeForwardValue(final String value) {
         if ("0".equals(value) || "1".equals(value)) return value;
-        Log.w(TAG, "Unexpected ip_forward value: " + value + ", defaulting to 0");
+        LogListener.w(TAG, "Unexpected ip_forward value: " + value + ", defaulting to 0");
         return "0";
     }
 
@@ -411,7 +410,7 @@ final class RootNetworkManager {
      */
     static String sanitizeSysctlValue(final String value) {
         if ("0".equals(value) || "1".equals(value) || "2".equals(value)) return value;
-        Log.w(TAG, "Unexpected sysctl value: " + value + ", defaulting to 0");
+        LogListener.w(TAG, "Unexpected sysctl value: " + value + ", defaulting to 0");
         return "0";
     }
 
@@ -419,7 +418,7 @@ final class RootNetworkManager {
         try {
             shell.run(null, command);
         } catch (final Exception e) {
-            Log.w(TAG, "Cleanup failed [" + step + "]: " + e.getMessage());
+            LogListener.w(TAG, "Cleanup failed [" + step + "]: " + e.getMessage());
         }
     }
 
@@ -433,7 +432,7 @@ final class RootNetworkManager {
                 pw.println(savedBeLiberal);
             }
         } catch (final Exception e) {
-            Log.w(TAG, "Failed to save sysctl values: " + e.getMessage());
+            LogListener.w(TAG, "Failed to save sysctl values: " + e.getMessage());
         }
     }
 
@@ -444,7 +443,7 @@ final class RootNetworkManager {
                 for (final String ip : activeEndpointIps) pw.println(ip);
             }
         } catch (final Exception e) {
-            Log.w(TAG, "Failed to save endpoint IPs: " + e.getMessage());
+            LogListener.w(TAG, "Failed to save endpoint IPs: " + e.getMessage());
         }
     }
 
@@ -461,7 +460,7 @@ final class RootNetworkManager {
             if (lineRp != null) savedRpFilterAll = sanitizeSysctlValue(lineRp.trim());
             if (lineBl != null) savedBeLiberal = sanitizeSysctlValue(lineBl.trim());
         } catch (final Exception e) {
-            Log.w(TAG, "Failed to load sysctl values: " + e.getMessage());
+            LogListener.w(TAG, "Failed to load sysctl values: " + e.getMessage());
         }
     }
 
@@ -476,7 +475,7 @@ final class RootNetworkManager {
                     if (!line.isEmpty()) ips.add(line);
                 }
             } catch (final Exception e) {
-                Log.w(TAG, "Failed to load endpoint IPs: " + e.getMessage());
+                LogListener.w(TAG, "Failed to load endpoint IPs: " + e.getMessage());
             }
             file.delete();
         }
@@ -486,6 +485,6 @@ final class RootNetworkManager {
     private void runCommand(final String command) throws Exception {
         final int ret = rootShell.run(null, command);
         if (ret != 0)
-            Log.w(TAG, "Root command returned " + ret + ": " + command);
+            LogListener.w(TAG, "Root command returned " + ret + ": " + command);
     }
 }

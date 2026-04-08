@@ -6,6 +6,7 @@ package org.amnezia.awg.model
 
 import android.util.Log
 import androidx.databinding.BaseObservable
+import org.amnezia.awg.util.LogCapture
 import androidx.databinding.Bindable
 import org.amnezia.awg.BR
 import org.amnezia.awg.backend.Statistics
@@ -76,6 +77,7 @@ class ObservableTunnel internal constructor(
             this.connectionStatus = status
             notifyPropertyChanged(BR.connectionStatus)
             Log.d(TAG, "Connection status changed for $name: $status")
+            LogCapture.d(TAG, "Connection status changed for $name: $status")
         }
         return status
     }

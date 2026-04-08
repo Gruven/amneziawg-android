@@ -8,10 +8,9 @@ package org.amnezia.awg.backend;
 import android.content.Context;
 import android.content.Intent;
 import android.os.ParcelFileDescriptor;
-import android.util.Log;
-
 import org.amnezia.awg.backend.BackendException.Reason;
 import org.amnezia.awg.backend.Tunnel.State;
+import org.amnezia.awg.util.LogListener;
 import org.amnezia.awg.util.SharedLibraryLoader;
 import org.amnezia.awg.config.Config;
 import org.amnezia.awg.config.InetEndpoint;
@@ -182,7 +181,7 @@ public final class GoBackend implements Backend {
             return -3; // Tunnel not active
         final String config = awgGetConfig(currentTunnelHandle);
         if (config == null) {
-            Log.e(TAG, "Failed to get tunnel config");
+            LogListener.e(TAG, "Failed to get tunnel config");
             return -2;
         }
 
@@ -191,13 +190,13 @@ public final class GoBackend implements Backend {
                 try {
                     return Long.parseLong(line.substring(24));
                 } catch (final NumberFormatException ignored) {
-                    Log.e(TAG, "Failed to parse last_handshake_time_sec");
+                    LogListener.e(TAG, "Failed to parse last_handshake_time_sec");
                     return -2;
                 }
             }
         }
 
-        Log.e(TAG, "Failed to get last_handshake_time_sec");
+        LogListener.e(TAG, "Failed to get last_handshake_time_sec");
         return -1;
     }
 
@@ -216,14 +215,14 @@ public final class GoBackend implements Backend {
      */
     private void launchStatusJob() {
         stopStatusJob();
-        Log.d(TAG, "Launch status job");
+        LogListener.d(TAG, "Launch status job");
         statusThread = new Thread(() -> {
             while (!Thread.currentThread().isInterrupted()) {
                 final long lastHandshake = getLastHandshake(currentTunnel);
 
                 // Check if tunnel is no longer active (race condition protection)
                 if (lastHandshake == -3L) {
-                    Log.d(TAG, "Tunnel is no longer active, stopping status job");
+                    LogListener.d(TAG, "Tunnel is no longer active, stopping status job");
                     break;
                 }
 
@@ -319,7 +318,7 @@ public final class GoBackend implements Backend {
 
     private void setStateInternal(final Tunnel tunnel, @Nullable final Config config, final State state)
             throws Exception {
-        Log.i(TAG, "Bringing tunnel " + tunnel.getName() + ' ' + state);
+        LogListener.i(TAG, "Bringing tunnel " + tunnel.getName() + ' ' + state);
 
         if (state == State.UP) {
             if (config == null)
@@ -330,7 +329,7 @@ public final class GoBackend implements Backend {
 
             final VpnService service;
             if (!vpnService.isDone()) {
-                Log.d(TAG, "Requesting to start VpnService");
+                LogListener.d(TAG, "Requesting to start VpnService");
                 context.startService(new Intent(context, VpnService.class));
             }
 
@@ -344,7 +343,7 @@ public final class GoBackend implements Backend {
             service.setOwner(this);
 
             if (currentTunnelHandle != -1) {
-                Log.w(TAG, "Tunnel already up");
+                LogListener.w(TAG, "Tunnel already up");
                 return;
             }
 
@@ -357,7 +356,7 @@ public final class GoBackend implements Backend {
                         continue;
                     if (ep.getResolved().orElse(null) == null) {
                         if (i < DNS_RESOLUTION_RETRIES - 1) {
-                            Log.w(TAG, "DNS host \"" + ep.getHost() + "\" failed to resolve; trying again");
+                            LogListener.w(TAG, "DNS host \"" + ep.getHost() + "\" failed to resolve; trying again");
                             Thread.sleep(1000);
                             continue dnsRetry;
                         } else
@@ -397,7 +396,7 @@ public final class GoBackend implements Backend {
             try (final ParcelFileDescriptor tun = builder.establish()) {
                 if (tun == null)
                     throw new BackendException(Reason.TUN_CREATION_ERROR);
-                Log.d(TAG, "Go backend " + awgVersion());
+                LogListener.d(TAG, "Go backend " + awgVersion());
                 currentTunnelHandle = awgTurnOn(tunnel.getName(), tun.detachFd(), goConfig);
             }
             if (currentTunnelHandle < 0)
@@ -412,7 +411,7 @@ public final class GoBackend implements Backend {
             launchStatusJob();
         } else {
             if (currentTunnelHandle == -1) {
-                Log.w(TAG, "Tunnel already down");
+                LogListener.w(TAG, "Tunnel already down");
                 return;
             }
             stopStatusJob();
@@ -503,7 +502,7 @@ public final class GoBackend implements Backend {
         public int onStartCommand(@Nullable final Intent intent, final int flags, final int startId) {
             vpnService.complete(this);
             if (intent == null || intent.getComponent() == null || !intent.getComponent().getPackageName().equals(getPackageName())) {
-                Log.d(TAG, "Service started by Always-on VPN feature");
+                LogListener.d(TAG, "Service started by Always-on VPN feature");
                 if (alwaysOnCallback != null)
                     alwaysOnCallback.alwaysOnTriggered();
             }
