@@ -6,16 +6,20 @@ Android GUI for [AmneziaWG](https://docs.amnezia.org/documentation/amnezia-wg/)
 > This is a fork of the original [amneziawg-android](https://github.com/amnezia-vpn/amneziawg-android) with additional features listed below. For the upstream version, please visit the [original repository](https://github.com/amnezia-vpn/amneziawg-android).
 
 > [!CAUTION]
-> This legacy branch is only for Android 4.4 users. For Android 5.0+ please use the [master branch](https://github.com/Gruven/amneziawg-plus-android).
+> This legacy branch is intended only for Android 4.4 devices. For Android 5.0 and newer, please use the [master branch](https://github.com/Gruven/amneziawg-plus-android).
 
 ## ✨ Additional features
 
 - **Android 4.4 support** — Minimum and target SDK lowered to 19 (Android 4.4 KitKat).
-- **Root mode** — Optional tunnel backend that uses root access to create TUN interfaces and configure routing via `iptables`/`ip route`, completely bypassing the Android VPN API. No VPN icon in the status bar, no VPN permission dialogs. All device traffic is routed through the tunnel. Can be enabled in settings. **Requires a rooted device** (SuperSU, Magisk tested).
+  - **UI rewrite** — Simplified UI for Android 4.4.
+  - **Built-in application log capture** — On devices where full `logcat` access is unavailable, the log viewer can still show logs produced by the app itself.
+  - **Removed per-app VPN** — It doesn't work on Android 4.4.
+  - **Removed Quick Settings tile and battery optimization integration** — These rely on newer Android APIs and are not available on this branch.
+  - **Compatibility cleanup** — The codebase was stripped of features and code paths that depend on Android APIs newer than 19.
+- **Root mode** — Optional tunnel backend that uses root access to create TUN interfaces and configure routing via `iptables`/`ip route`, completely bypassing the Android VPN API. No VPN icon in the status bar, no VPN permission dialogs. All device traffic is routed through the tunnel. Can be enabled in settings. **Requires a rooted device** (NOT TESTED for Android 4.4).
 - **Tasker plugin** — Integrates as a Tasker action plugin for automation. Select a tunnel and action (on/off/toggle) directly from Tasker.
 - **Token-based intent authentication** — Replaced the `CONTROL_TUNNELS` Android permission with a simple token for intent API authentication. No need to declare permissions in the calling app's manifest — just pass the token as an intent extra. More compatible with `adb`, scripts, and automation tools.
 - **Per-ABI APKs** — Separate APKs for each CPU architecture (`arm64-v8a`, `armeabi-v7a`, `x86`, `x86_64`). Smaller download size compared to a universal APK.
-- **UI rewrite** — Simplified UI for Android 4.4.
 
 ## 🤖 Automation
 
@@ -58,6 +62,7 @@ adb shell am broadcast -a org.amnezia.awg.action.SET_TUNNEL_UP \
 ```
 $ git clone --recurse-submodules https://github.com/Gruven/amneziawg-android
 $ cd amneziawg-android
+$ git checkout legacy/api19
 $ ./gradlew assembleRelease
 ```
 
