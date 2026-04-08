@@ -245,13 +245,10 @@ class SettingsActivity : AppCompatActivity() {
                     val token = UserKnobs.remoteControlToken.first() ?: ""
                     val pad = (24 * resources.displayMetrics.density).toInt()
 
-                    val editText = com.google.android.material.textfield.TextInputEditText(requireContext()).apply {
+                    val editText = android.widget.EditText(requireContext()).apply {
                         setText(token)
                         setSingleLine()
-                    }
-                    val inputLayout = com.google.android.material.textfield.TextInputLayout(requireContext()).apply {
                         layoutParams = android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1f)
-                        addView(editText)
                     }
                     val regenButton = com.google.android.material.button.MaterialButton(requireContext(), null, com.google.android.material.R.attr.materialButtonOutlinedStyle).apply {
                         text = "\uD83C\uDFB2"
@@ -267,7 +264,7 @@ class SettingsActivity : AppCompatActivity() {
                         orientation = android.widget.LinearLayout.HORIZONTAL
                         gravity = android.view.Gravity.CENTER_VERTICAL
                         setPadding(pad, pad / 2, pad, 0)
-                        addView(inputLayout)
+                        addView(editText)
                         addView(regenButton)
                     }
 
@@ -281,10 +278,10 @@ class SettingsActivity : AppCompatActivity() {
                     dialog.getButton(AlertDialog.BUTTON_POSITIVE).setOnClickListener {
                         val newToken = editText.text.toString().trim()
                         if (newToken.isEmpty()) {
-                            inputLayout.error = getString(R.string.remote_control_token_empty)
+                            editText.error = getString(R.string.remote_control_token_empty)
                             return@setOnClickListener
                         }
-                        inputLayout.error = null
+                        editText.error = null
                         lifecycleScope.launch {
                             UserKnobs.setRemoteControlToken(newToken)
                             tokenPref.summary = newToken
