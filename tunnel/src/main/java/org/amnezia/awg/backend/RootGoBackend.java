@@ -353,9 +353,9 @@ public final class RootGoBackend implements Backend {
             // DNS resolution for endpoints
             dnsRetry: for (int i = 0; i < DNS_RESOLUTION_RETRIES; ++i) {
                 for (final Peer peer : config.getPeers()) {
-                    final InetEndpoint ep = peer.getEndpoint().orElse(null);
+                    final InetEndpoint ep = peer.getEndpoint();
                     if (ep == null) continue;
-                    if (ep.getResolved().orElse(null) == null) {
+                    if (ep.getResolved() == null) {
                         if (i < DNS_RESOLUTION_RETRIES - 1) {
                             LogListener.w(TAG, "DNS host \"" + ep.getHost() + "\" failed to resolve; trying again");
                             Thread.sleep(1000);
@@ -388,7 +388,8 @@ public final class RootGoBackend implements Backend {
 
             try {
                 // Configure interface via root
-                final int mtu = config.getInterface().getMtu().orElse(1280);
+                final Integer mtuValue = config.getInterface().getMtu();
+                final int mtu = mtuValue != null ? mtuValue : 1280;
                 for (final InetNetwork addr : config.getInterface().getAddresses()) {
                     runRootCommandStrict("ip addr add " + addr.getAddress().getHostAddress() + "/" + addr.getMask() + " dev " + TUN_INTERFACE);
                 }

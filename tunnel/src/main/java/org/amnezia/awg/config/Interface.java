@@ -14,15 +14,14 @@ import org.amnezia.awg.crypto.KeyPair;
 import org.amnezia.awg.util.NonNullForAll;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import androidx.annotation.Nullable;
 
@@ -42,24 +41,24 @@ public final class Interface {
     private final Set<InetAddress> dnsServers;
     private final Set<String> dnsSearchDomains;
     private final KeyPair keyPair;
-    private final Optional<Integer> listenPort;
-    private final Optional<Integer> mtu;
-    private final Optional<Integer> junkPacketCount;
-    private final Optional<Integer> junkPacketMinSize;
-    private final Optional<Integer> junkPacketMaxSize;
-    private final Optional<Integer> initPacketJunkSize;
-    private final Optional<Integer> responsePacketJunkSize;
-    private final Optional<Integer> cookieReplyPacketJunkSize;
-    private final Optional<Integer> transportPacketJunkSize;
-    private final Optional<String> initPacketMagicHeader;
-    private final Optional<String> responsePacketMagicHeader;
-    private final Optional<String> underloadPacketMagicHeader;
-    private final Optional<String> transportPacketMagicHeader;
-    private final Optional<String> specialJunkI1;
-    private final Optional<String> specialJunkI2;
-    private final Optional<String> specialJunkI3;
-    private final Optional<String> specialJunkI4;
-    private final Optional<String> specialJunkI5;
+    @Nullable private final Integer listenPort;
+    @Nullable private final Integer mtu;
+    @Nullable private final Integer junkPacketCount;
+    @Nullable private final Integer junkPacketMinSize;
+    @Nullable private final Integer junkPacketMaxSize;
+    @Nullable private final Integer initPacketJunkSize;
+    @Nullable private final Integer responsePacketJunkSize;
+    @Nullable private final Integer cookieReplyPacketJunkSize;
+    @Nullable private final Integer transportPacketJunkSize;
+    @Nullable private final String initPacketMagicHeader;
+    @Nullable private final String responsePacketMagicHeader;
+    @Nullable private final String underloadPacketMagicHeader;
+    @Nullable private final String transportPacketMagicHeader;
+    @Nullable private final String specialJunkI1;
+    @Nullable private final String specialJunkI2;
+    @Nullable private final String specialJunkI3;
+    @Nullable private final String specialJunkI4;
+    @Nullable private final String specialJunkI5;
 
     private Interface(final Builder builder) {
         // Defensively copy to ensure immutability even if the Builder is reused.
@@ -98,9 +97,10 @@ public final class Interface {
             throws BadConfigException {
         final Builder builder = new Builder();
         for (final CharSequence line : lines) {
-            final Attribute attribute = Attribute.parse(line).orElseThrow(() ->
-                    new BadConfigException(Section.INTERFACE, Location.TOP_LEVEL,
-                            Reason.SYNTAX_ERROR, line));
+            final Attribute attribute = Attribute.parse(line);
+            if (attribute == null)
+                throw new BadConfigException(Section.INTERFACE, Location.TOP_LEVEL,
+                        Reason.SYNTAX_ERROR, line);
             switch (attribute.getKey().toLowerCase(Locale.ENGLISH)) {
                 case "address":
                     builder.parseAddresses(attribute.getValue());
@@ -185,24 +185,24 @@ public final class Interface {
                 && dnsServers.equals(other.dnsServers)
                 && dnsSearchDomains.equals(other.dnsSearchDomains)
                 && keyPair.equals(other.keyPair)
-                && listenPort.equals(other.listenPort)
-                && mtu.equals(other.mtu)
-                && junkPacketCount.equals(other.junkPacketCount)
-                && junkPacketMinSize.equals(other.junkPacketMinSize)
-                && junkPacketMaxSize.equals(other.junkPacketMaxSize)
-                && initPacketJunkSize.equals(other.initPacketJunkSize)
-                && responsePacketJunkSize.equals(other.responsePacketJunkSize)
-                && cookieReplyPacketJunkSize.equals(other.cookieReplyPacketJunkSize)
-                && transportPacketJunkSize.equals(other.transportPacketJunkSize)
-                && initPacketMagicHeader.equals(other.initPacketMagicHeader)
-                && responsePacketMagicHeader.equals(other.responsePacketMagicHeader)
-                && underloadPacketMagicHeader.equals(other.underloadPacketMagicHeader)
-                && transportPacketMagicHeader.equals(other.transportPacketMagicHeader)
-                && specialJunkI1.equals(other.specialJunkI1)
-                && specialJunkI2.equals(other.specialJunkI2)
-                && specialJunkI3.equals(other.specialJunkI3)
-                && specialJunkI4.equals(other.specialJunkI4)
-                && specialJunkI5.equals(other.specialJunkI5);
+                && Objects.equals(listenPort, other.listenPort)
+                && Objects.equals(mtu, other.mtu)
+                && Objects.equals(junkPacketCount, other.junkPacketCount)
+                && Objects.equals(junkPacketMinSize, other.junkPacketMinSize)
+                && Objects.equals(junkPacketMaxSize, other.junkPacketMaxSize)
+                && Objects.equals(initPacketJunkSize, other.initPacketJunkSize)
+                && Objects.equals(responsePacketJunkSize, other.responsePacketJunkSize)
+                && Objects.equals(cookieReplyPacketJunkSize, other.cookieReplyPacketJunkSize)
+                && Objects.equals(transportPacketJunkSize, other.transportPacketJunkSize)
+                && Objects.equals(initPacketMagicHeader, other.initPacketMagicHeader)
+                && Objects.equals(responsePacketMagicHeader, other.responsePacketMagicHeader)
+                && Objects.equals(underloadPacketMagicHeader, other.underloadPacketMagicHeader)
+                && Objects.equals(transportPacketMagicHeader, other.transportPacketMagicHeader)
+                && Objects.equals(specialJunkI1, other.specialJunkI1)
+                && Objects.equals(specialJunkI2, other.specialJunkI2)
+                && Objects.equals(specialJunkI3, other.specialJunkI3)
+                && Objects.equals(specialJunkI4, other.specialJunkI4)
+                && Objects.equals(specialJunkI5, other.specialJunkI5);
     }
 
     /**
@@ -247,163 +247,253 @@ public final class Interface {
     /**
      * Returns the UDP port number that the AmneziaWG interface will listen on.
      *
-     * @return a UDP port number, or {@code Optional.empty()} if none is configured
+     * @return a UDP port number, or {@code null} if none is configured
      */
-    public Optional<Integer> getListenPort() {
+    @Nullable
+    public Integer getListenPort() {
         return listenPort;
+    }
+
+    public boolean hasListenPort() {
+        return listenPort != null;
     }
 
     /**
      * Returns the MTU used for the AmneziaWG interface.
      *
-     * @return the MTU, or {@code Optional.empty()} if none is configured
+     * @return the MTU, or {@code null} if none is configured
      */
-    public Optional<Integer> getMtu() {
+    @Nullable
+    public Integer getMtu() {
         return mtu;
+    }
+
+    public boolean hasMtu() {
+        return mtu != null;
     }
 
     /**
      * Returns the junkPacketCount used for the AmneziaWG interface.
      *
-     * @return the junkPacketCount, or {@code Optional.empty()} if none is configured
+     * @return the junkPacketCount, or {@code null} if none is configured
      */
-    public Optional<Integer> getJunkPacketCount() {
+    @Nullable
+    public Integer getJunkPacketCount() {
         return junkPacketCount;
+    }
+
+    public boolean hasJunkPacketCount() {
+        return junkPacketCount != null;
     }
 
     /**
      * Returns the junkPacketMinSize used for the AmneziaWG interface.
      *
-     * @return the junkPacketMinSize, or {@code Optional.empty()} if none is configured
+     * @return the junkPacketMinSize, or {@code null} if none is configured
      */
-    public Optional<Integer> getJunkPacketMinSize() {
+    @Nullable
+    public Integer getJunkPacketMinSize() {
         return junkPacketMinSize;
+    }
+
+    public boolean hasJunkPacketMinSize() {
+        return junkPacketMinSize != null;
     }
 
     /**
      * Returns the junkPacketMaxSize used for the AmneziaWG interface.
      *
-     * @return the junkPacketMaxSize, or {@code Optional.empty()} if none is configured
+     * @return the junkPacketMaxSize, or {@code null} if none is configured
      */
-    public Optional<Integer> getJunkPacketMaxSize() {
+    @Nullable
+    public Integer getJunkPacketMaxSize() {
         return junkPacketMaxSize;
+    }
+
+    public boolean hasJunkPacketMaxSize() {
+        return junkPacketMaxSize != null;
     }
 
     /**
      * Returns the initPacketJunkSize used for the AmneziaWG interface.
      *
-     * @return the initPacketJunkSize, or {@code Optional.empty()} if none is configured
+     * @return the initPacketJunkSize, or {@code null} if none is configured
      */
-    public Optional<Integer> getInitPacketJunkSize() {
+    @Nullable
+    public Integer getInitPacketJunkSize() {
         return initPacketJunkSize;
+    }
+
+    public boolean hasInitPacketJunkSize() {
+        return initPacketJunkSize != null;
     }
 
     /**
      * Returns the responsePacketJunkSize used for the AmneziaWG interface.
      *
-     * @return the responsePacketJunkSize, or {@code Optional.empty()} if none is configured
+     * @return the responsePacketJunkSize, or {@code null} if none is configured
      */
-    public Optional<Integer> getResponsePacketJunkSize() {
+    @Nullable
+    public Integer getResponsePacketJunkSize() {
         return responsePacketJunkSize;
+    }
+
+    public boolean hasResponsePacketJunkSize() {
+        return responsePacketJunkSize != null;
     }
 
     /**
      * Returns the cookieReplyPacketJunkSize used for the AmneziaWG interface.
      *
-     * @return the cookieReplyPacketJunkSize, or {@code Optional.empty()} if none is configured
+     * @return the cookieReplyPacketJunkSize, or {@code null} if none is configured
      */
-    public Optional<Integer> getCookieReplyPacketJunkSize() {
+    @Nullable
+    public Integer getCookieReplyPacketJunkSize() {
         return cookieReplyPacketJunkSize;
+    }
+
+    public boolean hasCookieReplyPacketJunkSize() {
+        return cookieReplyPacketJunkSize != null;
     }
 
     /**
      * Returns the transportPacketJunkSize used for the AmneziaWG interface.
      *
-     * @return the transportPacketJunkSize, or {@code Optional.empty()} if none is configured
+     * @return the transportPacketJunkSize, or {@code null} if none is configured
      */
-    public Optional<Integer> getTransportPacketJunkSize() {
+    @Nullable
+    public Integer getTransportPacketJunkSize() {
         return transportPacketJunkSize;
+    }
+
+    public boolean hasTransportPacketJunkSize() {
+        return transportPacketJunkSize != null;
     }
 
     /**
      * Returns the initPacketMagicHeader used for the AmneziaWG interface.
      *
-     * @return the initPacketMagicHeader, or {@code Optional.empty()} if none is configured
+     * @return the initPacketMagicHeader, or {@code null} if none is configured
      */
-    public Optional<String> getInitPacketMagicHeader() {
+    @Nullable
+    public String getInitPacketMagicHeader() {
         return initPacketMagicHeader;
+    }
+
+    public boolean hasInitPacketMagicHeader() {
+        return initPacketMagicHeader != null;
     }
 
     /**
      * Returns the responsePacketMagicHeader used for the AmneziaWG interface.
      *
-     * @return the responsePacketMagicHeader, or {@code Optional.empty()} if none is configured
+     * @return the responsePacketMagicHeader, or {@code null} if none is configured
      */
-    public Optional<String> getResponsePacketMagicHeader() {
+    @Nullable
+    public String getResponsePacketMagicHeader() {
         return responsePacketMagicHeader;
+    }
+
+    public boolean hasResponsePacketMagicHeader() {
+        return responsePacketMagicHeader != null;
     }
 
     /**
      * Returns the underloadPacketMagicHeader used for the AmneziaWG interface.
      *
-     * @return the underloadPacketMagicHeader, or {@code Optional.empty()} if none is configured
+     * @return the underloadPacketMagicHeader, or {@code null} if none is configured
      */
-    public Optional<String> getUnderloadPacketMagicHeader() {
+    @Nullable
+    public String getUnderloadPacketMagicHeader() {
         return underloadPacketMagicHeader;
+    }
+
+    public boolean hasUnderloadPacketMagicHeader() {
+        return underloadPacketMagicHeader != null;
     }
 
     /**
      * Returns the transportPacketMagicHeader used for the AmneziaWG interface.
      *
-     * @return the transportPacketMagicHeader, or {@code Optional.empty()} if none is configured
+     * @return the transportPacketMagicHeader, or {@code null} if none is configured
      */
-    public Optional<String> getTransportPacketMagicHeader() {
+    @Nullable
+    public String getTransportPacketMagicHeader() {
         return transportPacketMagicHeader;
+    }
+
+    public boolean hasTransportPacketMagicHeader() {
+        return transportPacketMagicHeader != null;
     }
 
     /**
      * Returns the specialJunkI1 used for the AmneziaWG interface.
      *
-     * @return the specialJunkI1, or {@code Optional.empty()} if none is configured
+     * @return the specialJunkI1, or {@code null} if none is configured
      */
-    public Optional<String> getSpecialJunkI1() {
+    @Nullable
+    public String getSpecialJunkI1() {
         return specialJunkI1;
+    }
+
+    public boolean hasSpecialJunkI1() {
+        return specialJunkI1 != null;
     }
 
     /**
      * Returns the specialJunkI2 used for the AmneziaWG interface.
      *
-     * @return the specialJunkI2, or {@code Optional.empty()} if none is configured
+     * @return the specialJunkI2, or {@code null} if none is configured
      */
-    public Optional<String> getSpecialJunkI2() {
+    @Nullable
+    public String getSpecialJunkI2() {
         return specialJunkI2;
+    }
+
+    public boolean hasSpecialJunkI2() {
+        return specialJunkI2 != null;
     }
 
     /**
      * Returns the specialJunkI3 used for the AmneziaWG interface.
      *
-     * @return the specialJunkI3, or {@code Optional.empty()} if none is configured
+     * @return the specialJunkI3, or {@code null} if none is configured
      */
-    public Optional<String> getSpecialJunkI3() {
+    @Nullable
+    public String getSpecialJunkI3() {
         return specialJunkI3;
+    }
+
+    public boolean hasSpecialJunkI3() {
+        return specialJunkI3 != null;
     }
 
     /**
      * Returns the specialJunkI4 used for the AmneziaWG interface.
      *
-     * @return the specialJunkI4, or {@code Optional.empty()} if none is configured
+     * @return the specialJunkI4, or {@code null} if none is configured
      */
-    public Optional<String> getSpecialJunkI4() {
+    @Nullable
+    public String getSpecialJunkI4() {
         return specialJunkI4;
+    }
+
+    public boolean hasSpecialJunkI4() {
+        return specialJunkI4 != null;
     }
 
     /**
      * Returns the specialJunkI5 used for the AmneziaWG interface.
      *
-     * @return the specialJunkI5, or {@code Optional.empty()} if none is configured
+     * @return the specialJunkI5, or {@code null} if none is configured
      */
-    public Optional<String> getSpecialJunkI5() {
+    @Nullable
+    public String getSpecialJunkI5() {
         return specialJunkI5;
+    }
+
+    public boolean hasSpecialJunkI5() {
+        return specialJunkI5 != null;
     }
 
 
@@ -413,24 +503,24 @@ public final class Interface {
         hash = 31 * hash + addresses.hashCode();
         hash = 31 * hash + dnsServers.hashCode();
         hash = 31 * hash + keyPair.hashCode();
-        hash = 31 * hash + listenPort.hashCode();
-        hash = 31 * hash + mtu.hashCode();
-        hash = 31 * hash + junkPacketCount.hashCode();
-        hash = 31 * hash + junkPacketMinSize.hashCode();
-        hash = 31 * hash + junkPacketMaxSize.hashCode();
-        hash = 31 * hash + initPacketJunkSize.hashCode();
-        hash = 31 * hash + responsePacketJunkSize.hashCode();
-        hash = 31 * hash + cookieReplyPacketJunkSize.hashCode();
-        hash = 31 * hash + transportPacketJunkSize.hashCode();
-        hash = 31 * hash + initPacketMagicHeader.hashCode();
-        hash = 31 * hash + responsePacketMagicHeader.hashCode();
-        hash = 31 * hash + underloadPacketMagicHeader.hashCode();
-        hash = 31 * hash + transportPacketMagicHeader.hashCode();
-        hash = 31 * hash + specialJunkI1.hashCode();
-        hash = 31 * hash + specialJunkI2.hashCode();
-        hash = 31 * hash + specialJunkI3.hashCode();
-        hash = 31 * hash + specialJunkI4.hashCode();
-        hash = 31 * hash + specialJunkI5.hashCode();
+        hash = 31 * hash + Objects.hashCode(listenPort);
+        hash = 31 * hash + Objects.hashCode(mtu);
+        hash = 31 * hash + Objects.hashCode(junkPacketCount);
+        hash = 31 * hash + Objects.hashCode(junkPacketMinSize);
+        hash = 31 * hash + Objects.hashCode(junkPacketMaxSize);
+        hash = 31 * hash + Objects.hashCode(initPacketJunkSize);
+        hash = 31 * hash + Objects.hashCode(responsePacketJunkSize);
+        hash = 31 * hash + Objects.hashCode(cookieReplyPacketJunkSize);
+        hash = 31 * hash + Objects.hashCode(transportPacketJunkSize);
+        hash = 31 * hash + Objects.hashCode(initPacketMagicHeader);
+        hash = 31 * hash + Objects.hashCode(responsePacketMagicHeader);
+        hash = 31 * hash + Objects.hashCode(underloadPacketMagicHeader);
+        hash = 31 * hash + Objects.hashCode(transportPacketMagicHeader);
+        hash = 31 * hash + Objects.hashCode(specialJunkI1);
+        hash = 31 * hash + Objects.hashCode(specialJunkI2);
+        hash = 31 * hash + Objects.hashCode(specialJunkI3);
+        hash = 31 * hash + Objects.hashCode(specialJunkI4);
+        hash = 31 * hash + Objects.hashCode(specialJunkI5);
         return hash;
     }
 
@@ -444,7 +534,8 @@ public final class Interface {
     public String toString() {
         final StringBuilder sb = new StringBuilder("(Interface ");
         sb.append(keyPair.getPublicKey().toBase64());
-        listenPort.ifPresent(lp -> sb.append(" @").append(lp));
+        if (listenPort != null)
+            sb.append(" @").append(listenPort);
         sb.append(')');
         return sb.toString();
     }
@@ -460,28 +551,48 @@ public final class Interface {
         if (!addresses.isEmpty())
             sb.append("Address = ").append(Attribute.join(addresses)).append('\n');
         if (!dnsServers.isEmpty()) {
-            final List<String> dnsServerStrings = dnsServers.stream().map(InetAddress::getHostAddress).collect(Collectors.toList());
+            final List<String> dnsServerStrings = new ArrayList<>();
+            for (final InetAddress dnsServer : dnsServers)
+                dnsServerStrings.add(dnsServer.getHostAddress());
             dnsServerStrings.addAll(dnsSearchDomains);
             sb.append("DNS = ").append(Attribute.join(dnsServerStrings)).append('\n');
         }
-        listenPort.ifPresent(lp -> sb.append("ListenPort = ").append(lp).append('\n'));
-        mtu.ifPresent(m -> sb.append("MTU = ").append(m).append('\n'));
-        junkPacketCount.ifPresent(jc -> sb.append("Jc = ").append(jc).append('\n'));
-        junkPacketMinSize.ifPresent(jmin -> sb.append("Jmin = ").append(jmin).append('\n'));
-        junkPacketMaxSize.ifPresent(jmax -> sb.append("Jmax = ").append(jmax).append('\n'));
-        initPacketJunkSize.ifPresent(s1 -> sb.append("S1 = ").append(s1).append('\n'));
-        responsePacketJunkSize.ifPresent(s2 -> sb.append("S2 = ").append(s2).append('\n'));
-        cookieReplyPacketJunkSize.ifPresent(s3 -> sb.append("S3 = ").append(s3).append('\n'));
-        transportPacketJunkSize.ifPresent(s4 -> sb.append("S4 = ").append(s4).append('\n'));
-        initPacketMagicHeader.ifPresent(h1 -> sb.append("H1 = ").append(h1).append('\n'));
-        responsePacketMagicHeader.ifPresent(h2 -> sb.append("H2 = ").append(h2).append('\n'));
-        underloadPacketMagicHeader.ifPresent(h3 -> sb.append("H3 = ").append(h3).append('\n'));
-        transportPacketMagicHeader.ifPresent(h4 -> sb.append("H4 = ").append(h4).append('\n'));
-        specialJunkI1.ifPresent(i1 -> sb.append("I1 = ").append(i1).append('\n'));
-        specialJunkI2.ifPresent(i2 -> sb.append("I2 = ").append(i2).append('\n'));
-        specialJunkI3.ifPresent(i3 -> sb.append("I3 = ").append(i3).append('\n'));
-        specialJunkI4.ifPresent(i4 -> sb.append("I4 = ").append(i4).append('\n'));
-        specialJunkI5.ifPresent(i5 -> sb.append("I5 = ").append(i5).append('\n'));
+        if (listenPort != null)
+            sb.append("ListenPort = ").append(listenPort).append('\n');
+        if (mtu != null)
+            sb.append("MTU = ").append(mtu).append('\n');
+        if (junkPacketCount != null)
+            sb.append("Jc = ").append(junkPacketCount).append('\n');
+        if (junkPacketMinSize != null)
+            sb.append("Jmin = ").append(junkPacketMinSize).append('\n');
+        if (junkPacketMaxSize != null)
+            sb.append("Jmax = ").append(junkPacketMaxSize).append('\n');
+        if (initPacketJunkSize != null)
+            sb.append("S1 = ").append(initPacketJunkSize).append('\n');
+        if (responsePacketJunkSize != null)
+            sb.append("S2 = ").append(responsePacketJunkSize).append('\n');
+        if (cookieReplyPacketJunkSize != null)
+            sb.append("S3 = ").append(cookieReplyPacketJunkSize).append('\n');
+        if (transportPacketJunkSize != null)
+            sb.append("S4 = ").append(transportPacketJunkSize).append('\n');
+        if (initPacketMagicHeader != null)
+            sb.append("H1 = ").append(initPacketMagicHeader).append('\n');
+        if (responsePacketMagicHeader != null)
+            sb.append("H2 = ").append(responsePacketMagicHeader).append('\n');
+        if (underloadPacketMagicHeader != null)
+            sb.append("H3 = ").append(underloadPacketMagicHeader).append('\n');
+        if (transportPacketMagicHeader != null)
+            sb.append("H4 = ").append(transportPacketMagicHeader).append('\n');
+        if (specialJunkI1 != null)
+            sb.append("I1 = ").append(specialJunkI1).append('\n');
+        if (specialJunkI2 != null)
+            sb.append("I2 = ").append(specialJunkI2).append('\n');
+        if (specialJunkI3 != null)
+            sb.append("I3 = ").append(specialJunkI3).append('\n');
+        if (specialJunkI4 != null)
+            sb.append("I4 = ").append(specialJunkI4).append('\n');
+        if (specialJunkI5 != null)
+            sb.append("I5 = ").append(specialJunkI5).append('\n');
         sb.append("PrivateKey = ").append(keyPair.getPrivateKey().toBase64()).append('\n');
         return sb.toString();
     }
@@ -495,23 +606,40 @@ public final class Interface {
     public String toAwgUserspaceString() {
         final StringBuilder sb = new StringBuilder();
         sb.append("private_key=").append(keyPair.getPrivateKey().toHex()).append('\n');
-        listenPort.ifPresent(lp -> sb.append("listen_port=").append(lp).append('\n'));
-        junkPacketCount.ifPresent(jc -> sb.append("jc=").append(jc).append('\n'));
-        junkPacketMinSize.ifPresent(jmin -> sb.append("jmin=").append(jmin).append('\n'));
-        junkPacketMaxSize.ifPresent(jmax -> sb.append("jmax=").append(jmax).append('\n'));
-        initPacketJunkSize.ifPresent(s1 -> sb.append("s1=").append(s1).append('\n'));
-        responsePacketJunkSize.ifPresent(s2 -> sb.append("s2=").append(s2).append('\n'));
-        cookieReplyPacketJunkSize.ifPresent(s3 -> sb.append("s3=").append(s3).append('\n'));
-        transportPacketJunkSize.ifPresent(s4 -> sb.append("s4=").append(s4).append('\n'));
-        initPacketMagicHeader.ifPresent(h1 -> sb.append("h1=").append(h1).append('\n'));
-        responsePacketMagicHeader.ifPresent(h2 -> sb.append("h2=").append(h2).append('\n'));
-        underloadPacketMagicHeader.ifPresent(h3 -> sb.append("h3=").append(h3).append('\n'));
-        transportPacketMagicHeader.ifPresent(h4 -> sb.append("h4=").append(h4).append('\n'));
-        specialJunkI1.ifPresent(i1 -> sb.append("i1=").append(i1).append('\n'));
-        specialJunkI2.ifPresent(i2 -> sb.append("i2=").append(i2).append('\n'));
-        specialJunkI3.ifPresent(i3 -> sb.append("i3=").append(i3).append('\n'));
-        specialJunkI4.ifPresent(i4 -> sb.append("i4=").append(i4).append('\n'));
-        specialJunkI5.ifPresent(i5 -> sb.append("i5=").append(i5).append('\n'));
+        if (listenPort != null)
+            sb.append("listen_port=").append(listenPort).append('\n');
+        if (junkPacketCount != null)
+            sb.append("jc=").append(junkPacketCount).append('\n');
+        if (junkPacketMinSize != null)
+            sb.append("jmin=").append(junkPacketMinSize).append('\n');
+        if (junkPacketMaxSize != null)
+            sb.append("jmax=").append(junkPacketMaxSize).append('\n');
+        if (initPacketJunkSize != null)
+            sb.append("s1=").append(initPacketJunkSize).append('\n');
+        if (responsePacketJunkSize != null)
+            sb.append("s2=").append(responsePacketJunkSize).append('\n');
+        if (cookieReplyPacketJunkSize != null)
+            sb.append("s3=").append(cookieReplyPacketJunkSize).append('\n');
+        if (transportPacketJunkSize != null)
+            sb.append("s4=").append(transportPacketJunkSize).append('\n');
+        if (initPacketMagicHeader != null)
+            sb.append("h1=").append(initPacketMagicHeader).append('\n');
+        if (responsePacketMagicHeader != null)
+            sb.append("h2=").append(responsePacketMagicHeader).append('\n');
+        if (underloadPacketMagicHeader != null)
+            sb.append("h3=").append(underloadPacketMagicHeader).append('\n');
+        if (transportPacketMagicHeader != null)
+            sb.append("h4=").append(transportPacketMagicHeader).append('\n');
+        if (specialJunkI1 != null)
+            sb.append("i1=").append(specialJunkI1).append('\n');
+        if (specialJunkI2 != null)
+            sb.append("i2=").append(specialJunkI2).append('\n');
+        if (specialJunkI3 != null)
+            sb.append("i3=").append(specialJunkI3).append('\n');
+        if (specialJunkI4 != null)
+            sb.append("i4=").append(specialJunkI4).append('\n');
+        if (specialJunkI5 != null)
+            sb.append("i5=").append(specialJunkI5).append('\n');
         return sb.toString();
     }
 
@@ -526,41 +654,41 @@ public final class Interface {
         // No default; must be provided before building.
         @Nullable private KeyPair keyPair;
         // Defaults to not present.
-        private Optional<Integer> listenPort = Optional.empty();
+        @Nullable private Integer listenPort;
         // Defaults to not present.
-        private Optional<Integer> mtu = Optional.empty();
+        @Nullable private Integer mtu;
         // Defaults to not present.
-        private Optional<Integer> junkPacketCount = Optional.empty();
+        @Nullable private Integer junkPacketCount;
         // Defaults to not present.
-        private Optional<Integer> junkPacketMinSize = Optional.empty();
+        @Nullable private Integer junkPacketMinSize;
         // Defaults to not present.
-        private Optional<Integer> junkPacketMaxSize = Optional.empty();
+        @Nullable private Integer junkPacketMaxSize;
         // Defaults to not present.
-        private Optional<Integer> initPacketJunkSize = Optional.empty();
+        @Nullable private Integer initPacketJunkSize;
         // Defaults to not present.
-        private Optional<Integer> responsePacketJunkSize = Optional.empty();
+        @Nullable private Integer responsePacketJunkSize;
         // Defaults to not present.
-        private Optional<Integer> cookieReplyPacketJunkSize = Optional.empty();
+        @Nullable private Integer cookieReplyPacketJunkSize;
         // Defaults to not present.
-        private Optional<Integer> transportPacketJunkSize = Optional.empty();
+        @Nullable private Integer transportPacketJunkSize;
         // Defaults to not present.
-        private Optional<String> initPacketMagicHeader = Optional.empty();
+        @Nullable private String initPacketMagicHeader;
         // Defaults to not present.
-        private Optional<String> responsePacketMagicHeader = Optional.empty();
+        @Nullable private String responsePacketMagicHeader;
         // Defaults to not present.
-        private Optional<String> underloadPacketMagicHeader = Optional.empty();
+        @Nullable private String underloadPacketMagicHeader;
         // Defaults to not present.
-        private Optional<String> transportPacketMagicHeader = Optional.empty();
+        @Nullable private String transportPacketMagicHeader;
         // Defaults to not present.
-        private Optional<String> specialJunkI1 = Optional.empty();
+        @Nullable private String specialJunkI1;
         // Defaults to not present.
-        private Optional<String> specialJunkI2 = Optional.empty();
+        @Nullable private String specialJunkI2;
         // Defaults to not present.
-        private Optional<String> specialJunkI3 = Optional.empty();
+        @Nullable private String specialJunkI3;
         // Defaults to not present.
-        private Optional<String> specialJunkI4 = Optional.empty();
+        @Nullable private String specialJunkI4;
         // Defaults to not present.
-        private Optional<String> specialJunkI5 = Optional.empty();
+        @Nullable private String specialJunkI5;
 
 
         public Builder addAddress(final InetNetwork address) {
@@ -701,81 +829,81 @@ public final class Interface {
 
         public Builder parseInitPacketMagicHeader(final String initPacketMagicHeader) throws BadConfigException {
             if (initPacketMagicHeader == null || initPacketMagicHeader.trim().isEmpty()) {
-                this.initPacketMagicHeader = Optional.empty();
+                this.initPacketMagicHeader = null;
             } else {
-                this.initPacketMagicHeader = Optional.of(initPacketMagicHeader.trim());
+                this.initPacketMagicHeader = initPacketMagicHeader.trim();
             }
             return this;
         }
 
         public Builder parseResponsePacketMagicHeader(final String responsePacketMagicHeader) throws BadConfigException {
             if (responsePacketMagicHeader == null || responsePacketMagicHeader.trim().isEmpty()) {
-                this.responsePacketMagicHeader = Optional.empty();
+                this.responsePacketMagicHeader = null;
             } else {
-                this.responsePacketMagicHeader = Optional.of(responsePacketMagicHeader.trim());
+                this.responsePacketMagicHeader = responsePacketMagicHeader.trim();
             }
             return this;
         }
 
         public Builder parseUnderloadPacketMagicHeader(final String underloadPacketMagicHeader) throws BadConfigException {
             if (underloadPacketMagicHeader == null || underloadPacketMagicHeader.trim().isEmpty()) {
-                this.underloadPacketMagicHeader = Optional.empty();
+                this.underloadPacketMagicHeader = null;
             } else {
-                this.underloadPacketMagicHeader = Optional.of(underloadPacketMagicHeader.trim());
+                this.underloadPacketMagicHeader = underloadPacketMagicHeader.trim();
             }
             return this;
         }
-        
+
         public Builder parseTransportPacketMagicHeader(final String transportPacketMagicHeader) throws BadConfigException {
             if (transportPacketMagicHeader == null || transportPacketMagicHeader.trim().isEmpty()) {
-                this.transportPacketMagicHeader = Optional.empty();
+                this.transportPacketMagicHeader = null;
             } else {
-                this.transportPacketMagicHeader = Optional.of(transportPacketMagicHeader.trim());
+                this.transportPacketMagicHeader = transportPacketMagicHeader.trim();
             }
             return this;
         }
 
         public Builder parseSpecialJunkI1(final String specialJunkI1) throws BadConfigException {
             if (specialJunkI1 == null || specialJunkI1.trim().isEmpty()) {
-                this.specialJunkI1 = Optional.empty();
+                this.specialJunkI1 = null;
             } else {
-                this.specialJunkI1 = Optional.of(specialJunkI1.trim());
+                this.specialJunkI1 = specialJunkI1.trim();
             }
             return this;
         }
 
         public Builder parseSpecialJunkI2(final String specialJunkI2) throws BadConfigException {
             if (specialJunkI2 == null || specialJunkI2.trim().isEmpty()) {
-                this.specialJunkI2 = Optional.empty();
+                this.specialJunkI2 = null;
             } else {
-                this.specialJunkI2 = Optional.of(specialJunkI2.trim());
+                this.specialJunkI2 = specialJunkI2.trim();
             }
             return this;
         }
 
         public Builder parseSpecialJunkI3(final String specialJunkI3) throws BadConfigException {
             if (specialJunkI3 == null || specialJunkI3.trim().isEmpty()) {
-                this.specialJunkI3 = Optional.empty();
+                this.specialJunkI3 = null;
             } else {
-                this.specialJunkI3 = Optional.of(specialJunkI3.trim());
+                this.specialJunkI3 = specialJunkI3.trim();
             }
             return this;
         }
 
         public Builder parseSpecialJunkI4(final String specialJunkI4) throws BadConfigException {
             if (specialJunkI4 == null || specialJunkI4.trim().isEmpty()) {
-                this.specialJunkI4 = Optional.empty();
+                this.specialJunkI4 = null;
             } else {
-                this.specialJunkI4 = Optional.of(specialJunkI4.trim());
+                this.specialJunkI4 = specialJunkI4.trim();
             }
             return this;
         }
 
         public Builder parseSpecialJunkI5(final String specialJunkI5) throws BadConfigException {
             if (specialJunkI5 == null || specialJunkI5.trim().isEmpty()) {
-                this.specialJunkI5 = Optional.empty();
+                this.specialJunkI5 = null;
             } else {
-                this.specialJunkI5 = Optional.of(specialJunkI5.trim());
+                this.specialJunkI5 = specialJunkI5.trim();
             }
             return this;
         }
@@ -797,7 +925,7 @@ public final class Interface {
             if (listenPort < MIN_UDP_PORT || listenPort > MAX_UDP_PORT)
                 throw new BadConfigException(Section.INTERFACE, Location.LISTEN_PORT,
                         Reason.INVALID_VALUE, String.valueOf(listenPort));
-            this.listenPort = listenPort == 0 ? Optional.empty() : Optional.of(listenPort);
+            this.listenPort = listenPort == 0 ? null : listenPort;
             return this;
         }
 
@@ -805,7 +933,7 @@ public final class Interface {
             if (mtu < 0)
                 throw new BadConfigException(Section.INTERFACE, Location.MTU,
                         Reason.INVALID_VALUE, String.valueOf(mtu));
-            this.mtu = mtu == 0 ? Optional.empty() : Optional.of(mtu);
+            this.mtu = mtu == 0 ? null : mtu;
             return this;
         }
 
@@ -813,7 +941,7 @@ public final class Interface {
             if (junkPacketCount < 0)
                 throw new BadConfigException(Section.INTERFACE, Location.JUNK_PACKET_COUNT,
                         Reason.INVALID_VALUE, String.valueOf(junkPacketCount));
-            this.junkPacketCount = junkPacketCount == 0 ? Optional.empty() : Optional.of(junkPacketCount);
+            this.junkPacketCount = junkPacketCount == 0 ? null : junkPacketCount;
             return this;
         }
 
@@ -821,7 +949,7 @@ public final class Interface {
             if (junkPacketMinSize < 0)
                 throw new BadConfigException(Section.INTERFACE, Location.JUNK_PACKET_MIN_SIZE,
                         Reason.INVALID_VALUE, String.valueOf(junkPacketMinSize));
-            this.junkPacketMinSize = junkPacketMinSize == 0 ? Optional.empty() : Optional.of(junkPacketMinSize);
+            this.junkPacketMinSize = junkPacketMinSize == 0 ? null : junkPacketMinSize;
             return this;
         }
 
@@ -829,7 +957,7 @@ public final class Interface {
             if (junkPacketMaxSize < 0)
                 throw new BadConfigException(Section.INTERFACE, Location.JUNK_PACKET_MAX_SIZE,
                         Reason.INVALID_VALUE, String.valueOf(junkPacketMaxSize));
-            this.junkPacketMaxSize = junkPacketMaxSize == 0 ? Optional.empty() : Optional.of(junkPacketMaxSize);
+            this.junkPacketMaxSize = junkPacketMaxSize == 0 ? null : junkPacketMaxSize;
             return this;
         }
 
@@ -837,7 +965,7 @@ public final class Interface {
             if (initPacketJunkSize < 0)
                 throw new BadConfigException(Section.INTERFACE, Location.INIT_PACKET_JUNK_SIZE,
                         Reason.INVALID_VALUE, String.valueOf(initPacketJunkSize));
-            this.initPacketJunkSize = initPacketJunkSize == 0 ? Optional.empty() : Optional.of(initPacketJunkSize);
+            this.initPacketJunkSize = initPacketJunkSize == 0 ? null : initPacketJunkSize;
             return this;
         }
 
@@ -845,7 +973,7 @@ public final class Interface {
             if (responsePacketJunkSize < 0)
                 throw new BadConfigException(Section.INTERFACE, Location.RESPONSE_PACKET_JUNK_SIZE,
                         Reason.INVALID_VALUE, String.valueOf(responsePacketJunkSize));
-            this.responsePacketJunkSize = responsePacketJunkSize == 0 ? Optional.empty() : Optional.of(responsePacketJunkSize);
+            this.responsePacketJunkSize = responsePacketJunkSize == 0 ? null : responsePacketJunkSize;
             return this;
         }
 
@@ -853,7 +981,7 @@ public final class Interface {
             if (cookieReplyPacketJunkSize < 0)
                 throw new BadConfigException(Section.INTERFACE, Location.COOKIE_REPLY_PACKET_JUNK_SIZE,
                         Reason.INVALID_VALUE, String.valueOf(cookieReplyPacketJunkSize));
-            this.cookieReplyPacketJunkSize = cookieReplyPacketJunkSize == 0 ? Optional.empty() : Optional.of(cookieReplyPacketJunkSize);
+            this.cookieReplyPacketJunkSize = cookieReplyPacketJunkSize == 0 ? null : cookieReplyPacketJunkSize;
             return this;
         }
 
@@ -861,87 +989,87 @@ public final class Interface {
             if (transportPacketJunkSize < 0)
                 throw new BadConfigException(Section.INTERFACE, Location.TRANSPORT_PACKET_JUNK_SIZE,
                         Reason.INVALID_VALUE, String.valueOf(transportPacketJunkSize));
-            this.transportPacketJunkSize = transportPacketJunkSize == 0 ? Optional.empty() : Optional.of(transportPacketJunkSize);
+            this.transportPacketJunkSize = transportPacketJunkSize == 0 ? null : transportPacketJunkSize;
             return this;
         }
 
         public Builder setInitPacketMagicHeader(final String initPacketMagicHeader) throws BadConfigException {
             if (initPacketMagicHeader == null || initPacketMagicHeader.trim().isEmpty()) {
-                this.initPacketMagicHeader = Optional.empty();
+                this.initPacketMagicHeader = null;
             } else {
-                this.initPacketMagicHeader = Optional.of(initPacketMagicHeader.trim());
+                this.initPacketMagicHeader = initPacketMagicHeader.trim();
             }
             return this;
         }
 
         public Builder setResponsePacketMagicHeader(final String responsePacketMagicHeader) throws BadConfigException {
             if (responsePacketMagicHeader == null || responsePacketMagicHeader.trim().isEmpty()) {
-                this.responsePacketMagicHeader = Optional.empty();
+                this.responsePacketMagicHeader = null;
             } else {
-                this.responsePacketMagicHeader = Optional.of(responsePacketMagicHeader.trim());
+                this.responsePacketMagicHeader = responsePacketMagicHeader.trim();
             }
             return this;
         }
 
         public Builder setUnderloadPacketMagicHeader(final String underloadPacketMagicHeader) throws BadConfigException {
             if (underloadPacketMagicHeader == null || underloadPacketMagicHeader.trim().isEmpty()) {
-                this.underloadPacketMagicHeader = Optional.empty();
+                this.underloadPacketMagicHeader = null;
             } else {
-                this.underloadPacketMagicHeader = Optional.of(underloadPacketMagicHeader.trim());
+                this.underloadPacketMagicHeader = underloadPacketMagicHeader.trim();
             }
             return this;
         }
 
         public Builder setTransportPacketMagicHeader(final String transportPacketMagicHeader) throws BadConfigException {
             if (transportPacketMagicHeader == null || transportPacketMagicHeader.trim().isEmpty()) {
-                this.transportPacketMagicHeader = Optional.empty();
+                this.transportPacketMagicHeader = null;
             } else {
-                this.transportPacketMagicHeader = Optional.of(transportPacketMagicHeader.trim());
+                this.transportPacketMagicHeader = transportPacketMagicHeader.trim();
             }
             return this;
         }
 
         public Builder setSpecialJunkI1(final String specialJunkI1) throws BadConfigException {
             if (specialJunkI1 == null || specialJunkI1.trim().isEmpty()) {
-                this.specialJunkI1 = Optional.empty();
+                this.specialJunkI1 = null;
             } else {
-                this.specialJunkI1 = Optional.of(specialJunkI1.trim());
+                this.specialJunkI1 = specialJunkI1.trim();
             }
             return this;
         }
 
         public Builder setSpecialJunkI2(final String specialJunkI2) throws BadConfigException {
             if (specialJunkI2 == null || specialJunkI2.trim().isEmpty()) {
-                this.specialJunkI2 = Optional.empty();
+                this.specialJunkI2 = null;
             } else {
-                this.specialJunkI2 = Optional.of(specialJunkI2.trim());
+                this.specialJunkI2 = specialJunkI2.trim();
             }
             return this;
         }
 
         public Builder setSpecialJunkI3(final String specialJunkI3) throws BadConfigException {
             if (specialJunkI3 == null || specialJunkI3.trim().isEmpty()) {
-                this.specialJunkI3 = Optional.empty();
+                this.specialJunkI3 = null;
             } else {
-                this.specialJunkI3 = Optional.of(specialJunkI3.trim());
+                this.specialJunkI3 = specialJunkI3.trim();
             }
             return this;
         }
 
         public Builder setSpecialJunkI4(final String specialJunkI4) throws BadConfigException {
             if (specialJunkI4 == null || specialJunkI4.trim().isEmpty()) {
-                this.specialJunkI4 = Optional.empty();
+                this.specialJunkI4 = null;
             } else {
-                this.specialJunkI4 = Optional.of(specialJunkI4.trim());
+                this.specialJunkI4 = specialJunkI4.trim();
             }
             return this;
         }
 
         public Builder setSpecialJunkI5(final String specialJunkI5) throws BadConfigException {
             if (specialJunkI5 == null || specialJunkI5.trim().isEmpty()) {
-                this.specialJunkI5 = Optional.empty();
+                this.specialJunkI5 = null;
             } else {
-                this.specialJunkI5 = Optional.of(specialJunkI5.trim());
+                this.specialJunkI5 = specialJunkI5.trim();
             }
             return this;
         }

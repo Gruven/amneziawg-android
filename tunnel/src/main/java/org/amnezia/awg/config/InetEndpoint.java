@@ -12,9 +12,6 @@ import java.net.InetAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.UnknownHostException;
-import java.time.Duration;
-import java.time.Instant;
-import java.util.Optional;
 import java.util.regex.Pattern;
 
 import androidx.annotation.Nullable;
@@ -34,7 +31,7 @@ public final class InetEndpoint {
     private final boolean isResolved;
     private final Object lock = new Object();
     private final int port;
-    private Instant lastResolution = Instant.EPOCH;
+    private long lastResolutionMillis = 0;
     @Nullable private InetEndpoint resolved;
 
     private InetEndpoint(final String host, final boolean isResolved, final int port) {
@@ -85,14 +82,15 @@ public final class InetEndpoint {
      * to a numeric address. If the host is already numeric, the existing instance may be returned.
      * Because this function may perform network I/O, it must not be called from the main thread.
      *
-     * @return the resolved endpoint, or {@link Optional#empty()}
+     * @return the resolved endpoint, or {@code null}
      */
-    public Optional<InetEndpoint> getResolved() {
+    @Nullable
+    public InetEndpoint getResolved() {
         if (isResolved)
-            return Optional.of(this);
+            return this;
         synchronized (lock) {
             //TODO(zx2c4): Implement a real timeout mechanism using DNS TTL
-            if (Duration.between(lastResolution, Instant.now()).toMinutes() > 1) {
+            if (System.currentTimeMillis() - lastResolutionMillis > 60_000) {
                 try {
                     // Prefer v4 endpoints over v6 to work around DNS64 and IPv6 NAT issues.
                     final InetAddress[] candidates = InetAddress.getAllByName(host);
@@ -104,12 +102,12 @@ public final class InetEndpoint {
                         }
                     }
                     resolved = new InetEndpoint(address.getHostAddress(), true, port);
-                    lastResolution = Instant.now();
+                    lastResolutionMillis = System.currentTimeMillis();
                 } catch (final UnknownHostException e) {
                     resolved = null;
                 }
             }
-            return Optional.ofNullable(resolved);
+            return resolved;
         }
     }
 

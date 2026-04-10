@@ -27,7 +27,6 @@ import org.amnezia.awg.widget.TvCardView
 import org.amnezia.awg.config.Attribute
 import org.amnezia.awg.config.InetNetwork
 import java.net.InetAddress
-import java.util.Optional
 
 /**
  * Static methods for use by generated code in the Android data binding library.
@@ -147,8 +146,8 @@ object BindingAdapters {
 
     @JvmStatic
     @BindingAdapter("android:text")
-    fun setOptionalText(view: TextView, text: Optional<*>?) {
-        view.text = text?.map { it.toString() }?.orElse("") ?: ""
+    fun setNullableText(view: TextView, text: Any?) {
+        view.text = text?.toString() ?: ""
     }
 
     @JvmStatic

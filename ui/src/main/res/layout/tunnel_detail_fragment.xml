@@ -210,7 +210,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/listen_port_text"
                         android:text="@string/listen_port"
-                        android:visibility="@{!config.interface.listenPort.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasListenPort() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintEnd_toStartOf="@id/mtu_label"
                         app:layout_constraintHorizontal_weight="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -228,7 +228,7 @@
                         android:onClick="@{ClipboardUtils::copyTextView}"
                         android:text="@{config.interface.listenPort}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.listenPort.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasListenPort() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintEnd_toStartOf="@id/mtu_label"
                         app:layout_constraintHorizontal_weight="0.5"
                         app:layout_constraintStart_toStartOf="parent"
@@ -242,7 +242,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/mtu_text"
                         android:text="@string/mtu"
-                        android:visibility="@{!config.interface.mtu.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasMtu() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="0.5"
                         app:layout_constraintLeft_toRightOf="@id/listen_port_label"
@@ -260,7 +260,7 @@
                         android:onClick="@{ClipboardUtils::copyTextView}"
                         android:text="@{config.interface.mtu}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.mtu.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasMtu() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_weight="0.5"
                         app:layout_constraintStart_toEndOf="@id/listen_port_label"
@@ -282,7 +282,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/junk_packet_count_text"
                         android:text="@string/junk_packet_count"
-                        android:visibility="@{!config.interface.junkPacketCount.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasJunkPacketCount() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/listen_port_mtu_barrier" />
 
@@ -293,7 +293,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.junkPacketCount}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.junkPacketCount.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasJunkPacketCount() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/junk_packet_count_label"
                         tools:text="3" />
@@ -305,7 +305,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/junk_packet_min_size_text"
                         android:text="@string/junk_packet_min_size"
-                        android:visibility="@{!config.interface.junkPacketMinSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasJunkPacketMinSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/junk_packet_count_text" />
 
@@ -316,7 +316,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.junkPacketMinSize}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.junkPacketMinSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasJunkPacketMinSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/junk_packet_min_size_label"
                         tools:text="10" />
@@ -328,7 +328,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/junk_packet_max_size_text"
                         android:text="@string/junk_packet_max_size"
-                        android:visibility="@{!config.interface.junkPacketMaxSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasJunkPacketMaxSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/junk_packet_min_size_text" />
 
@@ -339,7 +339,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.junkPacketMaxSize}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.junkPacketMaxSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasJunkPacketMaxSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/junk_packet_max_size_label"
                         tools:text="30" />
@@ -351,7 +351,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/init_packet_junk_size_text"
                         android:text="@string/init_packet_junk_size"
-                        android:visibility="@{!config.interface.initPacketJunkSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasInitPacketJunkSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/junk_packet_max_size_text" />
 
@@ -362,7 +362,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.initPacketJunkSize}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.initPacketJunkSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasInitPacketJunkSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/init_packet_junk_size_label"
                         tools:text="15" />
@@ -374,7 +374,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/response_packet_junk_size_text"
                         android:text="@string/response_packet_junk_size"
-                        android:visibility="@{!config.interface.responsePacketJunkSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasResponsePacketJunkSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/init_packet_junk_size_text" />
 
@@ -385,7 +385,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.responsePacketJunkSize}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.responsePacketJunkSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasResponsePacketJunkSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/response_packet_junk_size_label"
                         tools:text="18" />
@@ -397,7 +397,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/cookie_reply_packet_junk_size_text"
                         android:text="@string/cookie_reply_packet_junk_size"
-                        android:visibility="@{!config.interface.cookieReplyPacketJunkSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasCookieReplyPacketJunkSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/response_packet_junk_size_text" />
 
@@ -408,7 +408,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.cookieReplyPacketJunkSize}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.cookieReplyPacketJunkSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasCookieReplyPacketJunkSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cookie_reply_packet_junk_size_label"
                         tools:text="20" />
@@ -420,7 +420,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/transport_packet_junk_size_text"
                         android:text="@string/transport_packet_junk_size"
-                        android:visibility="@{!config.interface.transportPacketJunkSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasTransportPacketJunkSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/cookie_reply_packet_junk_size_text" />
 
@@ -431,7 +431,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.transportPacketJunkSize}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.transportPacketJunkSize.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasTransportPacketJunkSize() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/transport_packet_junk_size_label"
                         tools:text="22" />
@@ -443,7 +443,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/init_packet_magic_header_text"
                         android:text="@string/init_packet_magic_header"
-                        android:visibility="@{!config.interface.initPacketMagicHeader.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasInitPacketMagicHeader() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/transport_packet_junk_size_text" />
 
@@ -454,7 +454,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.initPacketMagicHeader}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.initPacketMagicHeader.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasInitPacketMagicHeader() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/init_packet_magic_header_label"
                         tools:text="1020325451" />
@@ -466,7 +466,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/response_packet_magic_header_text"
                         android:text="@string/response_packet_magic_header"
-                        android:visibility="@{!config.interface.responsePacketMagicHeader.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasResponsePacketMagicHeader() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/init_packet_magic_header_text" />
 
@@ -477,7 +477,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.responsePacketMagicHeader}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.responsePacketMagicHeader.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasResponsePacketMagicHeader() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/response_packet_magic_header_label"
                         tools:text="3288052141" />
@@ -489,7 +489,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/underload_packet_magic_header_text"
                         android:text="@string/underload_packet_magic_header"
-                        android:visibility="@{!config.interface.underloadPacketMagicHeader.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasUnderloadPacketMagicHeader() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/response_packet_magic_header_text" />
 
@@ -500,7 +500,7 @@
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.underloadPacketMagicHeader}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.underloadPacketMagicHeader.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasUnderloadPacketMagicHeader() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/underload_packet_magic_header_label"
                         tools:text="2528465083" />
@@ -512,7 +512,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/transport_packet_magic_header_text"
                         android:text="@string/transport_packet_magic_header"
-                        android:visibility="@{!config.interface.transportPacketMagicHeader.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasTransportPacketMagicHeader() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/underload_packet_magic_header_text" />
 
@@ -522,7 +522,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:text="@{config.interface.transportPacketMagicHeader}"
-                        android:visibility="@{!config.interface.transportPacketMagicHeader.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasTransportPacketMagicHeader() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/transport_packet_magic_header_label"
@@ -535,7 +535,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/special_junk_i1_text"
                         android:text="@string/special_junk_i1"
-                        android:visibility="@{!config.interface.specialJunkI1.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI1() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/transport_packet_magic_header_text" />
 
@@ -551,7 +551,7 @@
                         android:onClick="@{ClipboardUtils::copyTextView}"
                         android:text="@{config.interface.specialJunkI1}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.specialJunkI1.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI1() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_junk_i1_label"
                         tools:text="&lt;b 0x10001c00c00050001000000df00210473746c730561646f626506636f6d2d636e09656467657375697465036e657400c02b00050001000001e200350473746c730561646f626506636f6d2d636e09656467657375697465036e65740b676c6f62616c726564697206616b61646e73c047c0580005000100&gt;" />
@@ -563,7 +563,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/special_junk_i2_text"
                         android:text="@string/special_junk_i2"
-                        android:visibility="@{!config.interface.specialJunkI2.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI2() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_junk_i1_text" />
 
@@ -579,7 +579,7 @@
                         android:onClick="@{ClipboardUtils::copyTextView}"
                         android:text="@{config.interface.specialJunkI2}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.specialJunkI2.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI2() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_junk_i2_label"
                         tools:text="&lt;b 0x1234&gt;" />
@@ -591,7 +591,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/special_junk_i3_text"
                         android:text="@string/special_junk_i3"
-                        android:visibility="@{!config.interface.specialJunkI3.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI3() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_junk_i2_text" />
 
@@ -607,7 +607,7 @@
                         android:onClick="@{ClipboardUtils::copyTextView}"
                         android:text="@{config.interface.specialJunkI3}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.specialJunkI3.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI3() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_junk_i3_label"
                         tools:text="&lt;b 0x1234567890&gt;" />
@@ -619,7 +619,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/special_junk_i4_text"
                         android:text="@string/special_junk_i4"
-                        android:visibility="@{!config.interface.specialJunkI4.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI4() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_junk_i3_text" />
 
@@ -635,7 +635,7 @@
                         android:onClick="@{ClipboardUtils::copyTextView}"
                         android:text="@{config.interface.specialJunkI4}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.specialJunkI4.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI4() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_junk_i4_label"
                         tools:text="&lt;b 0xdeadbeef&gt;" />
@@ -647,7 +647,7 @@
                         android:layout_marginTop="8dp"
                         android:labelFor="@+id/special_junk_i5_text"
                         android:text="@string/special_junk_i5"
-                        android:visibility="@{!config.interface.specialJunkI5.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI5() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_junk_i4_text" />
 
@@ -663,7 +663,7 @@
                         android:onClick="@{ClipboardUtils::copyTextView}"
                         android:text="@{config.interface.specialJunkI5}"
                         android:textAppearance="?attr/textAppearanceBodyLarge"
-                        android:visibility="@{!config.interface.specialJunkI5.isPresent() ? android.view.View.GONE : android.view.View.VISIBLE}"
+                        android:visibility="@{!config.interface.hasSpecialJunkI5() ? android.view.View.GONE : android.view.View.VISIBLE}"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/special_junk_i5_label"
                         tools:text="&lt;rc 12&gt;&lt;t&gt;&lt;rd 18&gt;" />

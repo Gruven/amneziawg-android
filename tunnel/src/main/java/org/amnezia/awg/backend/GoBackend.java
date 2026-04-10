@@ -351,10 +351,10 @@ public final class GoBackend implements Backend {
             dnsRetry: for (int i = 0; i < DNS_RESOLUTION_RETRIES; ++i) {
                 // Pre-resolve IPs so they're cached when building the userspace string
                 for (final Peer peer : config.getPeers()) {
-                    final InetEndpoint ep = peer.getEndpoint().orElse(null);
+                    final InetEndpoint ep = peer.getEndpoint();
                     if (ep == null)
                         continue;
-                    if (ep.getResolved().orElse(null) == null) {
+                    if (ep.getResolved() == null) {
                         if (i < DNS_RESOLUTION_RETRIES - 1) {
                             LogListener.w(TAG, "DNS host \"" + ep.getHost() + "\" failed to resolve; trying again");
                             Thread.sleep(1000);
@@ -391,7 +391,8 @@ public final class GoBackend implements Backend {
                 }
             }
 
-            builder.setMtu(config.getInterface().getMtu().orElse(1280));
+            final Integer mtu = config.getInterface().getMtu();
+            builder.setMtu(mtu != null ? mtu : 1280);
 
             try (final ParcelFileDescriptor tun = builder.establish()) {
                 if (tun == null)

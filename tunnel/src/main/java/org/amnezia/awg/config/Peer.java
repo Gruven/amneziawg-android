@@ -17,7 +17,6 @@ import java.util.Collections;
 import java.util.LinkedHashSet;
 import java.util.Locale;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.Set;
 
 import androidx.annotation.Nullable;
@@ -31,9 +30,9 @@ import androidx.annotation.Nullable;
 @NonNullForAll
 public final class Peer {
     private final Set<InetNetwork> allowedIps;
-    private final Optional<InetEndpoint> endpoint;
-    private final Optional<Integer> persistentKeepalive;
-    private final Optional<Key> preSharedKey;
+    @Nullable private final InetEndpoint endpoint;
+    @Nullable private final Integer persistentKeepalive;
+    @Nullable private final Key preSharedKey;
     private final Key publicKey;
 
     private Peer(final Builder builder) {
@@ -56,9 +55,10 @@ public final class Peer {
             throws BadConfigException {
         final Builder builder = new Builder();
         for (final CharSequence line : lines) {
-            final Attribute attribute = Attribute.parse(line).orElseThrow(() ->
-                    new BadConfigException(Section.PEER, Location.TOP_LEVEL,
-                            Reason.SYNTAX_ERROR, line));
+            final Attribute attribute = Attribute.parse(line);
+            if (attribute == null)
+                throw new BadConfigException(Section.PEER, Location.TOP_LEVEL,
+                        Reason.SYNTAX_ERROR, line);
             switch (attribute.getKey().toLowerCase(Locale.ENGLISH)) {
                 case "allowedips":
                     builder.parseAllowedIPs(attribute.getValue());
@@ -89,9 +89,9 @@ public final class Peer {
             return false;
         final Peer other = (Peer) obj;
         return allowedIps.equals(other.allowedIps)
-                && endpoint.equals(other.endpoint)
-                && persistentKeepalive.equals(other.persistentKeepalive)
-                && preSharedKey.equals(other.preSharedKey)
+                && Objects.equals(endpoint, other.endpoint)
+                && Objects.equals(persistentKeepalive, other.persistentKeepalive)
+                && Objects.equals(preSharedKey, other.preSharedKey)
                 && publicKey.equals(other.publicKey);
     }
 
@@ -108,28 +108,47 @@ public final class Peer {
     /**
      * Returns the peer's endpoint.
      *
-     * @return the endpoint, or {@code Optional.empty()} if none is configured
+     * @return the endpoint, or {@code null} if none is configured
      */
-    public Optional<InetEndpoint> getEndpoint() {
+    @Nullable
+    public InetEndpoint getEndpoint() {
         return endpoint;
+    }
+
+    public boolean hasEndpoint() {
+        return endpoint != null;
     }
 
     /**
      * Returns the peer's persistent keepalive.
      *
-     * @return the persistent keepalive, or {@code Optional.empty()} if none is configured
+     * @return the persistent keepalive, or {@code null} if none is configured
      */
-    public Optional<Integer> getPersistentKeepalive() {
+    @Nullable
+    public Integer getPersistentKeepalive() {
         return persistentKeepalive;
+    }
+
+    public boolean hasPersistentKeepalive() {
+        return persistentKeepalive != null;
+    }
+
+    public int getPersistentKeepaliveOrZero() {
+        return persistentKeepalive != null ? persistentKeepalive : 0;
     }
 
     /**
      * Returns the peer's pre-shared key.
      *
-     * @return the pre-shared key, or {@code Optional.empty()} if none is configured
+     * @return the pre-shared key, or {@code null} if none is configured
      */
-    public Optional<Key> getPreSharedKey() {
+    @Nullable
+    public Key getPreSharedKey() {
         return preSharedKey;
+    }
+
+    public boolean hasPreSharedKey() {
+        return preSharedKey != null;
     }
 
     /**
@@ -145,9 +164,9 @@ public final class Peer {
     public int hashCode() {
         int hash = 1;
         hash = 31 * hash + allowedIps.hashCode();
-        hash = 31 * hash + endpoint.hashCode();
-        hash = 31 * hash + persistentKeepalive.hashCode();
-        hash = 31 * hash + preSharedKey.hashCode();
+        hash = 31 * hash + Objects.hashCode(endpoint);
+        hash = 31 * hash + Objects.hashCode(persistentKeepalive);
+        hash = 31 * hash + Objects.hashCode(preSharedKey);
         hash = 31 * hash + publicKey.hashCode();
         return hash;
     }
@@ -162,7 +181,7 @@ public final class Peer {
     public String toString() {
         final StringBuilder sb = new StringBuilder("(Peer ");
         sb.append(publicKey.toBase64());
-        endpoint.ifPresent(ep -> sb.append(" @").append(ep));
+        if (endpoint != null) sb.append(" @").append(endpoint);
         sb.append(')');
         return sb.toString();
     }
@@ -177,9 +196,9 @@ public final class Peer {
         final StringBuilder sb = new StringBuilder();
         if (!allowedIps.isEmpty())
             sb.append("AllowedIPs = ").append(Attribute.join(allowedIps)).append('\n');
-        endpoint.ifPresent(ep -> sb.append("Endpoint = ").append(ep).append('\n'));
-        persistentKeepalive.ifPresent(pk -> sb.append("PersistentKeepalive = ").append(pk).append('\n'));
-        preSharedKey.ifPresent(psk -> sb.append("PreSharedKey = ").append(psk.toBase64()).append('\n'));
+        if (endpoint != null) sb.append("Endpoint = ").append(endpoint).append('\n');
+        if (persistentKeepalive != null) sb.append("PersistentKeepalive = ").append(persistentKeepalive).append('\n');
+        if (preSharedKey != null) sb.append("PreSharedKey = ").append(preSharedKey.toBase64()).append('\n');
         sb.append("PublicKey = ").append(publicKey.toBase64()).append('\n');
         return sb.toString();
     }
@@ -196,9 +215,12 @@ public final class Peer {
         sb.append("public_key=").append(publicKey.toHex()).append('\n');
         for (final InetNetwork allowedIp : allowedIps)
             sb.append("allowed_ip=").append(allowedIp).append('\n');
-        endpoint.flatMap(InetEndpoint::getResolved).ifPresent(ep -> sb.append("endpoint=").append(ep).append('\n'));
-        persistentKeepalive.ifPresent(pk -> sb.append("persistent_keepalive_interval=").append(pk).append('\n'));
-        preSharedKey.ifPresent(psk -> sb.append("preshared_key=").append(psk.toHex()).append('\n'));
+        if (endpoint != null) {
+            final InetEndpoint resolvedEndpoint = endpoint.getResolved();
+            if (resolvedEndpoint != null) sb.append("endpoint=").append(resolvedEndpoint).append('\n');
+        }
+        if (persistentKeepalive != null) sb.append("persistent_keepalive_interval=").append(persistentKeepalive).append('\n');
+        if (preSharedKey != null) sb.append("preshared_key=").append(preSharedKey.toHex()).append('\n');
         return sb.toString();
     }
 
@@ -210,11 +232,11 @@ public final class Peer {
         // Defaults to an empty set.
         private final Set<InetNetwork> allowedIps = new LinkedHashSet<>();
         // Defaults to not present.
-        private Optional<InetEndpoint> endpoint = Optional.empty();
+        @Nullable private InetEndpoint endpoint = null;
         // Defaults to not present.
-        private Optional<Integer> persistentKeepalive = Optional.empty();
+        @Nullable private Integer persistentKeepalive = null;
         // Defaults to not present.
-        private Optional<Key> preSharedKey = Optional.empty();
+        @Nullable private Key preSharedKey = null;
         // No default; must be provided before building.
         @Nullable private Key publicKey;
 
@@ -280,7 +302,7 @@ public final class Peer {
         }
 
         public Builder setEndpoint(final InetEndpoint endpoint) {
-            this.endpoint = Optional.of(endpoint);
+            this.endpoint = endpoint;
             return this;
         }
 
@@ -289,13 +311,12 @@ public final class Peer {
             if (persistentKeepalive < 0 || persistentKeepalive > MAX_PERSISTENT_KEEPALIVE)
                 throw new BadConfigException(Section.PEER, Location.PERSISTENT_KEEPALIVE,
                         Reason.INVALID_VALUE, String.valueOf(persistentKeepalive));
-            this.persistentKeepalive = persistentKeepalive == 0 ?
-                    Optional.empty() : Optional.of(persistentKeepalive);
+            this.persistentKeepalive = persistentKeepalive == 0 ? null : persistentKeepalive;
             return this;
         }
 
         public Builder setPreSharedKey(final Key preSharedKey) {
-            this.preSharedKey = Optional.of(preSharedKey);
+            this.preSharedKey = preSharedKey;
             return this;
         }
 

@@ -38,7 +38,11 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
+import java.io.File
+import java.io.PrintWriter
+import java.io.StringWriter
 import java.lang.ref.WeakReference
+import java.util.Date
 import java.util.Locale
 
 class Application : MultiDexApplication() {
@@ -52,6 +56,7 @@ class Application : MultiDexApplication() {
 
     override fun attachBaseContext(context: Context) {
         super.attachBaseContext(context)
+        setupCrashHandler()
         if (BuildConfig.MIN_SDK_VERSION > Build.VERSION.SDK_INT) {
             @Suppress("UnsafeImplicitIntentLaunch")
             val intent = Intent(Intent.ACTION_MAIN)
@@ -158,6 +163,24 @@ class Application : MultiDexApplication() {
             }
         } catch (e: Throwable) {
             LogListener.w(TAG, "Failed to reapply process protection: ${e.message}")
+        }
+    }
+
+    private fun setupCrashHandler() {
+        val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
+        Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
+            try {
+                val crashFile = File(filesDir, "crash_log.txt")
+                val sw = StringWriter()
+                sw.append("=== CRASH ${Date()} ===\n")
+                sw.append("Thread: ${thread.name}\n")
+                sw.append("SDK: ${Build.VERSION.SDK_INT}, ABI: ${Build.CPU_ABI}\n")
+                sw.append("Version: ${BuildConfig.VERSION_NAME}\n\n")
+                throwable.printStackTrace(PrintWriter(sw))
+                crashFile.appendText(sw.toString() + "\n\n")
+            } catch (_: Throwable) {
+            }
+            defaultHandler?.uncaughtException(thread, throwable)
         }
     }
 

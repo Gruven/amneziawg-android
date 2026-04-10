@@ -71,9 +71,9 @@ final class RootNetworkManager {
         // Collect endpoint IPs to exclude from tunnel routing
         activeEndpointIps.clear();
         for (final Peer peer : config.getPeers()) {
-            final InetEndpoint ep = peer.getEndpoint().orElse(null);
+            final InetEndpoint ep = peer.getEndpoint();
             if (ep == null) continue;
-            final InetEndpoint resolved = ep.getResolved().orElse(null);
+            final InetEndpoint resolved = ep.getResolved();
             if (resolved != null)
                 activeEndpointIps.add(resolved.getHost());
         }

@@ -8,9 +8,10 @@ package org.amnezia.awg.config;
 import org.amnezia.awg.util.NonNullForAll;
 
 import java.util.Iterator;
-import java.util.Optional;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import androidx.annotation.Nullable;
 
 @NonNullForAll
 public final class Attribute {
@@ -39,11 +40,12 @@ public final class Attribute {
         return sb.toString();
     }
 
-    public static Optional<Attribute> parse(final CharSequence line) {
+    @Nullable
+    public static Attribute parse(final CharSequence line) {
         final Matcher matcher = LINE_PATTERN.matcher(line);
         if (!matcher.matches())
-            return Optional.empty();
-        return Optional.of(new Attribute(matcher.group(1), matcher.group(2)));
+            return null;
+        return new Attribute(matcher.group(1), matcher.group(2));
     }
 
     public static String[] split(final CharSequence value) {
