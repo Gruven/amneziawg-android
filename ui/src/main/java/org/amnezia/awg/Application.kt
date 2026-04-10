@@ -7,6 +7,7 @@ package org.amnezia.awg
 import android.content.Context
 import android.content.Intent
 import android.os.Build
+import android.os.Environment
 import android.os.StrictMode
 import androidx.multidex.MultiDexApplication
 import android.os.StrictMode.ThreadPolicy
@@ -170,17 +171,39 @@ class Application : MultiDexApplication() {
         val defaultHandler = Thread.getDefaultUncaughtExceptionHandler()
         Thread.setDefaultUncaughtExceptionHandler { thread, throwable ->
             try {
-                val crashFile = File(filesDir, "crash_log.txt")
                 val sw = StringWriter()
                 sw.append("=== CRASH ${Date()} ===\n")
                 sw.append("Thread: ${thread.name}\n")
+                @Suppress("DEPRECATION")
                 sw.append("SDK: ${Build.VERSION.SDK_INT}, ABI: ${Build.CPU_ABI}\n")
                 sw.append("Version: ${BuildConfig.VERSION_NAME}\n\n")
                 throwable.printStackTrace(PrintWriter(sw))
-                crashFile.appendText(sw.toString() + "\n\n")
+                val crashEntry = sw.toString() + "\n\n"
+                appendCrashLog(File(filesDir, "crash_log.txt"), crashEntry)
+                appendCrashLog(getPublicCrashLogFile(), crashEntry)
             } catch (_: Throwable) {
             }
             defaultHandler?.uncaughtException(thread, throwable)
+        }
+    }
+
+    private fun appendCrashLog(file: File?, crashEntry: String) {
+        if (file == null) return
+        try {
+            val parent = file.parentFile
+            if (parent != null && !parent.isDirectory && !parent.mkdirs()) return
+            file.appendText(crashEntry)
+        } catch (_: Throwable) {
+        }
+    }
+
+    private fun getPublicCrashLogFile(): File? {
+        return try {
+            @Suppress("DEPRECATION")
+            val downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
+            File(downloadsDir, "amneziawg_crash_log.txt")
+        } catch (_: Throwable) {
+            null
         }
     }
 
