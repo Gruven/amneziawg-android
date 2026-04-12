@@ -6,7 +6,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 Android client for AmneziaWG — a WireGuard fork with additional obfuscation capabilities. Multi-module Gradle project with native code in Go and C.
 
-**This is the `legacy/api19` branch** — a legacy build targeting Android 4.4 (API 19). For modern Android (5.0+), see the `master` branch.
+**IMPORTANT: this is the `legacy/api19` branch** — a legacy build targeting **Android 4.4 / API 19 only**. For modern Android (5.0+), see the `master` branch.
+
+> [!WARNING]
+> **API 19 ONLY. Do not add, keep, or restore Android > 19 functionality in this branch.**
+> If code, manifest entries, resources, dependencies, or lint suppressions are only useful for API 20+ / 21+ / 23+ / 24+ / 25+ / 28+ / 30+, remove them or replace them with an API19-safe no-op/simplification. Do not add runtime SDK checks merely to preserve newer-Android features.
+> Before implementing, verify every Android API, manifest attribute, permission, support-library feature, and dependency against Android 4.4/API 19 compatibility. Preserve existing application functionality whenever it can be kept API19-safe; if a specific feature cannot be preserved for API19, explicitly report that loss and why.
 
 ## Build commands
 
@@ -43,19 +48,19 @@ git checkout legacy/api19
 **MVVM** with Android Data Binding. UI layer in Kotlin, tunnel logic in Java.
 
 ### UI module (`ui/src/main/java/org/amnezia/awg/`)
-- `activity/` — Activities. `BaseActivity` — shared base class. `MainActivity` for phones, `TvMainActivity` for Android TV (Leanback). `SettingsActivity`, `LogViewerActivity`, `TunnelCreatorActivity`, `TunnelToggleActivity`, `TaskerEditActivity`
+- `activity/` — Activities. `BaseActivity` — shared base class. `MainActivity`, `SettingsActivity`, `LogViewerActivity`, `TunnelCreatorActivity`, `TunnelToggleActivity`, `TaskerEditActivity`
 - `fragment/` — Fragments. `TunnelListFragment`, `TunnelDetailFragment`, `TunnelEditorFragment`, `AppListDialogFragment`, `AddTunnelsSheet`, `ConfigNamingDialogFragment`
 - `viewmodel/` — Proxy classes (`InterfaceProxy`, `PeerProxy`, `ConfigProxy`) for data binding
 - `model/` — `TunnelManager`, `ObservableTunnel`, `ApplicationData`
 - `preference/` — Custom preferences (`VersionPreference`, `ToolsInstallerPreference`, `ZipExporterPreference`, `KernelModuleEnablerPreference`)
-- `widget/` — Custom views (`ToggleSwitch`, `TvCardView`, `KeyInputFilter`, `NameInputFilter`)
+- `widget/` — Custom views (`ToggleSwitch`, `KeyInputFilter`, `NameInputFilter`)
 - `databinding/` — Observable collections and binding adapters
-- `util/` — Helpers (`ErrorMessages`, `UserKnobs`, `AdminKnobs`, `BiometricAuthenticator`, `ClipboardUtils`, `DownloadsFileSaver`, `QrCodeFromFileScanner`, `TunnelImporter`)
+- `util/` — Helpers (`ErrorMessages`, `UserKnobs`, `AdminKnobs`, `ClipboardUtils`, `DownloadsFileSaver`, `QrCodeFromFileScanner`, `TunnelImporter`)
 - `Application.kt` — App entry point, backend initialization
 - `BootShutdownReceiver.kt` — Auto-start on boot
 - `TaskerFireReceiver.kt` — Tasker plugin action receiver
 
-**Note:** No `QuickTileService` on this branch (Quick Settings tiles require API 24+).
+**Note:** No Android TV/Leanback launcher path, no `QuickTileService`, and no AndroidX Biometric on this branch; these are not API19-only requirements.
 
 ### Tunnel module (`tunnel/src/main/java/org/amnezia/awg/`)
 - `backend/` — `Backend` interface, `GoBackend` (primary, via JNI), `RootGoBackend` (root-based, no VPN API), `AwgQuickBackend` (alternative via root)
@@ -102,8 +107,15 @@ The project uses submodules (`amneziawg-tools`, `elf-cleaner`). After cloning or
 
 ## API compatibility notes
 
-This branch targets API 19 (Android 4.4 KitKat). Key restrictions:
+**This branch targets API 19 (Android 4.4 KitKat), not newer Android versions. Treat API 19 compatibility as a hard requirement for every change.** Key restrictions:
+- No Android TV / Leanback launcher support (`LEANBACK_LAUNCHER` and related banner attrs are API 20/21+)
 - No Quick Settings tiles (API 24+)
+- No AndroidX Biometric / BiometricPrompt / Fingerprint feature path for this branch
 - No `PowerManager.isIgnoringBatteryOptimizations()` (API 23+)
 - No Doze mode / `dumpsys deviceidle` (API 23+)
+- No `<queries>` package visibility block (API 30+)
+- No `android:roundIcon` (API 25+) or `android:banner` (API 20/21+)
+- No `android.permission.FOREGROUND_SERVICE` / `foregroundServiceType` additions for API19-only behavior
 - `elf-cleaner` is required for .so compatibility with API < 21
+
+When in doubt, prefer preserving the existing app behavior with an API19-safe implementation. If preservation is impossible because the feature is inherently newer-Android-only, prefer deletion or an API19-safe no-op over compatibility shims, and explicitly call out the removed/degraded functionality in the final report.
