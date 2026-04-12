@@ -37,7 +37,6 @@
     <string name="create_activity_title">Luo AmneziaWG Tunnel</string>
     <string name="dark_theme_title">Käytä tummaa teemaa</string>
     <string name="delete">Poista</string>
-    <string name="tv_delete">Valitse poistettava tunneli</string>
     <string name="dns_servers">DNS palvelimet</string>
     <string name="dns_search_domains">Hakudomaini</string>
     <string name="edit">Muokkaa</string>
@@ -83,8 +82,6 @@
     <string name="transfer_tibibytes">%.2f TiB</string>
     <string name="tunnel_name">Tunnelin nimi</string>
     <string name="version_summary_unknown">Tuntematon %s versio</string>
-    <string name="biometric_auth_error">Varmennusvirhe</string>
-    <string name="biometric_auth_error_reason">Varmennusvirhe: %s</string>
     <string name="root_mode_summary_off">Käytetään Android VPN APIa (vakiotila)</string>
     <string name="root_mode_summary_on">Käytetään root-käyttöoikeutta tunnelille (ei VPN APIa, kaikki sovellukset reititetään)</string>
     <string name="root_mode_title">Root-tila (ei VPN APIa)</string>

@@ -75,10 +75,6 @@
     <string name="dark_theme_summary_on">Bruger lige nu mørkt (nat) tema</string>
     <string name="dark_theme_title">Brug mørkt tema</string>
     <string name="delete">Slet</string>
-    <string name="tv_delete">Vælg tunnel du vil slette</string>
-    <string name="tv_select_a_storage_drive">Vælg et lagerdrev</string>
-    <string name="tv_add_tunnel_get_started">Tilføj en tunnel for at komme i gang</string>
-    <string name="disable_config_export_title">Deaktivér eksportering af konfiguration</string>
     <string name="dns_servers">DNS-servere</string>
     <string name="dns_search_domains">DNS-søgedomæner</string>
     <string name="edit">Redigér</string>
@@ -166,8 +162,6 @@
     <string name="zip_export_error">Ikke i stand til at eksportere tunneler: %s</string>
     <string name="zip_export_success">Gemt til \"%s\"</string>
     <string name="zip_export_title">Eksportér tunneler til zip-fil</string>
-    <string name="biometric_auth_error">Fejl ved godkendelse</string>
-    <string name="biometric_auth_error_reason">Fejl ved godkendelse: %s</string>
     <string name="tasker_plugin_title">AmneziaWG tunnelstyring</string>
     <string name="tasker_select_tunnel">Tunnel</string>
     <string name="tasker_select_action">Handling</string>

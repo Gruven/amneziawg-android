@@ -16,9 +16,6 @@
         android:name="android.hardware.touchscreen"
         android:required="false" />
     <uses-feature
-        android:name="android.software.leanback"
-        android:required="false" />
-    <uses-feature
         android:name="android.hardware.camera.any"
         android:required="false" />
     <uses-feature
@@ -28,10 +25,8 @@
     <application
         android:name=".Application"
         android:allowBackup="false"
-        android:banner="@mipmap/banner"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
@@ -49,16 +44,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-        </activity>
-
-        <activity
-            android:name=".activity.TvMainActivity"
-            android:exported="true"
-            android:theme="@style/TvTheme">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
-            </intent-filter>
         </activity>
 
         <activity
@@ -129,16 +114,5 @@
                 <action android:name="org.amnezia.awg.action.SET_TUNNEL_DOWN" />
             </intent-filter>
         </receiver>
-
-        <meta-data
-            android:name="android.content.APP_RESTRICTIONS"
-            android:resource="@xml/app_restrictions" />
     </application>
-
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent>
-    </queries>
 </manifest>

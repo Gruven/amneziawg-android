@@ -59,9 +59,6 @@
     <string name="dark_theme_summary_on">දැනට අඳුරු (රාත්‍රී) තේමාව භාවිතා කරයි</string>
     <string name="dark_theme_title">අඳුරු තේමාව භාවිතය</string>
     <string name="delete">මකන්න</string>
-    <string name="tv_select_a_storage_drive">ගබඩා ධාවකයක් තෝරන්න</string>
-    <string name="tv_no_file_picker">කරුණාකර ගොනු පිරික්සීමට ගොනු කළමනාකරණ උපයෝගිතා ස්ථාපනය කරන්න</string>
-    <string name="disable_config_export_description">වින්‍යාස අපනයනය අක්‍රිය කිරීම පුද්ගලික යතුරු වලට ප්‍රවේශ වීම අඩු කරයි</string>
     <string name="dns_servers">ව.නා.ප. සේවාදායක</string>
     <string name="dns_search_domains">වසම් සොයන්න</string>
     <string name="edit">සංස්කරණය</string>
@@ -181,10 +178,6 @@
     <string name="zip_export_success">“%s” ට සුරැකිණි</string>
     <string name="zip_export_summary">Zip ගොනුව බාගැනීම් ෆෝල්ඩරයට සුරකිනු ඇත</string>
     <string name="zip_export_title">zip ගොනුවට උමං අපනයනය කරන්න</string>
-    <string name="biometric_prompt_zip_exporter_title">උමං අපනයනය කිරීමට සත්‍යාපනය කරන්න</string>
-    <string name="biometric_prompt_private_key_title">පුද්ගලික යතුර බැලීමට සත්‍යාපනය කරන්න</string>
-    <string name="biometric_auth_error">සත්‍යාපනය අසාර්ථක වීම</string>
-    <string name="biometric_auth_error_reason">සත්‍යාපන අසාර්ථකත්වය: %s</string>
     <string name="tasker_plugin_title">AmneziaWG උමං පාලනය</string>
     <string name="tasker_select_tunnel">උමඟ</string>
     <string name="tasker_select_action">ක්‍රියාව</string>

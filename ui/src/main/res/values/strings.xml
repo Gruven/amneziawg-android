@@ -81,12 +81,6 @@
     <string name="root_shell_error">Root shell command failed: %d</string>
     <string name="type_name_root_go_userspace">Root Go userspace</string>
     <string name="delete">Delete</string>
-    <string name="tv_delete">Select tunnel to delete</string>
-    <string name="tv_select_a_storage_drive">Select a storage drive</string>
-    <string name="tv_no_file_picker">Please install a file management utility to browse files</string>
-    <string name="tv_add_tunnel_get_started">Add a tunnel to get started</string>
-    <string name="disable_config_export_title">Disable config exporting</string>
-    <string name="disable_config_export_description">Disabling config exporting makes private keys less accessible</string>
     <string name="dns_servers">DNS servers</string>
     <string name="dns_search_domains">Search domains</string>
     <string name="edit">Edit</string>
@@ -237,10 +231,6 @@
     <string name="zip_export_success">Saved to “%s”</string>
     <string name="zip_export_summary">Zip file will be saved to downloads folder</string>
     <string name="zip_export_title">Export tunnels to zip file</string>
-    <string name="biometric_prompt_zip_exporter_title">Authenticate to export tunnels</string>
-    <string name="biometric_prompt_private_key_title">Authenticate to view private key</string>
-    <string name="biometric_auth_error">Authentication failure</string>
-    <string name="biometric_auth_error_reason">Authentication failure: %s</string>
     <string name="import_disclaimer">Ensure that you obtained the configuration file from a trusted source.\n\nOfficial Amnezia services are available only at <a href="https://amnezia.org">amnezia.org</a>\n</string>
     <string name="tunnel_status_connected">Connected</string>
     <string name="tunnel_status_connecting">Connecting…</string>

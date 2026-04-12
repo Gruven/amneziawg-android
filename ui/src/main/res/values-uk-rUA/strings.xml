@@ -97,12 +97,6 @@
     <string name="dark_theme_summary_on">Зараз використовується темна (нічна) тема</string>
     <string name="dark_theme_title">Використовувати темну тему</string>
     <string name="delete">Видалити</string>
-    <string name="tv_delete">Оберіть тунель для видалення</string>
-    <string name="tv_select_a_storage_drive">Виберіть диск зберігання</string>
-    <string name="tv_no_file_picker">Будь ласка, встановіть провідник для перегляду файлів</string>
-    <string name="tv_add_tunnel_get_started">Додайте тунель, щоб почати</string>
-    <string name="disable_config_export_title">Вимкнути експорт конфігурації</string>
-    <string name="disable_config_export_description">Вимкнення експорту налаштувань робить приватні ключі менш доступними</string>
     <string name="dns_servers">DNS-сервери</string>
     <string name="dns_search_domains">Пошук доменів</string>
     <string name="edit">Редагувати</string>
@@ -233,10 +227,6 @@
     <string name="zip_export_success">Збережено до “%s”</string>
     <string name="zip_export_summary">Zip-файл буде збережено до теки завантажень</string>
     <string name="zip_export_title">Експортувати тунелі в zip-файл</string>
-    <string name="biometric_prompt_zip_exporter_title">Авторизуватись для експорту тунелів</string>
-    <string name="biometric_prompt_private_key_title">Авторизуйтеся для перегляду закритого ключа</string>
-    <string name="biometric_auth_error">Помилка автентифікації</string>
-    <string name="biometric_auth_error_reason">Помилка автентифікації: %s</string>
     <string name="tasker_plugin_title">Керування тунелем AmneziaWG</string>
     <string name="tasker_select_tunnel">Тунель</string>
     <string name="tasker_select_action">Дія</string>

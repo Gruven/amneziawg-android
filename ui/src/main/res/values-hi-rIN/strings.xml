@@ -196,10 +196,6 @@
     <string name="zip_export_success">“%s” पर सहेजा गया</string>
     <string name="zip_export_summary">ज़िप फ़ाइल को डाउनलोड फ़ोल्डर में सहेजा जाएगा</string>
     <string name="zip_export_title">जिप फाइल के लिए टनल को एक्सपोर्ट करें</string>
-    <string name="biometric_prompt_zip_exporter_title">टनल्स के निर्यात के लिए प्रमाणित करें</string>
-    <string name="biometric_prompt_private_key_title">प्राइवेट की देखने के लिए प्रमाणित करें</string>
-    <string name="biometric_auth_error">प्रमाणीकरण विफलता</string>
-    <string name="biometric_auth_error_reason">प्रमाणीकरण विफल: %s</string>
     <string name="tasker_plugin_title">AmneziaWG सुरंग नियंत्रण</string>
     <string name="tasker_select_tunnel">सुरंग</string>
     <string name="tasker_select_action">क्रिया</string>

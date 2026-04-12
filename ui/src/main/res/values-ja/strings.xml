@@ -76,12 +76,6 @@
     <string name="dark_theme_summary_on">ダークテーマを使用中</string>
     <string name="dark_theme_title">ダークテーマを使用する</string>
     <string name="delete">削除</string>
-    <string name="tv_delete">削除するトンネルを選択</string>
-    <string name="tv_select_a_storage_drive">ストレージを選択</string>
-    <string name="tv_no_file_picker">ファイルを参照するにはファイル管理アプリをインストールしてください</string>
-    <string name="tv_add_tunnel_get_started">トンネルを追加して開始する</string>
-    <string name="disable_config_export_title">設定のエクスポートを無効にする</string>
-    <string name="disable_config_export_description">設定のエクスポートを無効にすると、秘密鍵にアクセスされにくくなります</string>
     <string name="dns_servers">DNS サーバ</string>
     <string name="dns_search_domains">サーチドメイン</string>
     <string name="edit">編集</string>
@@ -216,10 +210,6 @@
     <string name="zip_export_success">“%s” に保存</string>
     <string name="zip_export_summary">Zip ファイルはダウンロードフォルダに保存されます</string>
     <string name="zip_export_title">トンネル設定を zip ファイルにエクスポート</string>
-    <string name="biometric_prompt_zip_exporter_title">トンネル設定をエクスポートするために認証を行います</string>
-    <string name="biometric_prompt_private_key_title">秘密鍵を表示するために認証を行います</string>
-    <string name="biometric_auth_error">認証に失敗</string>
-    <string name="biometric_auth_error_reason">認証に失敗: %s</string>
     <string name="tasker_plugin_title">AmneziaWGトンネル制御</string>
     <string name="tasker_select_tunnel">トンネル</string>
     <string name="tasker_select_action">アクション</string>

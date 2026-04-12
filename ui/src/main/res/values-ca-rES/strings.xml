@@ -81,12 +81,6 @@
     <string name="dark_theme_summary_on">Actualment fent servir el tema fosc (nit)</string>
     <string name="dark_theme_title">Utilitza tema fosc</string>
     <string name="delete">Elimina</string>
-    <string name="tv_delete">Slecciona túnel a esborrar</string>
-    <string name="tv_select_a_storage_drive">Seleccioneu un disc d\'emmagatzematge</string>
-    <string name="tv_no_file_picker">Si us plau, instsleu un gestor de fitxers per navegar pels arxius</string>
-    <string name="tv_add_tunnel_get_started">Afegeix un túnel per començar</string>
-    <string name="disable_config_export_title">Desactiva l\'exportació de configuracions</string>
-    <string name="disable_config_export_description">Desactivar l\'exportacio de configuracions fa que les claus privades siguin menys accessibles</string>
     <string name="dns_servers">Servidors DNS</string>
     <string name="edit">Edita</string>
     <string name="endpoint">Extrem</string>
@@ -203,10 +197,6 @@
     <string name="zip_export_success">Guardat a \"%s\"</string>
     <string name="zip_export_summary">El fitxer zip es guardarà a la carpeta de descàrregues</string>
     <string name="zip_export_title">Exporta els túnels a un fitxer zip</string>
-    <string name="biometric_prompt_zip_exporter_title">Autentifiqueu-vos per exportar els túnels</string>
-    <string name="biometric_prompt_private_key_title">Autentifiqueu-vos per veure la clau privada</string>
-    <string name="biometric_auth_error">Error d\'autenticació</string>
-    <string name="biometric_auth_error_reason">Error d\'autenticació: %s</string>
     <string name="tasker_plugin_title">Control de túnel AmneziaWG</string>
     <string name="tasker_select_tunnel">Túnel</string>
     <string name="tasker_select_action">Acció</string>

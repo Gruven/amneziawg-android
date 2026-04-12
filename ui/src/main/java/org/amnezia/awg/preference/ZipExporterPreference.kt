@@ -12,7 +12,6 @@ import com.google.android.material.snackbar.Snackbar
 import org.amnezia.awg.Application
 import org.amnezia.awg.R
 import org.amnezia.awg.util.AdminKnobs
-import org.amnezia.awg.util.BiometricAuthenticator
 import org.amnezia.awg.util.DownloadsFileSaver
 import org.amnezia.awg.util.ErrorMessages
 import org.amnezia.awg.util.activity
@@ -85,26 +84,8 @@ class ZipExporterPreference(context: Context, attrs: AttributeSet?) : Preference
 
     override fun onClick() {
         if (AdminKnobs.disableConfigExport) return
-        val fragment = activity.supportFragmentManager.fragments.first()
-        BiometricAuthenticator.authenticate(R.string.biometric_prompt_zip_exporter_title, fragment) {
-            when (it) {
-                // When we have successful authentication, or when there is no biometric hardware available.
-                is BiometricAuthenticator.Result.Success, is BiometricAuthenticator.Result.HardwareUnavailableOrDisabled -> {
-                    isEnabled = false
-                    exportZip()
-                }
-
-                is BiometricAuthenticator.Result.Failure -> {
-                    Snackbar.make(
-                        activity.findViewById(android.R.id.content),
-                        it.message,
-                        Snackbar.LENGTH_SHORT
-                    ).show()
-                }
-
-                is BiometricAuthenticator.Result.Cancelled -> {}
-            }
-        }
+        isEnabled = false
+        exportZip()
     }
 
     companion object {

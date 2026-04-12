@@ -83,12 +83,6 @@
     <string name="dark_theme_summary_on">Bruker nå mørkt (natt) tema</string>
     <string name="dark_theme_title">Bruk mørkt tema</string>
     <string name="delete">Slett</string>
-    <string name="tv_delete">Velg tunnel som skal slettes</string>
-    <string name="tv_select_a_storage_drive">Velg en lagringsenhet</string>
-    <string name="tv_no_file_picker">Vennligst installer et filhåndteringsverktøy for å bla i filer</string>
-    <string name="tv_add_tunnel_get_started">Opprett en ny tunnel for å komme i gang</string>
-    <string name="disable_config_export_title">Deaktiver eksport av konfigurasjon</string>
-    <string name="disable_config_export_description">Deaktivering av konfigurasjonseksport gjør private nøkler mindre tilgjengelig</string>
     <string name="dns_servers">DNS tjenere</string>
     <string name="dns_search_domains">Søk gjennom domener</string>
     <string name="edit">Rediger</string>
@@ -217,10 +211,6 @@
     <string name="zip_export_success">Lagret til «%s»</string>
     <string name="zip_export_summary">Zip-filen vil bli lagret i nedlastingsmappen</string>
     <string name="zip_export_title">Eksporter tunneler til zip-fil</string>
-    <string name="biometric_prompt_zip_exporter_title">Autentiser for å eksportere tunneler</string>
-    <string name="biometric_prompt_private_key_title">Autentiser for å vise privatnøkkel</string>
-    <string name="biometric_auth_error">Autentiseringsfeil</string>
-    <string name="biometric_auth_error_reason">Autentiseringsfeil: %s</string>
     <string name="tasker_plugin_title">AmneziaWG tunnelstyring</string>
     <string name="tasker_select_tunnel">Tunnel</string>
     <string name="tasker_select_action">Handling</string>

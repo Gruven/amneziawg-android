@@ -83,12 +83,6 @@
     <string name="dark_theme_summary_on">Utilisation en cours du thème sombre (nuit)</string>
     <string name="dark_theme_title">Utilisez le thème sombre</string>
     <string name="delete">Supprimer</string>
-    <string name="tv_delete">Sélectionner le tunnel à supprimer</string>
-    <string name="tv_select_a_storage_drive">Sélectionner un disque de stockage</string>
-    <string name="tv_no_file_picker">Veuillez installer un utilitaire de gestion de fichiers pour parcourir les fichiers</string>
-    <string name="tv_add_tunnel_get_started">Ajouter un tunnel pour commencer</string>
-    <string name="disable_config_export_title">Désactiver l\'export de configuration</string>
-    <string name="disable_config_export_description">La désactivation de l\'export de configuration rend les clés privées moins accessibles</string>
     <string name="dns_servers">Serveurs DNS</string>
     <string name="dns_search_domains">Domaines de recherche DNS</string>
     <string name="edit">Modifier</string>
@@ -223,10 +217,6 @@
     <string name="zip_export_success">Enregistré dans « %s »</string>
     <string name="zip_export_summary">L\'archive zip sera sauvegardée dans le dossier de téléchargement</string>
     <string name="zip_export_title">Exporter les tunnels vers le fichier zip</string>
-    <string name="biometric_prompt_zip_exporter_title">S\'authentifier pour exporter des tunnels</string>
-    <string name="biometric_prompt_private_key_title">S\'authentifier pour voir la clé privée</string>
-    <string name="biometric_auth_error">Échec de l\'authentification</string>
-    <string name="biometric_auth_error_reason">Échec de l\'authentification : %s</string>
     <string name="tasker_plugin_title">Contrôle de tunnel AmneziaWG</string>
     <string name="tasker_select_tunnel">Tunnel</string>
     <string name="tasker_select_action">Action</string>

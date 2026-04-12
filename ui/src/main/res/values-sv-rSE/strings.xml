@@ -83,12 +83,6 @@
     <string name="dark_theme_summary_on">Använder just nu mörkt (natt) tema</string>
     <string name="dark_theme_title">Använd mörkt tema</string>
     <string name="delete">Radera</string>
-    <string name="tv_delete">Välj tunnel att ta bort</string>
-    <string name="tv_select_a_storage_drive">Välj en lagringsenhet</string>
-    <string name="tv_no_file_picker">Installera ett filhanteringsverktyg för att bläddra bland filer</string>
-    <string name="tv_add_tunnel_get_started">Lägg till en tunnel för att komma igång</string>
-    <string name="disable_config_export_title">Inaktivera export av konfiguration</string>
-    <string name="disable_config_export_description">Inaktivering av konfigurationsexport gör privata nycklar mindre tillgängliga</string>
     <string name="dns_servers">DNS-servrar</string>
     <string name="dns_search_domains">Sök domäner</string>
     <string name="edit">Redigera</string>
@@ -223,10 +217,6 @@
     <string name="zip_export_success">Sparad till ”%s”</string>
     <string name="zip_export_summary">Zip-filen kommer att sparas till nedladdningskatalogen</string>
     <string name="zip_export_title">Exportera tunnlar till zip-fil</string>
-    <string name="biometric_prompt_zip_exporter_title">Godkänn för att exportera tunnlar</string>
-    <string name="biometric_prompt_private_key_title">Godkänn för att visa tunnelns privata nycklar</string>
-    <string name="biometric_auth_error">Fel vid godkännande</string>
-    <string name="biometric_auth_error_reason">Fel vid godkännande: %s</string>
     <string name="tasker_plugin_title">AmneziaWG tunnelkontroll</string>
     <string name="tasker_select_tunnel">Tunnel</string>
     <string name="tasker_select_action">Åtgärd</string>

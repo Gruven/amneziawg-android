@@ -83,12 +83,6 @@
     <string name="dark_theme_summary_on">Hetkel kasutusel tume (öine) teema</string>
     <string name="dark_theme_title">Kasuta tumedat teemat</string>
     <string name="delete">Kustuta</string>
-    <string name="tv_delete">Vali tunnel, mida kustutada</string>
-    <string name="tv_select_a_storage_drive">Vali salvestusseade</string>
-    <string name="tv_no_file_picker">Failide vaatamiseks paigalda failide haldusvahend</string>
-    <string name="tv_add_tunnel_get_started">Alustamiseks lisa uus tunnel</string>
-    <string name="disable_config_export_title">Keela seadistuste eksportimine</string>
-    <string name="disable_config_export_description">Seadistuste eksportimise keelamine teeb privaatvõtmetele ligipääsu keerulisemaks</string>
     <string name="dns_servers">DNS-serverid</string>
     <string name="dns_search_domains">DNS-i otsingudomeenid</string>
     <string name="edit">Muuda</string>
@@ -220,10 +214,6 @@
     <string name="zip_export_success">Salvestatud faili \"%s\"</string>
     <string name="zip_export_summary">Zip fail salvestatakse allalaadimiste kausta</string>
     <string name="zip_export_title">Ekspordi tunnelid zip-faili</string>
-    <string name="biometric_prompt_zip_exporter_title">Autendi tunnelite eksportimiseks</string>
-    <string name="biometric_prompt_private_key_title">Autendi privaatvõtme vaatamiseks</string>
-    <string name="biometric_auth_error">Autentimine ebaõnnestus</string>
-    <string name="biometric_auth_error_reason">Autentimine ebaõnnestus: %s</string>
     <string name="tasker_plugin_title">AmneziaWG tunneli juhtimine</string>
     <string name="tasker_select_tunnel">Tunnel</string>
     <string name="tasker_select_action">Tegevus</string>

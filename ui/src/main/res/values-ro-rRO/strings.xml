@@ -90,12 +90,6 @@
     <string name="dark_theme_summary_on">În prezent este utilizată tema întunecată (noapte)</string>
     <string name="dark_theme_title">Utilizare temă întunecată</string>
     <string name="delete">Ștergere</string>
-    <string name="tv_delete">Selectează tunelul de șters</string>
-    <string name="tv_select_a_storage_drive">Selectează o unitate de stocare</string>
-    <string name="tv_no_file_picker">Instalează un serviciu de administrare a fișierelor pentru a căuta fișiere</string>
-    <string name="tv_add_tunnel_get_started">Adaugă un tunel pentru a începe</string>
-    <string name="disable_config_export_title">Dezactivează exportarea configurației</string>
-    <string name="disable_config_export_description">Dezactivarea exportării configurației face mai puțin accesibile cheile private</string>
     <string name="dns_servers">Servere DNS</string>
     <string name="dns_search_domains">Domenii de căutare</string>
     <string name="edit">Editare</string>
@@ -227,10 +221,6 @@
     <string name="zip_export_success">Salvat în „%s”</string>
     <string name="zip_export_summary">Fișierul zip va fi salvat în dosarul pentru descărcări</string>
     <string name="zip_export_title">Exportare tuneluri în fișierul zip</string>
-    <string name="biometric_prompt_zip_exporter_title">Autentifică-te pentru a exporta tunelurile</string>
-    <string name="biometric_prompt_private_key_title">Autentifică-te pentru a vizualiza cheia privată</string>
-    <string name="biometric_auth_error">Eroare la autentificare</string>
-    <string name="biometric_auth_error_reason">Eroare la autentificare: %s</string>
     <string name="tasker_plugin_title">Control tunel AmneziaWG</string>
     <string name="tasker_select_tunnel">Tunel</string>
     <string name="tasker_select_action">Acțiune</string>

@@ -101,8 +101,6 @@
     <string name="unknown_error">Άγνωστο σφάλμα</string>
     <string name="version_summary_unknown">Άγνωστη έκδοση %s</string>
     <string name="version_title">AmneziaWG+ για Android v%s</string>
-    <string name="biometric_auth_error">Αποτυχία ελέγχου ταυτότητας</string>
-    <string name="biometric_auth_error_reason">Αποτυχία ελέγχου ταυτότητας: %s</string>
     <string name="root_mode_summary_off">Χρήση Android VPN API (τυπική λειτουργία)</string>
     <string name="root_mode_summary_on">Χρήση πρόσβασης root για τούνελ (χωρίς VPN API, όλες οι εφαρμογές δρομολογούνται)</string>
     <string name="root_mode_title">Λειτουργία root (χωρίς VPN API)</string>

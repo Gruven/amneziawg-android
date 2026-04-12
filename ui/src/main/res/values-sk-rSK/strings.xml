@@ -52,12 +52,6 @@
     <string name="dark_theme_summary_on">Momentálne používate tmavý (nočný) vzhľad</string>
     <string name="dark_theme_title">Používať tmavý vzhľad</string>
     <string name="delete">Odstrániť</string>
-    <string name="tv_delete">Vyberte tunel na odstránenie</string>
-    <string name="tv_select_a_storage_drive">Vyberte úložnú jednotku</string>
-    <string name="tv_no_file_picker">Prosím nainštalujte manažéra súborov aby ste mohli prehliadať súbory</string>
-    <string name="tv_add_tunnel_get_started">Pridajte tunel aby ste mohli začať</string>
-    <string name="disable_config_export_title">Zakázať export konfigurácie</string>
-    <string name="disable_config_export_description">Zakázanie exportu konfigurácie spôsobí, že prístup k súkromným kľúčom sa stáva zložitým</string>
     <string name="dns_servers">Servery DNS</string>
     <string name="dns_search_domains">Prehľadávať domény</string>
     <string name="edit">Upraviť</string>
@@ -159,10 +153,6 @@
     <string name="zip_export_success">Uložené ako “%s”</string>
     <string name="zip_export_summary">Zip súbor bude uložený do priečinka stiahnuté</string>
     <string name="zip_export_title">Export tunelov do zip súboru</string>
-    <string name="biometric_prompt_zip_exporter_title">Overovanie pre export tunelov</string>
-    <string name="biometric_prompt_private_key_title">Authenticate to view private key</string>
-    <string name="biometric_auth_error">Overovanie zlyhalo</string>
-    <string name="biometric_auth_error_reason">Overovanie zlyhalo: %s</string>
     <string name="tasker_plugin_title">Ovládanie tunela AmneziaWG</string>
     <string name="tasker_select_tunnel">Tunel</string>
     <string name="tasker_select_action">Akcia</string>

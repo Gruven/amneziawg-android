@@ -23,7 +23,6 @@ import org.amnezia.awg.R
 import org.amnezia.awg.databinding.ObservableKeyedRecyclerViewAdapter.RowConfigurationHandler
 import org.amnezia.awg.widget.ToggleSwitch
 import org.amnezia.awg.widget.ToggleSwitch.OnBeforeCheckedChangeListener
-import org.amnezia.awg.widget.TvCardView
 import org.amnezia.awg.config.Attribute
 import org.amnezia.awg.config.InetNetwork
 import java.net.InetAddress
@@ -168,15 +167,4 @@ object BindingAdapters {
         view.text = if (strings != null) Attribute.join(strings) else ""
     }
 
-    @JvmStatic
-    @BindingAdapter("isUp")
-    fun setIsUp(card: TvCardView, up: Boolean) {
-        card.isUp = up
-    }
-
-    @JvmStatic
-    @BindingAdapter("isDeleting")
-    fun setIsDeleting(card: TvCardView, deleting: Boolean) {
-        card.isDeleting = deleting
-    }
 }

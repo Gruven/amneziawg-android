@@ -76,12 +76,6 @@
     <string name="dark_theme_summary_on">Đang sử dụng đề tối (ban đêm)</string>
     <string name="dark_theme_title">Sử dụng đề tối</string>
     <string name="delete">Xóa</string>
-    <string name="tv_delete">Chọn tunnel để xóa</string>
-    <string name="tv_select_a_storage_drive">Chọn bộ lưu trữ</string>
-    <string name="tv_no_file_picker">Vui lòng cài đặt tệp tiện ích lưu trữ để tìm kiếm các tệp</string>
-    <string name="tv_add_tunnel_get_started">Thêm một tunnel để bắt đầu</string>
-    <string name="disable_config_export_title">Vô hiệu hóa xuất cấu hình</string>
-    <string name="disable_config_export_description">Vô hiệu hóa xuất cấu hình sẽ giúp giảm khả năng truy cập vào private keys</string>
     <string name="dns_servers">DNS servers</string>
     <string name="dns_search_domains">Tên miền của DNS tìm kiếm</string>
     <string name="edit">Chỉnh sửa</string>

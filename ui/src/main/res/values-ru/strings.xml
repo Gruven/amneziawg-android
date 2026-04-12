@@ -97,12 +97,6 @@
     <string name="dark_theme_summary_on">В данный момент используется темная (ночная) тема</string>
     <string name="dark_theme_title">Использовать темную тему</string>
     <string name="delete">Удалить</string>
-    <string name="tv_delete">Выберите туннель для удаления</string>
-    <string name="tv_select_a_storage_drive">Выберите накопитель</string>
-    <string name="tv_no_file_picker">Пожалуйста, установите утилиту управления файлами для их просмотра</string>
-    <string name="tv_add_tunnel_get_started">Добавьте туннель, чтобы начать</string>
-    <string name="disable_config_export_title">Отключить экспорт конфигурации</string>
-    <string name="disable_config_export_description">Отключение экспорта конфигурации делает приватные ключи менее доступными</string>
     <string name="dns_servers">DNS-серверы</string>
     <string name="dns_search_domains">Домены поиска</string>
     <string name="edit">Изменить</string>
@@ -243,10 +237,6 @@
     <string name="zip_export_success">Сохранено в “%s”</string>
     <string name="zip_export_summary">Zip-файл будет сохранен в папке загрузок</string>
     <string name="zip_export_title">Экспорт туннелей в zip-файл</string>
-    <string name="biometric_prompt_zip_exporter_title">Аутентификация для экспорта туннелей</string>
-    <string name="biometric_prompt_private_key_title">Аутентификация для просмотра приватного ключа</string>
-    <string name="biometric_auth_error">Ошибка аутентификации</string>
-    <string name="biometric_auth_error_reason">Ошибка аутентификации: %s</string>
     <string name="import_disclaimer">Убедитесь, что вы получили файл конфигурации в надёжном источнике.\n\nОфициальные сервисы Amnezia доступны только на сайте <a href="https://storage.googleapis.com/amnezia/amnezia.org">amnezia.org</a>\n</string>
     <string name="tunnel_status_connected">Подключено</string>
     <string name="tunnel_status_connecting">Подключение…</string>

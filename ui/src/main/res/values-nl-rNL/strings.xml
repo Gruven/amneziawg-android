@@ -83,12 +83,6 @@
     <string name="dark_theme_summary_on">Momenteel wordt donker (nacht) thema gebruikt</string>
     <string name="dark_theme_title">Gebruik donker thema</string>
     <string name="delete">Verwijder</string>
-    <string name="tv_delete">Selecteer tunnel om te verwijderen</string>
-    <string name="tv_select_a_storage_drive">Selecteer een opslaglocatie</string>
-    <string name="tv_no_file_picker">Installeer een bestandsbeheer applicatie</string>
-    <string name="tv_add_tunnel_get_started">Voeg een tunnel toe om te beginnen</string>
-    <string name="disable_config_export_title">Config export uitschakelen</string>
-    <string name="disable_config_export_description">Het uitschakelen van configuratie export maakt privésleutels minder toegankelijk</string>
     <string name="dns_servers">DNS-servers</string>
     <string name="dns_search_domains">DNS-zoekdomeinen</string>
     <string name="edit">Bewerken</string>
@@ -204,10 +198,6 @@
     <string name="version_title">AmneziaWG+ voor Android v%s</string>
     <string name="zip_export_summary">Zip-bestand wordt opgeslagen in de downloadmap</string>
     <string name="zip_export_title">Exporteer tunnels naar zip-bestand</string>
-    <string name="biometric_prompt_zip_exporter_title">Authenticeer om de tunnel configuratie te exporteren</string>
-    <string name="biometric_prompt_private_key_title">Authenticeer om de persoonlijke sleutel te bekijken</string>
-    <string name="biometric_auth_error">Authenticatiefout</string>
-    <string name="biometric_auth_error_reason">Authenticatiefout: %s</string>
     <string name="tasker_plugin_title">AmneziaWG tunnelbeheer</string>
     <string name="tasker_select_tunnel">Tunnel</string>
     <string name="tasker_select_action">Actie</string>

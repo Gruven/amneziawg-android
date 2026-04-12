@@ -76,12 +76,6 @@
     <string name="dark_theme_summary_on">正在使用暗色（黑夜）主题</string>
     <string name="dark_theme_title">使用暗色主题</string>
     <string name="delete">删除</string>
-    <string name="tv_delete">选择要删除的隧道</string>
-    <string name="tv_select_a_storage_drive">选择一个存储驱动器</string>
-    <string name="tv_no_file_picker">请安装一个文件管理工具以浏览文件</string>
-    <string name="tv_add_tunnel_get_started">添加第一条网络隧道</string>
-    <string name="disable_config_export_title">禁止导出配置</string>
-    <string name="disable_config_export_description">禁止导出配置可降低私钥泄露的风险</string>
     <string name="dns_servers">DNS 服务器</string>
     <string name="dns_search_domains">搜索域名</string>
     <string name="edit">编辑</string>
@@ -216,10 +210,6 @@
     <string name="zip_export_success">已保存至 “%s”</string>
     <string name="zip_export_summary">zip 压缩包将保存至下载文件夹</string>
     <string name="zip_export_title">导出隧道配置</string>
-    <string name="biometric_prompt_zip_exporter_title">导出配置前需要通过认证</string>
-    <string name="biometric_prompt_private_key_title">查看私钥前需要通过认证</string>
-    <string name="biometric_auth_error">认证失败</string>
-    <string name="biometric_auth_error_reason">认证失败：%s</string>
     <string name="tasker_plugin_title">AmneziaWG 隧道控制</string>
     <string name="tasker_select_tunnel">隧道</string>
     <string name="tasker_select_action">操作</string>

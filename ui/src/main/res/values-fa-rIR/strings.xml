@@ -84,12 +84,6 @@
     <string name="dark_theme_summary_on">اکنون از پوسته تاریک(شب) استفاده می‌شود</string>
     <string name="dark_theme_title">استفاده از پوسته تاریک</string>
     <string name="delete">حذف</string>
-    <string name="tv_delete">موارد را برای حذف انتخاب کنید</string>
-    <string name="tv_select_a_storage_drive">حافظه ذخیره سازی موردنظر را انتخاب کنید</string>
-    <string name="tv_no_file_picker">برای مدیریت پوشه های حافظه، یک برنامه مدیریت فایل نصب کنید</string>
-    <string name="tv_add_tunnel_get_started">یک پروفایل تونل برای شروع انتخاب کنید</string>
-    <string name="disable_config_export_title">غیرفعال سازی خروجی گرفتن از کانفیگ ها</string>
-    <string name="disable_config_export_description">غیرفعال سازی خروجی گرفتن، دسترسی کلیدهای خصوصی را کم می کند</string>
     <string name="dns_servers">سرورهای DNS</string>
     <string name="dns_search_domains">جست‌وجوی دامنه‌ها</string>
     <string name="edit">ویرایش</string>
@@ -217,10 +211,6 @@
     <string name="zip_export_success">ذخیره شد در “%s”</string>
     <string name="zip_export_summary">پرونده زیپ در پوشه بارگیری‌ها ذخیره خواهد شد</string>
     <string name="zip_export_title">برون‌بری تونل‌ها در پرونده زیپ</string>
-    <string name="biometric_prompt_zip_exporter_title">برای برون‌بری تونل‌ها، هویت خود را تایید کنید</string>
-    <string name="biometric_prompt_private_key_title">برای دیدن کلید خصوصی، هویت خود را تایید کنید</string>
-    <string name="biometric_auth_error">شکست در تایید هویت</string>
-    <string name="biometric_auth_error_reason">شکست در تایید هویت: %s</string>
     <string name="tasker_plugin_title">کنترل تونل AmneziaWG</string>
     <string name="tasker_select_tunnel">تونل</string>
     <string name="tasker_select_action">عملیات</string>

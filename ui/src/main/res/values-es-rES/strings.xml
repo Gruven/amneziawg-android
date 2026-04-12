@@ -83,12 +83,6 @@
     <string name="dark_theme_summary_on">Actualmente usando tema oscuro (noche)</string>
     <string name="dark_theme_title">Usar tema oscuro</string>
     <string name="delete">Eliminar</string>
-    <string name="tv_delete">Seleccione el túnel para eliminar</string>
-    <string name="tv_select_a_storage_drive">Selecciones un dispositivo de almacenamiento</string>
-    <string name="tv_no_file_picker">Por favor, instale una herramienta de gestión de archivos para navegar por archivos</string>
-    <string name="tv_add_tunnel_get_started">Agregue un túnel para empezar</string>
-    <string name="disable_config_export_title">Inhabilitar la exportación de configuración</string>
-    <string name="disable_config_export_description">Desactivar la exportación de configuración hace que las claves privadas sean menos accesibles</string>
     <string name="dns_servers">Servidores DNS</string>
     <string name="dns_search_domains">Buscar dominios</string>
     <string name="edit">Editar</string>
@@ -219,10 +213,6 @@
     <string name="zip_export_success">Guardado en “%s”</string>
     <string name="zip_export_summary">El archivo Zip se guardará en la carpeta de descargas</string>
     <string name="zip_export_title">Exportar túneles a archivo zip</string>
-    <string name="biometric_prompt_zip_exporter_title">Autenticar para exportar túneles</string>
-    <string name="biometric_prompt_private_key_title">Autenticar para ver la clave privada</string>
-    <string name="biometric_auth_error">Error de autenticación</string>
-    <string name="biometric_auth_error_reason">Error de autenticación: %s</string>
     <string name="tasker_plugin_title">Control de túnel AmneziaWG</string>
     <string name="tasker_select_tunnel">Túnel</string>
     <string name="tasker_select_action">Acción</string>

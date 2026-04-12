@@ -29,7 +29,6 @@ import org.amnezia.awg.backend.Tunnel
 import org.amnezia.awg.databinding.TunnelEditorFragmentBinding
 import org.amnezia.awg.model.ObservableTunnel
 import org.amnezia.awg.util.AdminKnobs
-import org.amnezia.awg.util.BiometricAuthenticator
 import org.amnezia.awg.util.ErrorMessages
 import org.amnezia.awg.viewmodel.ConfigProxy
 import org.amnezia.awg.config.Config
@@ -252,39 +251,18 @@ class TunnelEditorFragment : BaseFragment(), MenuProvider {
         super.onViewStateRestored(savedInstanceState)
     }
 
-    private var showingAuthenticator = false
 
     fun onKeyClick(view: View) = onKeyFocusChange(view, true)
 
     fun onKeyFocusChange(view: View, isFocused: Boolean) {
-        if (!isFocused || showingAuthenticator) return
+        if (!isFocused) return
         val edit = view as? EditText ?: return
         if (edit.inputType == InputType.TYPE_TEXT_FLAG_NO_SUGGESTIONS or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD) return
         if (!haveShownKeys && edit.text.isNotEmpty()) {
             if (AdminKnobs.disableConfigExport) return
-            showingAuthenticator = true
-            BiometricAuthenticator.authenticate(R.string.biometric_prompt_private_key_title, this) {
-                showingAuthenticator = false
-                when (it) {
-                    is BiometricAuthenticator.Result.Success, is BiometricAuthenticator.Result.HardwareUnavailableOrDisabled -> {
-                        haveShownKeys = true
-                        showPrivateKey(edit)
-                    }
-
-                    is BiometricAuthenticator.Result.Failure -> {
-                        Snackbar.make(
-                            binding!!.mainContainer,
-                            it.message,
-                            Snackbar.LENGTH_SHORT
-                        ).show()
-                    }
-
-                    is BiometricAuthenticator.Result.Cancelled -> {}
-                }
-            }
-        } else {
-            showPrivateKey(edit)
+            haveShownKeys = true
         }
+        showPrivateKey(edit)
     }
 
     private fun showPrivateKey(edit: EditText) {

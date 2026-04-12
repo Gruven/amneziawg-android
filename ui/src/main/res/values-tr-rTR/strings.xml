@@ -83,12 +83,6 @@
     <string name="dark_theme_summary_on">Şu anda karanlık (gece) teması kullanılıyor</string>
     <string name="dark_theme_title">Koyu tema kullan</string>
     <string name="delete">Sil</string>
-    <string name="tv_delete">Silinecek tüneli seçin</string>
-    <string name="tv_select_a_storage_drive">Bir depolama sürücüsü seçin</string>
-    <string name="tv_no_file_picker">Dosyalara göz atmak için lütfen bir dosya yönetim aracı yükleyin</string>
-    <string name="tv_add_tunnel_get_started">Başlamak için bir tünel ekleyin</string>
-    <string name="disable_config_export_title">Ayarları dışa aktarmayı kapa</string>
-    <string name="disable_config_export_description">Ayarları dışa aktarmayı kapamak gizli anahtarları daha az erişilebilir kılar</string>
     <string name="dns_servers">DNS sunucuları</string>
     <string name="dns_search_domains">Alan adı ara</string>
     <string name="edit">Düzenle</string>
@@ -223,10 +217,6 @@
     <string name="zip_export_success">“%s” ’e kaydedildi</string>
     <string name="zip_export_summary">Zip dosyası indirilenler klasörüne kaydedilecek</string>
     <string name="zip_export_title">Tünelleri zip dosyasına aktar</string>
-    <string name="biometric_prompt_zip_exporter_title">Tünelleri dışa aktarmak için kimlik doğrulama</string>
-    <string name="biometric_prompt_private_key_title">Özel anahtarı görüntülemek için kimlik doğrulaması</string>
-    <string name="biometric_auth_error">Kimlik doğrulama hatası</string>
-    <string name="biometric_auth_error_reason">Kimlik doğrulama hatası: %s</string>
     <string name="tasker_plugin_title">AmneziaWG tünel kontrolü</string>
     <string name="tasker_select_tunnel">Tünel</string>
     <string name="tasker_select_action">Eylem</string>
